@@ -8,8 +8,11 @@ import math
 import os
 import glob
 
+print(os.getcwd())
 
-shipsPath = "/Users/griffin/Sync/__currentCourses/5443-2D-Gaming/Resources/01_PyGame/ships/"
+print(glob.glob("*.*"))
+
+shipsPath = "./images/ships/"
 
 def bendTrajectory(line,coefficient=0.009,direction=1):
     """

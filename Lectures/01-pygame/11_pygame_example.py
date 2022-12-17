@@ -8,11 +8,16 @@ import math
 import os
 import glob
 
-print(os.getcwd())
 
-print(glob.glob("*.*"))
+shipsPath = "./images/ships/"
 
-shipsPath = "/Users/griffin/Sync/__currentCourses/5443-2D-Gaming/Resources/01_PyGame/ships/"
+
+def angle_of_vector(x, y):
+    return pygame.math.Vector2(x, y).angle_to((1, 0))
+
+def angle_of_line(x1, y1, x2, y2):
+    return angle_of_vector(x2-x1, y2-y1)
+
 
 def bendTrajectory(line,coefficient=0.009,direction=1):
     """
@@ -42,10 +47,27 @@ def makeLine(r=400):
         y -= 1
     return line
 
-def drawLine(line,screen,line_color,percent=1):
+    # rotated_cookie_surface = pygame.transform.rotate(cookie_surface, rotation)
+    # rotated_cookie_rect = rotated_cookie_surface.get_rect(center = cookie_rect.center)
+
+    # # [...]
+
+    # screen.blit(rotated_cookie_surface, rotated_cookie_rect)
+
+def drawLine(line,screen,bullet,line_color,percent=1):
+    color = (48, 141, 70)
     stop = int(len(line) * percent)
     for i in range(stop-1):
+        screen.fill((255, 255, 255))
+        a = angle_of_line(line[i][0],line[i][1],line[i+1][0],line[i+1][1])
+        rbullet = pygame.transform.rotate(bullet, a+270)
+
+        screen.blit(rbullet,line[i]) # paint to screen
+
+        
         pygame.draw.line(screen, line_color, (line[i][0],line[i][1]), (line[i+1][0],line[i+1][1]))
+
+
 
 if __name__=='__main__':
 
@@ -56,8 +78,6 @@ if __name__=='__main__':
 
     clock = pygame.time.Clock()
     
-
- 
 
     width = 500         # width of overall screen
     height = 500        # same but height
@@ -72,9 +92,11 @@ if __name__=='__main__':
 
     ship1 = pygame.image.load(os.path.join(shipsPath,"Bismarck.png")).convert_alpha()
     ship2 = pygame.image.load(os.path.join(shipsPath,"Iowa.png")).convert_alpha()
+    bullet = pygame.image.load("images/bs_bullet/bs_bullet_001.png").convert_alpha()
 
     ship1Scaled = pygame.transform.scale(ship1, (15,75))
     ship2Scaled = pygame.transform.scale(ship2, (15,75))
+    #bullet = pygame.transform.scale(bullet, (12,15))
 
     ship1Scaled = pygame.transform.rotate(ship1Scaled, 125)
     ship2Scaled = pygame.transform.rotate(ship2Scaled, 125)
@@ -86,6 +108,8 @@ if __name__=='__main__':
 
     screen.blit(ship1Scaled, ( 450,450)) # paint to screen
     screen.blit(ship2Scaled, ( 50,50)) # paint to screen
+    screen.blit(bullet, ( 50,50)) # paint to screen
+
     pygame.display.flip() # paint screen one time
 
     while running:
@@ -97,10 +121,10 @@ if __name__=='__main__':
 
         # Fill the background with white
         # This also helps "clear" the screen everytime
-        screen.fill((255, 255, 255))
+        
 
         #drawLine(line1,screen,line_color)
-        drawLine(line2,screen,line_color,percent)
+        drawLine(line2,screen,bullet,line_color,percent)
         screen.blit(ship1Scaled, ( 420,420)) # paint to screen
         screen.blit(ship2Scaled, ( 25,25)) # paint to screen
 
@@ -113,6 +137,7 @@ if __name__=='__main__':
         pygame.display.flip()
         clock.tick(60)
         pygame.time.wait(30)
+       #screen.fill((255, 255, 255))
 
     # Done! Time to quit.
     pygame.quit()
