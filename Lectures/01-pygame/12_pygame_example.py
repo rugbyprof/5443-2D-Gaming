@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
 This starts an image class ...
+https://gist.github.com/abcsds/8093698
 """
 # Import and initialize the pygame library
+
 import pygame
+from pygame.locals import *
+
 import random
 import sys
 import math
@@ -83,8 +87,61 @@ class PySprite(PyImage):
         screen.blit(self.image, self.location)
 
 
-def main():
-    pass
+class Game:
+    def __init__(self, **kwargs):
+        self.running = False
+        self.initialized = False
+        self.clock = pygame.time.Clock()
+        self.width = kwargs.get("width", 800)
+        self.height = kwargs.get("height", 600)
+        self.size = (self.width, self.height)
+        self.caption = kwargs.get("caption", "My Game!")
+        self.surfaceColor = kwargs.get("surface_color", (47, 109, 158))
+        self.surface = kwargs.get("surface", None)
+        if not self.screen:
+            print("Error: need pygame screen / window instance to run!")
+            sys.exit()
+
+        self.initGame()
+
+    def initGame(self):
+        pygame.init()
+        if not self.surface:
+            self.surface = pygame.display.set_mode(self.size)
+        pygame.display.set_caption(self.caption)
+        pygame.display.flip()
+        self.running = True
+        self.initialized = True
+
+    def handleEvent(self, event):
+        if event.type == pygame.QUIT:
+            self.running = False
+        elif event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                self.running = False
+                self.cleanup()
+        elif event.type == MOUSEBUTTONDOWN:
+            if event.button == 1:
+                print(event.pos)
+
+    def loop(self):
+        pass
+
+    def render(self):
+        pass
+
+    def cleanup(self):
+        pygame.quit()
+
+    def on_execute(self):
+        if not self.initialized:
+            self.running = False
+        while self.running:
+            for event in pygame.event.get():
+                self.handleEvent(event)
+            self.loop()
+            self.render()
+        self.cleanup()
 
 
 if __name__ == "__main__":
@@ -122,13 +179,10 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-        # paint to screen
-
         # Flip the display
         pygame.display.flip()
         clock.tick(60)
         pygame.time.wait(5)
-
         pygame.display.update()
 
     # Done! Time to quit.
