@@ -6,6 +6,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02">01-A02</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> Assignment 2 </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> Code Repository</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> 01-23-2023 (Monday @ 2:30 p.m.)</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02">2023-01-23 00:00:00</a>*** | 4 |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/graphics">graphics</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/graphics"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/graphics"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/graphics">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/graphics">None</a>*** |  |
 
-<sup>Last Updated: 2023-01-19 (Thu @ 12:43)</sup> 
+<sup>Last Updated: 2023-01-19 (Thu @ 12:47)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
