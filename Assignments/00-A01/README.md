@@ -16,7 +16,7 @@ If you have had me before, and this seems **TL;DR** make sure you:
 
 ---
 
-<img src="https://cs.msutexas.edu/~griffin/zcloud/zcloud-files/slack_icon.png" width="120">
+<img src="https://raw.githubusercontent.com/rugbyprof/5443-2D-Gaming/main/Assignments/graphics/slack_icon.png" width="120">
 
 
 The first step in doing well in any of my courses is establishing a base of communication. Why? Not everything can be done while we are in class.
