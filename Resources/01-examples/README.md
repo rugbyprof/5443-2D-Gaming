@@ -1,1 +1,3 @@
-## Placeholder Readme - No Description
+## Pygame Provided Examples
+
+This folder contains pygame examples provided by pygame itself.
