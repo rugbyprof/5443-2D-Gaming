@@ -1,0 +1,204 @@
+{
+    "base_name": "mario_",
+    "frame_width": 80,
+    "frame_height": 105,
+    "ext":".png",
+    "moves": {
+
+        "jump_hammer_right" : {
+            "frame_width" : 375,
+            "frame_height" : 240,
+            "frames" : [
+                "004",
+                "005",
+                "006"
+            ]
+        },
+        "jump_hammer_left" : {
+            "frame_width" : 375,
+            "frame_height" : 240,
+            "frames" : [
+                "001",
+                "002",
+                "003"
+            ]
+        },
+        "small_jump_left" : {
+            "frame_width" : 170,
+            "frame_height" : 240,
+            "frames" : [
+                "007"
+            ]
+        },
+        "small_jump_right" : {
+            "frame_width" : 170,
+            "frame_height" : 240,
+            "frames" : [
+                "008"
+            ]
+        },
+        "med_jump_left" : {
+            "frame_width" : 170,
+            "frame_height" : 240,
+            "frames" : [
+                "009",
+                "010",
+                "011"
+            ]
+        },
+        "med_jump_right" : {
+            "frame_width" : 170,
+            "frame_height" : 240,
+            "frames" : [
+                "012",
+                "013",
+                "014"
+            ]
+        },
+        "dropping_left" : {
+            "frame_width" : 191,
+            "frame_height" : 240,
+            "frames" : [
+                "015"
+            ]
+        },
+        "dropping_right" : {
+            "frame_width" : 191,
+            "frame_height" : 240,
+            "frames" : [
+                "016"
+            ]
+        },
+        "long_jump_left" : {
+            "frame_width" : 175,
+            "frame_height" : 240,
+            "frames" : [
+                "017",
+                "018",
+                "019",
+                "020",
+                "021",
+                "022",
+                "023",
+                "024"
+            ]
+        },
+        "long_jump_right" : {
+            "frame_width" : 175,
+            "frame_height" : 240,
+            "frames" : [
+                "025",
+                "026",
+                "027",
+                "028",
+                "029",
+                "030",
+                "031",
+                "032"
+            ]
+        },
+        "die_left" : {
+            "frame_width" : 210,
+            "frame_height" : 240,
+            "frames" : [
+                "033",
+                "034",
+                "035",
+                "036",
+                "037"
+            ]
+        },
+        "die_right" : {
+            "frame_width" : 210,
+            "frame_height" : 240,
+            "frames" : [
+                "038",
+                "039",
+                "040",
+                "041",
+                "042"
+            ]
+        },
+        "duck_left" : {
+            "frame_width" : 150,
+            "frame_height" : 240,
+            "frames" : [
+                "043",
+                "044"
+            ]
+        },
+        "duck_right" : {
+            "frame_width" : 150,
+            "frame_height" : 240,
+            "frames" : [
+                "045",
+                "046"
+            ]
+        },
+        "sit_spin" : {
+            "frame_width" : 175,
+            "frame_height" : 240,
+            "frames" : [
+                "047",
+                "048",
+                "049"
+            ]
+        },
+        "walk_left_01" : {
+            "frame_width" : 140,
+            "frame_height" : 240,
+            "frames" : [
+                "050",
+                "051",
+                "052"
+            ]
+        },
+        "walk_left_02" : {
+            "frame_width" : 140,
+            "frame_height" : 240,
+            "frames" : [
+                "053",
+                "054",
+                "055"
+            ]
+        },
+        "bball_hammer_left" : {
+            "frame_width" : 300,
+            "frame_height" : 256,
+            "frames" : [
+                "056",
+                "057",
+                "058",
+                "059"
+            ]
+        },
+        "bball_hammer_right" : {
+            "frame_width" : 300,
+            "frame_height" : 256,
+            "frames" : [
+                "060",
+                "061",
+                "062",
+                "063"
+            ]
+        },
+        "walk_left" : {
+            "frame_width" : 150,
+            "frame_height" : 240,
+            "frames" : [
+                "064",
+                "065",
+                "066"
+            ]
+        },
+        "walk_right" : {
+            "frame_width" : 150,
+            "frame_height" : 240,
+            "frames" : [
+                "067",
+                "068",
+                "069"
+            ]
+        }
+    }
+}
