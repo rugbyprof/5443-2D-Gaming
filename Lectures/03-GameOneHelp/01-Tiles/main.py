@@ -32,11 +32,14 @@ def rectangle(**kwargs):
     border_size = kwargs.get("border_size",3)
     border_color = kwargs.get("border_color","black")
     border_radius = kwargs.get("border_radius",7)
+    font_ratio = kwargs.get("font_ratio",.9)
 
 
     tile_width = size[0]
     tile_height = size[1]
-    letter_size = int(tile_height * .90)
+    letter_size = int(tile_height * font_ratio)
+
+    print(letter_size)
 
     font_size,font_width,font_hieght = get_font_size(letter, r'Roboto-Bold.ttf', letter_size)
 
@@ -48,12 +51,12 @@ def rectangle(**kwargs):
     draw.rounded_rectangle((0, 0, tile_width, tile_height), fill=fill_color, outline=border_color,
                            width=border_size, radius=border_radius)
 
-    font = ImageFont.truetype(r'Roboto-Bold.ttf', tile_height) 
+    font = ImageFont.truetype(r'Roboto-Bold.ttf', letter_size) 
 
   
     # use the tile width and font width to center the letter. Same with the height.
     # the 1.30 is to shift the letter up a little bit. Not sure what will happen with a different font
-    draw.text((tile_width//2-(font_width//2), tile_height//2-(font_hieght*1.30//2)), letter, font = font,fill=letter_color,align='middle')
+    draw.text((tile_width//2-(font_width//2), tile_height//2-(font_hieght*1.10//2)), letter, font = font,fill=letter_color,align='middle')
     return image
     
     
@@ -61,3 +64,10 @@ if __name__ == "__main__":
     for letter in range(26):
         im = rectangle(letter=str(chr(letter+65)),size=(64,64),fill_color="black",border_size=3,border_color="red",border_radius=7,letter_color="white")
         im.save(f"./letters/{str(chr(letter+65))}.png")
+
+    val = 2
+    for i in range(11):
+        im = rectangle(letter=str(val),size=(64,64),fill_color="black",border_size=2,border_color="red",border_radius=7,letter_color="white",font_ratio=.40)
+        im.save(f"./letters/{str(val)}.png")
+
+        val *= 2

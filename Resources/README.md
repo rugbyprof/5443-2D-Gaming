@@ -12,6 +12,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/08-ComprehensiveExamples">08-ComprehensiveExamples</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/08-ComprehensiveExamples"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/08-ComprehensiveExamples"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/08-ComprehensiveExamples">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/08-ComprehensiveExamples">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">trunk</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">None</a>*** |  |
 
-<sup>Last Updated: 2023-01-30 (Mon @ 13:26)</sup> 
+<sup>Last Updated: 2023-01-30 (Mon @ 13:38)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 

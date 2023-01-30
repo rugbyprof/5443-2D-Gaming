@@ -6,6 +6,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-First_Assignment_Choices">02-First_Assignment_Choices</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-First_Assignment_Choices"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-First_Assignment_Choices"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-First_Assignment_Choices">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-First_Assignment_Choices">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-GameOneHelp">03-GameOneHelp</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-GameOneHelp"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-GameOneHelp"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-GameOneHelp">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-GameOneHelp">None</a>*** |  |
 
-<sup>Last Updated: 2023-01-30 (Mon @ 13:26)</sup> 
+<sup>Last Updated: 2023-01-30 (Mon @ 13:38)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
