@@ -15,9 +15,10 @@ class MySprite(pygame.sprite.Sprite):
     def __init__(self, action):
         super(MySprite, self).__init__()
         self.images = []
-        loc = f"./data/flatboy/{action}*.png"
+        loc = f"/Users/griffin/Sync/__currentCourses/5443-2D-Gaming/Resources/01-Examples/data/flatboy/{action}*.png"
         im = glob.glob(loc)
         imsorted = sorted(im)
+        print(imsorted)
         for im in imsorted:
             self.images.append(pygame.image.load(im))
 
