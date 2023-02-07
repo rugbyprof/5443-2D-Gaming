@@ -22,7 +22,8 @@ def help():
     print("Examples: ")
     print('    player-1 ~ fire ~ {"lon":97.234,"lat":33.456,"ammo":"explosive_round"}')
     print('    player-2 ~ message ~ "You are going down"')
-    print('    broadcast ~ message ~ "Message to everyone: player-1 is going down!"')
+    print('    everyone ~ broadcast ~ "Message to everyone: player-1 is going down!"')
+    print('    everyone ~ move ~ "X":234,"Y":110,"direction":"ENE"')
     print("The tildes (~) are used as an easy character to split on!")
     print("=" * 60)
 
