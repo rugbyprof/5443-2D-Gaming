@@ -21,6 +21,9 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.right > 300:
             self.kill()
 
+    def newMethod(self):
+        pass
+
 
 pygame.init()
 window = pygame.display.set_mode((400, 300))
