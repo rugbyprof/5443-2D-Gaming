@@ -2,3 +2,6 @@ pygame
 pika
 requests
 rich
+pygame-menu
+tk
+pysimplegui
