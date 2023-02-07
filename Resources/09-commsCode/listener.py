@@ -2,12 +2,12 @@ from comms import CommsListener
 
 # example game user
 creds = {
-    "exchange": "battleship",
+    "exchange": "2dgame",
     "port": "5672",
-    "host": "battleshipgame.fun",
-    "user": "us_navy",
-    "password": "rockpaperscissorsrabbitdonkey",
-    "hash": "61ec12b68d0ded5f6a84b7d1f6d4d8e70695c2ba5dd7176fc3e4c3d53db9ecf2",
+    "host": "crappy2d.us",
+    "user": "player-3",
+    "password": "horse1CatDonkey",
+    "hash": None,
 }
 
 print("Comms Listener starting. To exit press CTRL+C ...")

@@ -4,42 +4,56 @@ Example sender with some helper code to format and parse commands
 
 from comms import CommsSender
 import json
+import sys
+
+
+def isJson(jsonData):
+    try:
+        json.loads(jsonData)
+    except ValueError as err:
+        return False
+    return True
 
 
 def help():
     print("=" * 60)
     print("Commands are formatted like the following examples: ")
-    print('    stalin.fire ~ {"lon":2.345,"lat":10.1234,"angle":30.23,"kg":1200}')
-    print("    broadcast ~ Stalin is going down!")
+    print("    targetplayer ~ command ~ json object of command info")
+    print("Examples: ")
+    print('    player-1 ~ fire ~ {"lon":97.234,"lat":33.456,"ammo":"explosive_round"}')
+    print('    player-2 ~ message ~ "You are going down"')
+    print('    broadcast ~ message ~ "Message to everyone: player-1 is going down!"')
     print("The tildes (~) are used as an easy character to split on!")
     print("=" * 60)
 
 
-def parseCommand(cmd):
-    targetName = None
-    msgAction = None
+def parseCommand(cmdTxt):
+    print(cmdTxt)
+    target = None
+    cmd = None
+    data = None
 
-    cmd, data = cmd.split("~")
+    target, cmd, data = cmdTxt.split("~")
+
+    target = target.strip()
     cmd = cmd.strip()
     data = data.strip()
-    if "broadcast" in cmd:
-        msgAction = "broadcasting"
-        targetName = "everyone"
-    if "fire" in cmd:
-        targetName, _ = cmd.split(".")
-        msgAction = "firing"
+    if isJson(data):
         data = json.loads(data)  # turn it into json if you need to "access" it.
 
-    return {"cmd": cmd, "data": data, "msgAction": msgAction, "targetName": targetName}
+    if target == "everyone" or cmd == "broadcast":
+        target = "broadcast"
+
+    return {"target": target, "cmd": cmd, "data": data}
 
 
 creds = {
-    "exchange": "battleship",
+    "exchange": "2dgame",
     "port": "5672",
-    "host": "battleshipgame.fun",
-    "user": "us_navy",
-    "password": "rockpaperscissorsrabbitdonkey",
-    "hash": "61ec12b68d0ded5f6a84b7d1f6d4d8e70695c2ba5dd7176fc3e4c3d53db9ecf2",
+    "host": "crappy2d.us",
+    "user": "player-X",
+    "password": "horse1CatDonkey",
+    "hash": None,
 }
 
 team = creds["user"]
@@ -55,9 +69,9 @@ while txt:
         break
     else:
         cmd = parseCommand(txt)
-        print(f"{cmd['msgAction']} at/to {cmd['targetName']}")
+        print(cmd)
 
         # turn the json back into a string to send it
-        commsSender.sendCommand(cmd["cmd"], json.dumps(cmd["data"]))
+        commsSender.sendCommand(cmd["target"], json.dumps(cmd))
 
 commsSender.closeConnection()

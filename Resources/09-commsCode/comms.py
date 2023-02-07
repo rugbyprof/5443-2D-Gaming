@@ -187,10 +187,14 @@ if __name__ == "__main__":
         time.sleep(2)
         cmd = f"{team}.turn", f"{team} is turning!!"
         print(cmd)
-
         commsSender.sendCommand("byron", "hello dude")
 
         time.sleep(2)
+
+        cmd = f"{team}.blowup", f"{team} is dead!!"
+        print(cmd)
+        commsSender.sendCommand(f"yoseph",f"{cmd}")
+
         commsSender.closeConnection()
     else:
         print("Comms Listener starting. To exit press CTRL+C ...")
