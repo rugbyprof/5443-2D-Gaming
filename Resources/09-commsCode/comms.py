@@ -21,9 +21,9 @@ class Comms(object):
             The following example shows you how to init an instance of this class.
         Example:
             {
-                "exchange": "battleship",
+                "exchange": "2dgame",
                 "port": "5672",
-                "host": "battleshipgame.fun",
+                "host": "crappy2d.us",
                 "user": "yourteamname",
                 "password": "yourpassword",
             }
@@ -76,6 +76,8 @@ class CommsListener(Comms):
     def __init__(self, **kwargs):
         """Extends Comms"""
         self.binding_keys = kwargs.get("binding_keys", [])
+        self.mq = []
+
         super().__init__(**kwargs)
 
     def bindKeysToQueue(self, binding_keys=None):
@@ -129,10 +131,7 @@ class CommsListener(Comms):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
         """
-        print(f"{method.routing_key} : {body}")
-        # logDict = {"routing_key": method.routing_key, "data": json.loads(body)}
-        # with open("log.json", "a") as f:
-        #     json.dump(logDict, f, indent=4)
+        self.mq.append(f"{method.routing_key} : {body}")
 
 
 class CommsSender(Comms):
@@ -142,8 +141,12 @@ class CommsSender(Comms):
         """
         super().__init__(**kwargs)
 
-    def sendCommand(self, routing_key, command):
-        self.channel.basic_publish(self.exchange, routing_key=routing_key, body=command)
+    def send(self, routing_key, body, closeConnection=True):
+        print(f"Sending: routing_key: {routing_key}, body: {body}")
+
+        self.channel.basic_publish(self.exchange, routing_key=routing_key, body=body)
+        if closeConnection:
+            self.connection.close()
 
     def closeConnection(self):
         self.connection.close()
@@ -156,7 +159,6 @@ def usage():
 
 
 if __name__ == "__main__":
-
     if len(sys.argv) < 2:
         usage()
     elif len(sys.argv) == 2:
@@ -193,7 +195,7 @@ if __name__ == "__main__":
 
         cmd = f"{team}.blowup", f"{team} is dead!!"
         print(cmd)
-        commsSender.sendCommand(f"yoseph",f"{cmd}")
+        commsSender.sendCommand(f"yoseph", f"{cmd}")
 
         commsSender.closeConnection()
     else:
