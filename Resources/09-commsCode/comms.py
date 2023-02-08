@@ -6,7 +6,7 @@ import sys
 import time
 
 import pika
-import requests
+import random
 
 
 class Comms(object):
@@ -154,52 +154,58 @@ class CommsSender(Comms):
 
 def usage():
     print("Error: You need to choose `send` or `listen` and optionally `teamName`!")
-    print("Usage: python CommsClass <send,listen> [teamName]")
+    print("Usage: python CommsClass <send,listen>")
     sys.exit()
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         usage()
-    elif len(sys.argv) == 2:
-        method = sys.argv[1]
-    elif len(sys.argv) > 2:
-        method = sys.argv[1]
-        team = sys.argv[2]
+
+    method = sys.argv[1]
+
+    if len(sys.argv) > 2:
+        numCmds = sys.argv[2]
+    else:
+        numCmds = 3
+
+    teams = ["team-1", "team-2", "team-3", "team-4", "team-5"]
+    teams = ["player-1", "player-2", "player-3"]
+    cmds = ["message", "broadcast", "move", "fire"]
+    body = {
+        "message": ["hello", "whatsup", "show me the money", "god bless merica"],
+        "broadcast": ["hello", "whatsup", "show me the money", "god bless merica"],
+        "move": [{"x": random.randint(1, 100), "y": random.randint(1, 100)}],
+        "fire": [
+            {
+                "x": random.randint(1, 100),
+                "y": random.randint(1, 100),
+                "bearing": random.choice(["N", "S", "E", "W"]),
+            }
+        ],
+    }
+
+    user = random.choice(teams)
+    target = random.choice(teams)
 
     creds = {
-        "exchange": "battleship",
+        "exchange": "2dgame",
         "port": "5672",
-        "host": "battleshipgame.fun",
-        "user": "admiral",
-        "password": "rockpaperscissors",
+        "host": "crappy2d.us",
+        "user": user,
+        "password": "horse1CatDonkey",  # user.capitalize() * 3,
     }
 
     if method == "send":
         commsSender = CommsSender(**creds)
-        cmd = f"{team}.fire", json.dumps(
-            {"lat": 34, "lon": -98, "bearing": 231, "bags": 8}
-        )
-        print(cmd)
-        commsSender.sendCommand(cmd[0], cmd[1])
-        time.sleep(2)
-        cmd = "broadcast.*", "Hey everybody!!"
-        print(cmd)
-        commsSender.sendCommand(cmd[0], cmd[1])
-        time.sleep(2)
-        cmd = f"{team}.turn", f"{team} is turning!!"
-        print(cmd)
-        commsSender.sendCommand("byron", "hello dude")
+        for i in range(numCmds):
+            cmd = random.choice(cmds)
+            data = random.choice(body[cmd])
+            commsSender.send(target, json.dumps({"cmd": cmd, "body": data}), False)
+            time.sleep(2)
 
-        time.sleep(2)
-
-        cmd = f"{team}.blowup", f"{team} is dead!!"
-        print(cmd)
-        commsSender.sendCommand(f"yoseph", f"{cmd}")
-
-        commsSender.closeConnection()
     else:
         print("Comms Listener starting. To exit press CTRL+C ...")
         commsListener = CommsListener(**creds)
-        commsListener.bindKeysToQueue([f"#.{team}.#", "#.broadcast.#"])
+        commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()
