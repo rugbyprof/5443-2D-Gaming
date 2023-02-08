@@ -2,7 +2,6 @@ import PySimpleGUI as sg
 
 import json
 from threading import Thread
-import subprocess
 import sys
 
 from comms import CommsSender, CommsListener
@@ -44,15 +43,20 @@ def sendMessage(tgt, cmd, bdy):
     if tgt == "everyone" or cmd == "broadcast":
         tgt = "broadcast"
 
-    # print(tgt, cmd, bdy)
+    # create an instance of the sender code sending in appropriate
+    # user/password along with which channel to message
     commsSender = CommsSender(**creds)
+
+    # actually send the message
     commsSender.send(tgt, json.dumps({"cmd": cmd, "bdy": bdy}))
 
 
 def listenForMessages():
     global commsListener
-    # tell rabbitMQ which 'topics' you want to listen to. In this case anything
-    # with the team name in it (user) and the broadcast keyword.
+
+    # tell rabbitMQ which 'topics' you want to listen for. In this case anything
+    # with the team name in it (user) or the broadcast keyword. Remember the pound
+    # sign is a wildcard for rabbitMQ
     commsListener.bindKeysToQueue([f"#.{creds['user']}.#", "#.broadcast.#"])
 
     # now really start listening
@@ -73,7 +77,7 @@ def main(player, offset):
     sg.theme("DarkGrey14")
 
     commands = ("message", "broadcast", "move", "fire")
-    targets = ("plawer-1", "player-2", "player-3", "Everyone")
+    targets = ("player-1", "player-2", "player-3", "Everyone")
 
     layout = [
         [sg.Text("Comms Output....", size=(40, 1))],
