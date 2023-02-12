@@ -3,32 +3,50 @@ import PySimpleGUI as sg
 import json
 from threading import Thread
 import sys
+import random
+from rich import print
 
 from comms import CommsSender, CommsListener
 
-commsListener = None
-prevQueueState = []
 
-creds = {
-    "exchange": "2dgame",
-    "port": "5672",
-    "host": "crappy2d.us",
-    "user": "player-1",
-    "password": "horse1CatDonkey",
-}
+class WindowLocation:
+    _shared_state = {}
 
+    def __init__(self):
+        self.__dict__ = self._shared_state
+        self.dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
+        self.usedLocations = []
 
-def checkMq():
-    global commsListener
-    global prevQueueState
-    if len(commsListener.mq) == 0:
-        return
+    def getRandomLoc(self, guiSize=(800, 600)):
+        width, height = sg.Window.get_screen_size()
+        loc = random.choice(self.dirs)
+        while loc in self.usedLocations:
+            loc = random.choice(self.dirs)
 
-    print(f"Receiving: {commsListener.mq[-1]}")
-    return commsListener.mq.pop(-1)
+        self.usedLocations.append(loc)
+
+        if loc == "N":
+            return (width // 2, 0)
+        elif loc == "NE":
+            return (width - guiSize[0], 0)
+        elif loc == "E":
+            return (width - guiSize[0], height // 2)
+        elif loc == "SE":
+            return (width - guiSize[0], height - guiSize[1])
+        elif loc == "S":
+            return (width // 2, height - guiSize[1])
+        elif loc == "SW":
+            return (0, height - guiSize[1])
+        elif loc == "W":
+            return (0, height // 2)
+        elif loc == "NW":
+            return (0, 0)
+
+        return loc
 
 
 def isJson(jsonData):
+    """Checks if a string can be valid json data"""
     try:
         json.loads(jsonData)
     except ValueError as err:
@@ -36,52 +54,43 @@ def isJson(jsonData):
     return True
 
 
-def sendMessage(tgt, cmd, bdy):
-    if isJson(bdy):
-        bdy = json.loads(bdy)  # turn it into json if you need to "access" it.
+def main(player, offset):
+    W = WindowLocation()
 
-    if tgt == "everyone" or cmd == "broadcast":
-        tgt = "broadcast"
+    creds = {
+        "exchange": "2dgame",
+        "port": "5672",
+        "host": "crappy2d.us",
+        "user": player,
+        "password": "horse1CatDonkey",
+    }
 
-    # create an instance of the sender code sending in appropriate
-    # user/password along with which channel to message
+    # create instances of a comms listener and sender
+    # to handle message passing.
+    commsListener = CommsListener(**creds)
     commsSender = CommsSender(**creds)
 
-    # actually send the message
-    commsSender.send(tgt, json.dumps({"cmd": cmd, "bdy": bdy}))
+    # Start the comms listener to listen for incoming messages
+    commsListener.threadedListen()
 
+    theme_names = [
+        "black",
+        # "DarkBlue14",
+        # "DarkGrey12",
+        # "DarkGrey13",
+        # "DarkGrey14",
+        # "DarkGrey15",
+        # "DarkPurple6",
+        # "DarkPurple7",
+    ]
 
-def listenForMessages():
-    global commsListener
-
-    # tell rabbitMQ which 'topics' you want to listen for. In this case anything
-    # with the team name in it (user) or the broadcast keyword. Remember the pound
-    # sign is a wildcard for rabbitMQ
-    commsListener.bindKeysToQueue([f"#.{creds['user']}.#", "#.broadcast.#"])
-
-    # now really start listening
-    commsListener.startConsuming()
-
-
-def main(player, offset):
-    global commsListener
-    creds["user"] = player
-    commsListener = CommsListener(**creds)
-
-    Thread(
-        target=listenForMessages,
-        args=(),
-        daemon=True,
-    ).start()
-
-    sg.theme("DarkGrey14")
+    sg.theme(random.choice(theme_names))
 
     commands = ("message", "broadcast", "move", "fire")
     targets = ("player-1", "player-2", "player-3", "Everyone")
-
     layout = [
         [sg.Text("Comms Output....", size=(40, 1))],
-        [sg.Output(size=(88, 20), text_color="green", font="Courier 12")],
+        [sg.Output(size=(88, 20), text_color="white", font="Courier 18")],
         [
             sg.Push(),
             sg.Text("Command:", size=(15, 1)),
@@ -98,6 +107,7 @@ def main(player, offset):
                 key="-COMMAND-",
                 enable_events=True,
                 default_value="message",
+                font="Courier 18",
             ),
             sg.Combo(
                 targets,
@@ -105,23 +115,22 @@ def main(player, offset):
                 key="-TARGET-",
                 enable_events=True,
                 default_value="everyone",
+                font="Courier 18",
             ),
             sg.Multiline(
                 size=(40, 3),
-                key="-CMDBODY-",
+                key="-commandBODY-",
                 enable_events=True,
                 default_text="",
+                font="Courier 18",
                 # default_text='{"lat":123.345,"lon":34.234}',
             ),
-            sg.Button("Submit"),
+            sg.Button("Submit", font="Courier 18"),
             sg.Push(),
         ],
     ]
 
-    if offset:
-        location = (offset, 330)
-    else:
-        location = (0, 0)
+    location = W.getRandomLoc()
 
     window = sg.Window(f"Comms Panel: {creds['user']}", layout, location=location)
 
@@ -131,19 +140,12 @@ def main(player, offset):
             break  # exit button clicked
         if event == "Submit":
             # sp = sg.execute_command_subprocess("pip", "list", wait=True)
-            cmd = values["-COMMAND-"]
-            tgt = values["-TARGET-"]
-            bdy = values["-CMDBODY-"]
-            Thread(
-                target=sendMessage,
-                args=(
-                    tgt,
-                    cmd,
-                    bdy,
-                ),
-                daemon=True,
-            ).start()
-        checkMq()
+            command = values["-COMMAND-"]
+            target = values["-TARGET-"]
+            body = values["-commandBODY-"]
+            commsSender.threadedSend(
+                target, json.dumps({"command": command, "body": body})
+            )
 
     window.close()
 

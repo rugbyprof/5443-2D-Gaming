@@ -5,7 +5,7 @@ creds = {
     "exchange": "2dgame",
     "port": "5672",
     "host": "crappy2d.us",
-    "user": "player-1",
+    "user": "player-2",
     "password": "horse1CatDonkey",
     "hash": None,
 }

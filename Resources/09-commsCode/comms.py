@@ -7,6 +7,9 @@ import time
 
 import pika
 import random
+from threading import Thread
+
+from rich import print
 
 
 class Comms(object):
@@ -15,6 +18,8 @@ class Comms(object):
     class! However, I organized it into one simply for encapsulation, keeping
     data and methods together and the added bonus of a constructor etc.
     """
+
+    _messageQueue = {}
 
     def __init__(self, **kwargs):
         """Remember keyword arguments are params like: key=arg so order doesn't matter.
@@ -34,6 +39,9 @@ class Comms(object):
         self.user = kwargs.get("user", None)
         self.password = kwargs.get("password", None)
         self.binding_keys = kwargs.get("binding_keys", [])
+
+        if not self.user in self._messageQueue:
+            self._messageQueue[self.user] = []
 
         self.establishConnection()
 
@@ -76,7 +84,6 @@ class CommsListener(Comms):
     def __init__(self, **kwargs):
         """Extends Comms"""
         self.binding_keys = kwargs.get("binding_keys", [])
-        self.mq = []
 
         super().__init__(**kwargs)
 
@@ -131,7 +138,16 @@ class CommsListener(Comms):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
         """
-        self.mq.append(f"{method.routing_key} : {body}")
+        self._messageQueue[self.user].append(f"{method.routing_key} : {body}")
+        print(self._messageQueue)
+
+    def threadedListen(self):
+        self.bindKeysToQueue([f"#.{self.user}.#", "#.broadcast.#"])
+        Thread(
+            target=self.startConsuming,
+            args=(),
+            daemon=True,
+        ).start()
 
 
 class CommsSender(Comms):
@@ -144,9 +160,28 @@ class CommsSender(Comms):
     def send(self, routing_key, body, closeConnection=True):
         print(f"Sending: routing_key: {routing_key}, body: {body}")
 
-        self.channel.basic_publish(self.exchange, routing_key=routing_key, body=body)
+        body = json.loads(body)
+
+        body["from"] = self.user
+
+        self.channel.basic_publish(
+            self.exchange, routing_key=routing_key, body=json.dumps(body)
+        )
         if closeConnection:
             self.connection.close()
+
+    def threadedSend(self, routing_key, body, closeConnection=False):
+        print(f"Calling send via Thread")
+
+        Thread(
+            target=self.send,
+            args=(
+                routing_key,
+                body,
+                closeConnection,
+            ),
+            daemon=True,
+        ).start()
 
     def closeConnection(self):
         self.connection.close()
