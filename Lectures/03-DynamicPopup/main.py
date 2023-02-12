@@ -108,10 +108,11 @@ def makePopUp(content,**kwargs):
         x = border_size
         
         if line['align'] == 'center':
-            x = border_size + ((width // 2) - (font_width // 2))
+            x = ((width // 2) - (font_width // 2))
+            #x = width // 2
         elif line['align'] == 'right':
             x = border_size + width - font_width
-        draw.text((x,y),line['text'],font=font,fill=color,align=line['align'])
+        draw.text((x,y),line['text'],font=font,fill=color,align='left')
         y += font_height + font_height // 2 + 5
         i += 1
 
@@ -123,11 +124,11 @@ if __name__ == "__main__":
         {"text":"Window Title",'font_size':20,'align':'left','color':'white'},
         {"text":" ",'font_size':20,'align':'left','color':'white'},
         {"text":" Second Line ",'font_size':20,'align':'left','color':'white'},
-        {"text":" Third Line Third Line Third Line Third Line Third Line ",'font_size':20,'align':'center','color':'white'},
+        {"text":" Third Line centered Third Line centered ",'font_size':20,'align':'center','color':'white'},
         {"text":" Fourth Line Fourth Line Fourth Line ",'font_size':20,'align':'left','color':'white'},
         {"text":" Fifth Line ",'font_size':20,'align':'left','color':'white'},
         {"text":"This is a footer",'font_size':20,'align':'center','color':'white'}
     ]
-    image = makePopUp(content,border_size=20,border_color='black',fill_color='green',width=400,height=250,font_name="Roboto-Bold.ttf")
+    image = makePopUp(content,border_size=20,border_color='black',fill_color='green',width=600,height=275,font_name="Roboto-Bold.ttf")
     image.show()
     image.save(f"popup.png")
