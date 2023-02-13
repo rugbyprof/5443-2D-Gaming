@@ -4,7 +4,8 @@
 |:------|:------|:------|:------|:-----:|-----|
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/01-pygame">01-pygame</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/01-pygame">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/01-pygame">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/01-pygame">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/01-pygame">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-TiledLetters">02-TiledLetters</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-TiledLetters"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-TiledLetters"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-TiledLetters">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/02-TiledLetters">None</a>*** |  |
+| ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-DynamicPopup">03-DynamicPopup</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-DynamicPopup"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-DynamicPopup"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-DynamicPopup">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/03-DynamicPopup">None</a>*** |  |
 
-<sup>Last Updated: 2023-02-06 (Mon @ 23:00)</sup> 
+<sup>Last Updated: 2023-02-13 (Mon @ 12:31)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
