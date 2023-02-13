@@ -7,6 +7,8 @@ import json
 # Initializing Pygame
 pygame.init()
 
+
+
 # Screen
 WIDTH = 500
 ROWS = 3

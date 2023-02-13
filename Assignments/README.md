@@ -9,6 +9,6 @@
 | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/00-A01">00-A01</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/00-A01"> Assignment 1 </a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/00-A01"> Establishing Comms</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/00-A01"> 01-23-2023 (Monday @ 2:30 p.m.)</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/00-A01">2023-01-23 00:00:00</a>~ | ---- |
 | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02">01-A02</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> Assignment 2 </a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> Code Repository</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02"> 01-23-2023 (Monday @ 2:30 p.m.)</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/01-A02">2023-01-23 00:00:00</a>~ | ---- |
 
-<sup>Last Updated: 2023-02-13 (Mon @ 12:34)</sup> 
+<sup>Last Updated: 2023-02-13 (Mon @ 12:36)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
