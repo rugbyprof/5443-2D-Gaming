@@ -1,6 +1,0 @@
-pygame
-pika
-requests
-rich
-tk
-pysimplegui
