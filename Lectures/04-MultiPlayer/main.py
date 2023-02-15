@@ -151,8 +151,6 @@ def main(player,otherplayer):
     # Set up the drawing window
 
 
-
-
     screen.blit(ptBoat.image, (250, 250))  # paint to screen
 
     ptBoat.update()
