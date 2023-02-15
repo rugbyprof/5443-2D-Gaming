@@ -8,6 +8,9 @@ https://gist.github.com/abcsds/8093698
 import pygame
 from pygame.locals import *
 
+from pygame.sprite import Sprite
+from math import radians, sin, cos
+
 import random
 import sys
 import math
@@ -23,97 +26,103 @@ pygame.init()
 
 screen = pygame.display.set_mode([500, 700])
 
-class PyImage(pygame.sprite.Sprite):
+
+class RotationMovementKeys:
+
+    def __init__(self, sprite, up, down, left, right):
+        self.sprite = sprite
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
+
+        self.angle = 0
+        # self.speed = 0.04
+        # self.rotation_speed = 0.08
+        self.speed = 0.12
+        self.rotation_speed = 0.08
+        print(self.sprite)
+        self.center = pygame.Vector2(self.sprite.rect.center)
+        self.set_direction()
+
+    def set_direction(self):
+        rad = radians(self.angle)
+        self.direction = pygame.Vector2(sin(rad), cos(rad))
+
+    def do_rotate(self):
+        self.sprite.image = pygame.transform.rotate(self.sprite.original_image,
+                                                    self.angle)
+        self.sprite.rect = self.sprite.image.get_rect()
+        self.sprite.rect.center = self.center
+        self.set_direction()
+
+    def on_keydown(self, keys_press, delta):
+        if keys_press[self.up]:
+            self.center -= self.direction * delta * self.speed
+            self.sprite.rect.center = self.center
+        elif keys_press[self.down]:
+            self.center += self.direction * delta * (self.speed / 2)
+            self.sprite.rect.center = self.center
+
+        if keys_press[self.right]:
+            self.angle = (self.angle - self.rotation_speed * delta) % 360
+            self.do_rotate()
+        elif keys_press[self.left]:
+            self.angle = (self.angle + self.rotation_speed * delta) % 360
+            self.do_rotate()
+
+class BaseSprite(Sprite):
+
     def __init__(self, **kwargs):
-        self.screen = kwargs.get("screen", None)
-        if not self.screen:
-            print("Error! Need surface / screen")
-            sys.exit()
+        Sprite.__init__(self)
+        anchor = kwargs.get('anchor','center')
+        position = kwargs.get('position',(0,0))
+        self.original_image = kwargs.get('image')
+        self.image = kwargs.get('image')
+        self.rect = self.image.get_rect()
 
+        setattr(self.rect, anchor, position)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
+
+class PyImage(Sprite):
+    def __init__(self, **kwargs):
+        Sprite.__init__(self)
         self.imagePath = kwargs.get("image_path", None)
+        self.image = pygame.image.load(self.imagePath)
 
-        self.gameWidth = kwargs.get("width", None)
-        self.gameHeight = kwargs.get("height", None)
+        self.position = kwargs.get('position',(0,0))
+        self.anchor = kwargs.get("anchor", "center")
+        self.original_image = self.image
+        self.rect = self.image.get_rect()
+        setattr(self.rect, self.anchor, self.position)
 
-        self.location = kwargs.get("location", None)
-        self.x = kwargs.get("x", None)
-        self.y = kwargs.get("y", None)
 
-        if self.location:
-            self.x = self.location[0]
-            self.y = self.location[1]
-        else:
-            if self.x and self.y:
-                self.location = (self.x, self.y)
-            else:
-                self.location = (0, 0)
-                self.x = 0
-                self.y = 0
 
-        self.scaleX = kwargs.get("scaleX", 1)
-        self.scaleY = kwargs.get("scaleY", 1)
-        self.angle = kwargs.get("angle", 0)
 
-        self.image = pygame.image.load(self.imagePath).convert_alpha()
-        self.image.convert()
+
+        self.image = pygame.transform.rotate(self.image, 90)
 
         self.imWidth = self.image.get_width()
         self.imHeight = self.image.get_height()
 
-        self.image = pygame.transform.scale(
-            self.image,
-            (int(self.imWidth * self.scaleX), int(self.imHeight * self.scaleY)),
-        )
 
-        if self.angle:
-            self.image = pygame.transform.rotate(self.image, self.angle)
+        self.rect.center = self.position
 
-        self.rect = self.image.get_rect()
-        self.rect.center = self.location
+        self.sprite_movement = RotationMovementKeys(self.image, pygame.K_UP,
+                                                    pygame.K_DOWN,
+                                                    pygame.K_LEFT,
+                                                    pygame.K_RIGHT)
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
 
-    def scale(self, scaleX, scaleY):
-        pass
-
-    def rotate(self, change):
-        """
-        https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame
-
-        not implemented
-        """
-        self.angle += change
-        self.image = pygame.transform.rotate(self.image, self.angle)
-        self.bbox = self.image.get_rect(center = self.image.get_rect(center = (self.x, self.y)).center)
-
-    def move(self, x=0, y=0):
-        self.x += x
-        self.y += y
-        self.location = (self.x, self.y)
-        self.rect.center = self.location
-
-
-class PySprite(PyImage):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.frames = kwargs.get("frames", 0)
-        self.currFrame = 0
-
-    def update(self):
-        screen.blit(self.image, self.location)
-
-ptBoat = PySprite(
-    screen=screen,
-    image_path="./images/ships/PT_Boat_One.png",
-    scaleX=0.2,
-    scaleY=0.2,
-    x=250,
-    y=300
-)
 
 
 def callBack(ch, method, properties, body):
     body = json.loads(body)
-    print("move dammit")
-    ptBoat.move(0,-5)
+    car.draw()
 
 
 def main(player,otherplayer):
@@ -126,6 +135,16 @@ def main(player,otherplayer):
         "user": player,
         "password": "rockpaperscissorsdonkey",
     }
+
+    car = PyImage(
+        screen=screen,
+        image_path="./images/cars/CarRed64.png",
+        scaleX=0.2,
+        scaleY=0.2,
+        x=250,
+        y=300,
+        position=(250,300)
+    )
 
 
     # create instances of a comms listener and sender
@@ -151,9 +170,8 @@ def main(player,otherplayer):
     # Set up the drawing window
 
 
-    screen.blit(ptBoat.image, (250, 250))  # paint to screen
+    car.draw()
 
-    ptBoat.update()
 
     pygame.display.flip()  # paint screen one time
 
@@ -171,17 +189,17 @@ def main(player,otherplayer):
                     print('down')
                 elif event.key == pygame.K_UP:
                     print('up')
-                    ptBoat.move(0,-5)
+                    
 
                     commsSender.threadedSend(otherplayer, json.dumps({'from':player,'data':'up'}))
                 elif event.key == pygame.K_LEFT:
                     print('left')
-                    ptBoat.rotate(3)
+                    
                 elif event.key == pygame.K_RIGHT:
                     print('right')
-                    ptBoat.rotate(-3)
+                    
 
-        ptBoat.update()
+        car.draw()
 
 # Flip the display
         pygame.display.flip()

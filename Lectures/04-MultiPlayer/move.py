@@ -90,23 +90,26 @@ class RotationMovementKeys:
         elif keys_press[self.left]:
             self.angle = (self.angle + self.rotation_speed * delta) % 360
             self.do_rotate()
-  
-class Example(Scene):
+
+class Player:
     def __init__(self, manager):
-        self.create_image()
-        self.manager = manager
-        self.sprite = BaseSprite(self.rectangle, manager.rect.center, "center")
-        self.sprite_movement = RotationMovementKeys(self.sprite,
-            pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT)
-  
-    def create_image(self):
         self.rectangle = pygame.Surface((10, 20), pygame.SRCALPHA)
         self.rectangle.fill(pygame.Color('dodgerblue'))
         self.rectangle.fill(pygame.Color('white'), (2, 2, 6, 3))
+        self.sprite = BaseSprite(self.rectangle, manager.rect.center, "center")
+        self.sprite_movement = RotationMovementKeys(self.sprite,
+            pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT)
+
+
+class Example(Scene):
+    def __init__(self, manager):
+        self.manager = manager
+        self.player = Player(manager)
+  
   
     def on_draw(self, surface):
         surface.fill(pygame.Color("black"))
-        self.sprite.draw(surface)
+        self.player.sprite.draw(surface)
   
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -114,7 +117,7 @@ class Example(Scene):
   
     def on_update(self, delta):
         keys = pygame.key.get_pressed()
-        self.sprite_movement.on_keydown(keys, delta)
+        self.player.sprite_movement.on_keydown(keys, delta)
   
 def main():
     pygame.init()
