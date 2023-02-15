@@ -4,34 +4,31 @@ import json
 import os
 import sys
 import time
-
 import pika
 import random
 from threading import Thread
-
 from rich import print
 
 
 class Comms(object):
-    """A helper class for client to client messaging. I don't know anything about
-    pub/sub so this is rudimentary. In fact, it probably doesn't need to be a
-    class! However, I organized it into one simply for encapsulation, keeping
-    data and methods together and the added bonus of a constructor etc.
+    """ This base class simply connects to the rabbitmq server and is used by both the sender 
+        and listener classes. 
     """
 
     _messageQueue = {}
 
     def __init__(self, **kwargs):
-        """Remember keyword arguments are params like: key=arg so order doesn't matter.
-            The following example shows you how to init an instance of this class.
-        Example:
-            {
-                "exchange": "2dgame",
-                "port": "5672",
-                "host": "crappy2d.us",
-                "user": "yourteamname",
-                "password": "yourpassword",
-            }
+        """ Remember keyword arguments are params like: key=arg and order doesn't matter. Here is an
+            example connection:
+
+            comms = Comms(
+                exchange="2dgame",
+                port="5672",
+                host="crappy2d.us",
+                user="yourteamname",
+                password= "yourpassword"
+            )
+            
         """
         self.exchange = kwargs.get("exchange", None)
         self.port = kwargs.get("port", 5432)
@@ -46,9 +43,13 @@ class Comms(object):
         self.establishConnection()
 
     def establishConnection(self, **kwargs):
-        """This method basically authenticates with the message server using:
+        """ This method basically authenticates with the message server using:
 
-                host, port, user, and password
+                exchange: the 'channel' we will send messages on
+                host: the ip address or domain name of the server
+                port: port number (nearly always 5672)
+                user: your username
+                password: your password
 
         After authentication it chooses which "exchange" to listen to. This
         is just like a "channel" in slack. The exchange "type" = "topic" is
@@ -61,8 +62,12 @@ class Comms(object):
         self.user = kwargs.get("user", self.user)
         self.password = kwargs.get("password", self.password)
 
+        # names is a list of expected keys to be passed in that I 
+        # use for error checking,
         names = ["exchange", "port", "host", "user", "password"]
         params = [self.exchange, self.port, self.host, self.user, self.password]
+
+        # p[0] is the key and p[1] is the value 
         for p in zip(names, params):
             if not p[1]:
                 print(
@@ -70,11 +75,13 @@ class Comms(object):
                 )
                 sys.exit()
 
+        # establish credentials and auth values
         credentials = pika.PlainCredentials(self.user, self.password)
         parameters = pika.ConnectionParameters(
             self.host, int(self.port), self.exchange, credentials
         )
 
+        # make the connection and choose "exchange" to communicate with
         self.connection = pika.BlockingConnection(parameters)
         self.channel = self.connection.channel()
         self.channel.exchange_declare(exchange=self.exchange, exchange_type="topic")
@@ -82,7 +89,8 @@ class Comms(object):
 
 class CommsListener(Comms):
     def __init__(self, **kwargs):
-        """Extends Comms"""
+        """Extends base class Comms.  
+        """
         self.binding_keys = kwargs.get("binding_keys", [])
 
         super().__init__(**kwargs)
@@ -91,8 +99,9 @@ class CommsListener(Comms):
         """https://www.rabbitmq.com/tutorials/tutorial-five-python.html
 
         A binding key is a way of "subscribing" to a specific messages. Without
-        getting to the difference between "routing" and "topics" I will say topics
-        should work better for battleship. Valid topics are things like:
+        getting to the difference between "routing" and "topics". The example below
+        shows how a routing key can include multiple items and be directed based on any 
+        of the words below:
 
            python.javascript.cpp
 
