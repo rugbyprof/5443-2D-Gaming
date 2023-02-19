@@ -10,12 +10,20 @@ from threading import Thread
 from rich import print
 
 
+def isJson(myjson):
+  try:
+    json.loads(myjson)
+  except ValueError as e:
+    return False
+  return True
+
+
 class Comms(object):
     """ This base class simply connects to the rabbitmq server and is used by both the sender 
         and listener classes. 
     """
 
-    _messageQueue = {}
+    
 
     def __init__(self, **kwargs):
         """ Remember keyword arguments are params like: key=arg and order doesn't matter. Here is an
@@ -36,9 +44,10 @@ class Comms(object):
         self.user = kwargs.get("user", None)
         self.password = kwargs.get("password", None)
         self.binding_keys = kwargs.get("binding_keys", [])
+        self.messageQueue = {}
 
-        if not self.user in self._messageQueue:
-            self._messageQueue[self.user] = []
+        # if not self.user in self._messageQueue:
+        #     self._messageQueue[self.user] = []
 
         self.establishConnection()
 
@@ -149,8 +158,15 @@ class CommsListener(Comms):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
         """
-        self._messageQueue[self.user].append(f"{method.routing_key} : {body}")
-        print(self._messageQueue)
+
+        if isJson(body):
+            tmp = json.loads(body)
+        if 'from' in tmp:
+            if not tmp['from'] in self.messageQueue:
+                self.messageQueue[tmp['from']] = []
+            self.messageQueue[tmp['from']].append(f"{body}")
+
+        print(self.messageQueue)
 
     def threadedListen(self,callback=None):
         self.bindKeysToQueue([f"#.{self.user}.#", "#.broadcast.#"])
@@ -168,29 +184,34 @@ class CommsSender(Comms):
         """
         super().__init__(**kwargs)
 
-    def send(self, routing_key, body, closeConnection=True):
-        print(f"Sending: routing_key: {routing_key}, body: {body}")
+    def send(self, target, sender, body, closeConnection=True):
+        print(f"Sending: target: {target}, body: {body}")
 
         body = json.loads(body)
 
-        body["from"] = self.user
+        body["from"] = sender
 
         self.channel.basic_publish(
-            self.exchange, routing_key=routing_key, body=json.dumps(body)
+            self.exchange, routing_key=target, body=json.dumps(body)
         )
         if closeConnection:
             self.connection.close()
 
-    def threadedSend(self, routing_key, body, closeConnection=False):
-        print(f"Calling send via Thread")
+    def threadedSend(self, **kwargs):
+        """ Immediately calls send with a thread.
+        """
+        target = kwargs.get('target','broadcast')
+        sender = kwargs.get('sender','unknown')
+        body = kwargs.get('body',{})
+        closeConnection = kwargs.get('closeConnection',False)
+        debug = kwargs.get('debug',False)
+    
+        if debug:
+            print(f"Calling send via Thread")
 
         Thread(
             target=self.send,
-            args=(
-                routing_key,
-                body,
-                closeConnection,
-            ),
+            args=(target,sender,body,closeConnection,),
             daemon=True,
         ).start()
 
@@ -203,57 +224,89 @@ def usage():
     print("Usage: python CommsClass <send,listen>")
     sys.exit()
 
+def mykwargs(argv):
+    """
+    Processes argv list into plain args and kwargs.
+    Just easier than using a library like argparse for small things.
+    Example:
+        python file.py arg1 arg2 arg3=val1 arg4=val2 -arg5 -arg6 --arg7
+        Would create:
+            args[arg1, arg2, -arg5, -arg6, --arg7]
+            kargs{arg3 : val1, arg4 : val2}
 
-players = ["player-1", "player-2"]
-cmds = ["message", "broadcast", "move", "fire"]
+        Params with dashes (flags) can now be processed seperately
+    Shortfalls:
+        spaces between k=v would result in bad params
+    Returns:
+        tuple  (args,kargs)
+    """
+    args = []
+    kwargs = {}
+
+    for arg in argv:
+        if "=" in arg:
+            key, val = arg.split("=")
+            kwargs[key] = val
+        else:
+            args.append(arg)
+    return args, kwargs
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         usage()
 
-    method = sys.argv[1]
+    args,kwargs = mykwargs(sys.argv)
 
-    if len(sys.argv) > 2:
-        numCmds = sys.argv[2]
-    else:
-        numCmds = 3
-
-    # teams = ["team-1", "team-2", "team-3", "team-4", "team-5"]
-
-    body = {
-        "message": ["hello", "whatsup", "show me the money", "god bless merica"],
-        "broadcast": ["hello", "whatsup", "show me the money", "god bless merica"],
-        "move": [{"x": random.randint(1, 100), "y": random.randint(1, 100)}],
-        "fire": [
-            {
-                "x": random.randint(1, 100),
-                "y": random.randint(1, 100),
-                "bearing": random.choice(["N", "S", "E", "W"]),
-            }
-        ],
-    }
-
-    user = random.choice(players)
-    target = random.choice(players)
+    user = kwargs.get('user','player-1')
+    passwd = kwargs.get('passwd','player-12023!!!')
+    target = kwargs.get('target','player-2')
+    # cmd = kwargs.get('cmd','message')
+    # body = kwargs.get('body','hello world')
+    method = kwargs.get('method','listen')
+    exchange = kwargs.get('exchange','messages')
 
     creds = {
-        "exchange": "messages",
+        "exchange": exchange,
         "port": "5672",
         "host": "terrywgriffin.com",
         "user": user,
-        "password": "rockpaperscissorsdonkey",  # user.capitalize() * 3,
+        "password": passwd,  # user.capitalize() * 3,
     }
-
+    
     if method == "send":
-        commsSender = CommsSender(**creds)
-        for i in range(numCmds):
-            cmd = random.choice(cmds)
-            data = random.choice(body[cmd])
-            commsSender.send(target, json.dumps({"cmd": cmd, "body": data}), False)
+
+        exampleMessages = [
+            {"cmd":"message","body": {"messageTxt":"hello world"}},
+            {"cmd":"move","body": {"startLon":34.1234,"startLat":-98.452,"endLon":34.1234,"endLat":-98.452}},
+            {"cmd":"move","body": {"dx":-4,"dy":4}},
+            {"cmd":"fire","body": {"angle":23,"velocity":320}},
+            {"cmd":"move","body": {"dx":-4,"dy":4,"angle":231}}
+        ]
+        
+        users = ['player-1','player-2','player-3','player-4','player-5']
+        vhosts = ['vhost1','vhost2','vhost3','vhost4','vhost5']
+
+        senders = []
+ 
+        for i in range(1,10):
+            id = (i % 4) + 1
+            user = f'player-{id}'
+            creds['user'] = user
+            creds['password']= user+'2023!!!!!'
+
+            creds['exchange'] = f'game{id}'
+            print(creds)
+            senders.append(CommsSender(**creds))
+        
+            # cmd = random.choice(body[cmd])
+            # data = random.choice(body[cmd])
+            senders[-1].send(target=user, sender=user,body=json.dumps(random.choice(exampleMessages)))
             time.sleep(2)
 
     else:
         print("Comms Listener starting. To exit press CTRL+C ...")
+
         commsListener = CommsListener(**creds)
         commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()

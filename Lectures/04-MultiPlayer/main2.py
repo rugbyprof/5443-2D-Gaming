@@ -15,9 +15,6 @@ from comms import CommsListener
 
 
 class Scene:
-    """ pythons version of an abstract base class to enforce the 
-        implementation of the following three methods.
-    """
     def on_draw(self, surface):
         pass
 
@@ -42,8 +39,6 @@ class Manager:
         self.delta = 0
         self.fps = 60
 
-        self.ticks = 0
-
         # Scene Interface
         self.scene = Scene()
 
@@ -55,7 +50,6 @@ class Manager:
 
             self.scene.on_update(self.delta)
             self.scene.on_draw(self.surface)
-
             pygame.display.flip()
             self.delta = self.clock.tick(self.fps)
 
@@ -152,7 +146,7 @@ class Player:
         if image:
             self.rectangle = pygame.image.load(image)
             self.rectangle = pygame.transform.rotate(self.rectangle, 90)
-            #print(self.rectangle)
+            print(self.rectangle)
         else:
             self.rectangle = pygame.Surface((20, 40), pygame.SRCALPHA)
             self.rectangle.fill(pygame.Color(random.choice(colors)))
@@ -166,8 +160,6 @@ class Player:
         self.turnThreshold = random.randrange(1000, 2000)
         self.up, self.down, self.left, self.right = (True, False, True, False)
 
-        self.ticks = 0
-
     def move(self, delta):
         random.shuffle(self.turnChoice)
         if pygame.time.get_ticks() - self.lastTurn > self.turnThreshold:
@@ -179,23 +171,16 @@ class Player:
                 self.turnChoice[1],
             ]
         self.sprite_movement.get_input(self.up, self.down, self.left, self.right, delta)
-
-        # only send a message so many ticks otherwise problems occur!
-        if pygame.time.get_ticks() - self.ticks > 100:
-            if self.player:
-                center = (self.sprite_movement.center.x, self.sprite_movement.center.y)
-                self.messageQueue.send(
-                    target='broadcast', sender=self.player, player=self.player,angle=self.sprite_movement.angle,center=center,debug=False
-                )
-            self.ticks = pygame.time.get_ticks()
+        if self.player:
+            self.messageQueue.commsSender.threadedSend(
+                    target='broadcast', sender=self.player,body =json.dumps({'message':'message content'})
+            )
 
 
 class Message:
     def __init__(self,creds):
-        self.user = creds["user"]
+        self.player = creds["user"]
         self.creds = creds
-
-        print(self.creds)
 
         # create instances of a comms listener and sender
         # to handle message passing.
@@ -208,18 +193,10 @@ class Message:
     def callBack(self):
         print("this is a local callback")
 
-    def send(self,**kwargs):
-        target = kwargs.get('target','broadcast')
-        self.commsSender.threadedSend(
-            target=target, sender=self.user,body =json.dumps(kwargs),debug=False
-        )
-
 
 class Game(Scene):
-    """ 
-    """
     def __init__(self, manager):
-        self.manager = manager # instance of the manager class
+        self.manager = manager
         self.players = []
 
     def add_player(self, **kwargs):
@@ -265,6 +242,7 @@ def main(creds):
     ]
 
     image = random.choice(images)
+    
     pos = (random.randint(10, 800), random.randint(500, 600))
     manager.scene.add_player(pos=pos,creds=creds,image=image_path+image)
     manager.mainloop()
@@ -301,11 +279,11 @@ if __name__ == "__main__":
     args,kwargs = mykwargs(sys.argv)
 
     creds = {
-        "exchange": kwargs.get('exchange','game1'),
+        "exchange": kwargs.get('exchange','messages'),
         "port": kwargs.get('port','5672'),
         "host": kwargs.get('host','terrywgriffin.com'),
-        "user": kwargs.get('user','player-1'),
-        "password": kwargs.get('password','player-12023!!!!!')
+        "user": kwargs.get('user','player-2'),
+        "password": kwargs.get('password','player-22023!!!!!')
     }
     
     main(creds)
