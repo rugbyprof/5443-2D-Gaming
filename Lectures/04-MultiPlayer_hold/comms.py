@@ -8,7 +8,7 @@ import pika
 import random
 from threading import Thread
 from rich import print
-import requests
+
 
 def isJson(myjson):
   try:
@@ -219,54 +219,6 @@ class CommsSender(Comms):
         self.connection.close()
 
 
-class Messages:
-    def __init__(self,creds,callback=None):
-        self.user = creds["user"]
-        self.creds = creds
-
-        if callback:
-            self.callBack = self.callback
-       
-
-        # create instances of a comms listener and sender
-        # to handle message passing.
-        self.commsListener = CommsListener(**self.creds)
-        self.commsSender = CommsSender(**self.creds)
-
-        # Start the comms listener to listen for incoming messages
-        self.commsListener.threadedListen(self.callBack)
-
-    def callBack(self):
-        print("this is an example callback")
-
-    def send(self,**kwargs):
-        target = kwargs.get('target','broadcast')
-        self.commsSender.threadedSend(
-            target=target, sender=self.user,body =json.dumps(kwargs),debug=False
-        )
-
-    def setCallback(self,callback):
-        self.callBack = callback
-
-
-class MultiComms:
-    def __init__(self):
-        self.currentConnections = {}
-        self.getCurrentConnections()
-
-    
-    def getCurrentConnections(self):
-        response = requests.get('http://terrywgriffin.com:8080/connections/?verbose=false')
-        if response.status_code == 200:
-            response = response.json()
-        
-        for row in response:
-            if not row['vhost'] in self.currentConnections:
-                self.currentConnections[row['vhost']] = []
-            self.currentConnections[row['vhost']].append(row['user'])
-
-
-
 def usage():
     print("Error: You need to choose `send` or `listen` and optionally `teamName`!")
     print("Usage: python CommsClass <send,listen>")
@@ -301,22 +253,18 @@ def mykwargs(argv):
 
 
 if __name__ == "__main__":
-
-    MultiComms()
-
     if len(sys.argv) < 2:
         usage()
 
     args,kwargs = mykwargs(sys.argv)
 
     user = kwargs.get('user','player-1')
-    passwd = user+'2023!!!!!'
-    # passwd = kwargs.get('passwd','player-12023!!!')
+    passwd = kwargs.get('passwd','player-12023!!!')
     target = kwargs.get('target','player-2')
     # cmd = kwargs.get('cmd','message')
     # body = kwargs.get('body','hello world')
     method = kwargs.get('method','listen')
-    exchange = kwargs.get('exchange','game1')
+    exchange = kwargs.get('exchange','messages')
 
     creds = {
         "exchange": exchange,
@@ -325,8 +273,6 @@ if __name__ == "__main__":
         "user": user,
         "password": passwd,  # user.capitalize() * 3,
     }
-
-
     
     if method == "send":
 
@@ -344,7 +290,7 @@ if __name__ == "__main__":
         senders = []
  
         for i in range(1,10):
-            id = (i % 2) + 1
+            id = (i % 4) + 1
             user = f'player-{id}'
             creds['user'] = user
             creds['password']= user+'2023!!!!!'
@@ -359,11 +305,8 @@ if __name__ == "__main__":
             time.sleep(2)
 
     else:
-
         print("Comms Listener starting. To exit press CTRL+C ...")
 
         commsListener = CommsListener(**creds)
-        # m = MultiComms('player-4','game1')
         commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()
-        
