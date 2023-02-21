@@ -33,8 +33,16 @@ class MessageHandler:
         # Start the comms listener to listen for incoming messages
         self.commsListener.threadedListen(self.callBack)
 
-    def callBack(self,**kwargs):
-        print(kwargs)
+    def callBack(self, ch, method, properties, body):
+        results = {}
+        results['game'] = method.exchange
+        results['exchange'] = method.exchange
+        body = json.loads(body.decode('utf-8'))
+        for k,v in body.items():
+            results[k] = v
+
+        print(results)
+        return results
 
     def send(self,**kwargs):
         target = kwargs.get('target','broadcast')
@@ -43,6 +51,8 @@ class MessageHandler:
         )
 
     def setCallback(self,callback):
+        """
+        """
         self.callBack = callback
 
 class Player:
@@ -101,18 +111,25 @@ class PlayerManager:
         pass
 
 
+############################################################
+# GLOBALS
+############################################################
+
 playerManager = PlayerManager()
-    # initialize Pygame
+    
+# initialize Pygame
 pygame.init()
+
 # set the window size
 size = (400, 400)
 
 # create the window
 screen = pygame.display.set_mode(size)
+############################################################
+
+
 
 def main(creds):
-
-    print(creds)
 
     localplayer = Player(screen,creds)
 
@@ -128,7 +145,8 @@ def main(creds):
     # run the game loop
     running = True
     while running:
-
+        
+        # clear the screen
         screen.fill((255, 255, 255))
 
         # handle events
@@ -145,14 +163,9 @@ def main(creds):
                     # choose current dot by which key pressed
                     currentPlayer = 48 - event.key
 
-
-
         # move the dot based on key input
         keys = pygame.key.get_pressed()
         localplayer.update(keys)
-
-        # clear the screen
-        
 
         localplayer.draw()
         # update the screen
