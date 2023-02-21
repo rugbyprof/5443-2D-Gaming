@@ -20,9 +20,20 @@ from comms import CommsListener
 from comms import CommsSender
 
 class MessageHandler:
-    def __init__(self,**creds):
-        self.user = creds["user"]
-        self.creds = creds
+    def __init__(self,**kwargs):
+        self.creds = kwargs.get('creds',None)
+        self.callBack = kwargs.get('callBack',None)
+        
+        if not self.creds:
+            print("Error: Message handler needs `creds` or credentials to log into rabbitmq. ")
+            sys.exit()
+            
+        if not self.callBack:
+            print("Error: Message handler needs a `callBack` function to handle responses from rabbitmq. ")
+            sys.exit()
+        
+        
+        self.user = self.creds['user']
     
 
         # create instances of a comms listener and sender
@@ -34,6 +45,17 @@ class MessageHandler:
         self.commsListener.threadedListen(self.callBack)
 
     def callBack(self, ch, method, properties, body):
+        """_summary_: generic callback in case one isn't passed in to be used.
+
+        Args:
+            ch (_type_): _description_
+            method (_type_): _description_
+            properties (_type_): _description_
+            body (_type_): _description_
+
+        Returns:
+            dictionary: results of callback
+        """
         results = {}
         results['game'] = method.exchange
         results['exchange'] = method.exchange
@@ -41,6 +63,7 @@ class MessageHandler:
         for k,v in body.items():
             results[k] = v
 
+        print(self.__class__)
         print(results)
         return results
 
@@ -51,17 +74,38 @@ class MessageHandler:
         )
 
     def setCallback(self,callback):
-        """
+        """_summary_
+        Sets a callback function handler for the 'commsListener' class. 
+
+        Args:
+            callback (function): _description_
         """
         self.callBack = callback
 
 class Player:
     def __init__(self,screen,creds):
+        """_summary_
+
+        Args:
+            screen (_type_): _description_
+            creds (_type_): _description_
+        """
+        
+        # Cheap hack for now to access the player manager easily
+        global playerManager
+        self.playerManager = playerManager
+        
+        
         self.screen = screen    # copy of screen to display dot on
         self.creds = creds
         self.player = self.creds['user'] 
+        
+        kwargs = {
+            'creds': creds,
+            'callBack':self.messageCallback
+        }
 
-        self.messages = MessageHandler(**creds,callBack=self.messageCallback)
+        self.messages = MessageHandler(**kwargs)
         
         # set the initial position of the dot
         self.dot_position = pygame.math.Vector2(randint(25,400), randint(25,400))
@@ -70,8 +114,18 @@ class Player:
         self.ticks = 0
 
 
-    def messageCallback(self,**kwargs):
-        print(kwargs)
+    def messageCallback(self, ch, method, properties, body):
+        results = {}
+        results['game'] = method.exchange
+        results['exchange'] = method.exchange
+        body = json.loads(body.decode('utf-8'))
+        for k,v in body.items():
+            results[k] = v
+
+        print(self.__class__)
+        print(results)
+        
+        return results
 
     def update(self,keys):
         """ Get the keys from main, then adjust position based
@@ -106,9 +160,11 @@ class PlayerManager:
     def addPlayer(self,player):
         if not player.player in self.players:
             self.players['user'] = player
+
     
     def update(self,keys):
-        pass
+        for player in self.players:
+            player.draw()
 
 
 ############################################################
