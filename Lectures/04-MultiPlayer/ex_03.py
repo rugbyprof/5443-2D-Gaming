@@ -15,7 +15,7 @@ class Dot:
         # set the initial position of the dot
         self.dot_position = pygame.math.Vector2(randint(25,400), randint(25,400))
         self.speed = 1
-        self.color = (randint(0,256),randint(0,256),randint(0,256))
+        self.color = (randint(0,255),randint(0,255),randint(0,255))
 
     def eventHandler(self,keys):
         """ Get the keys from main, then adjust position based
