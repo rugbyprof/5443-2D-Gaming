@@ -45,27 +45,6 @@ class Messenger:
 
 
 
-    # def callBack(self, ch, method, properties, body):
-    #     """_summary_: generic callback in case one isn't passed in to be used.
-
-    #     Args:
-    #         ch (_type_): _description_
-    #         method (_type_): _description_
-    #         properties (_type_): _description_
-    #         body (_type_): _description_
-
-    #     Returns:
-    #         dictionary: results of callback
-    #     """
-    #     results = {}
-    #     results['game'] = method.exchange
-    #     results['exchange'] = method.exchange
-    #     body = json.loads(body.decode('utf-8'))
-    #     for k,v in body.items():
-    #         results[k] = v
-
-    #     print(results)
-    #     return results
 
     def send(self,**kwargs):
         """
@@ -152,14 +131,19 @@ class GameManager:
     def __init__(self,screen):
         self.players = {}
         self.screen = screen
+        self.localPlayer = None
 
-    def addPlayer(self,player):
+    def addPlayer(self,player,local=False):
         if not player.id in self.players:
-            self.players['id'] = player
+            self.players[player.id] = player
+        
+        if local:
+            self.localPlayer = self.players[player.id]
 
     def draw(self):
         for id,player in self.players.items():
-            player.draw()
+            if not id == self.localPlayer:
+                player.draw()
 
     def callBack(self, ch, method, properties, body):
         """_summary_: callback for multiple players
@@ -182,6 +166,7 @@ class GameManager:
 
         if not results['sender'] in self.players:
             self.players[results['sender']] = BasicPlayer(self.screen)
+            print(len(self.players))
         else:
             self.players[results['sender']].dot_position.x = results['dot_position'][0]
             self.players[results['sender']].dot_position.y = results['dot_position'][1]
@@ -204,14 +189,13 @@ screen = pygame.display.set_mode(size)
 ############################################################
 
 
-
 def main(creds):
 
     manager = GameManager(screen)
 
     localPlayer = Player(screen,creds,manager.callBack)
     
-    manager.addPlayer(localPlayer)
+    manager.addPlayer(localPlayer,True)
    
 
     # set the window title
