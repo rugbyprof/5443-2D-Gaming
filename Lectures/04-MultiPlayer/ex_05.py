@@ -84,10 +84,8 @@ class BasicPlayer:
             creds (_type_): _description_
         """
         
-        
         self.screen = screen    # copy of screen to display dot on
 
-        
         # set the initial position of the dot
         self.dot_position = pygame.math.Vector2(randint(25,400), randint(25,400))
         self.speed = 1
