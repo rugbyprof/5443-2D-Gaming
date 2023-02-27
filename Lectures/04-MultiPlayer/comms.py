@@ -185,7 +185,7 @@ class CommsSender(Comms):
         super().__init__(**kwargs)
 
     def send(self, target, sender, body, closeConnection=True):
-        print(f"Sending: target: {target}, body: {body}")
+        #print(f"Sending: target: {target}, body: {body}")
 
         body = json.loads(body)
 
