@@ -9,6 +9,6 @@
 | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/02-P01">02-P01</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/02-P01"> Program 1 </a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/02-P01"> Tiled Game or Tetris</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/02-P01"> 02-13-2023 (Monday @ 2:30 p.m.)</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/02-P01">2023-02-13 00:00:00</a>~ | ---- |
 | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/03-A03">03-A03</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/03-A03"> Assignment 3 </a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/03-A03"> Create your own server.</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/03-A03"> 02-13-2023 (Monday @ 2:30 p.m.)</a>~ | ~<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Assignments/03-A03">2023-02-13 00:00:00</a>~ | ---- |
 
-<sup>Last Updated: 2023-02-27 (Mon @ 14:26)</sup> 
+<sup>Last Updated: 2023-02-27 (Mon @ 22:27)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
