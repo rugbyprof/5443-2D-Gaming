@@ -281,7 +281,7 @@ def main(creds):
 
 if __name__ == "__main__":
     """
-    python ex_05.py game1 player-1 'player-12023!!!!!'
+    python ex_05.py game-01 player-01
     """
     if len(sys.argv) < 3:
         print("Need: exchange and player ")

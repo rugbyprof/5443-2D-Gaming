@@ -111,7 +111,6 @@ class Player(BasicPlayer):
             screen (_type_): _description_
             creds (_type_): _description_
         """
-
         super().__init__(screen)
         self.creds = creds
         self.id = self.creds["user"]
@@ -122,33 +121,23 @@ class Player(BasicPlayer):
     def timeToBroadCast(self):
         return pygame.time.get_ticks() - self.lastBroadcast > self.broadCastDelay
 
-    def broadcastLocation(self):
-        # only send a message so many ticks otherwise problems occur!
+    def broadcastData(self,data):
+        """ Sends data to all other players in the game.
+        """
+        if self.timeToBroadCast():
+
+            self.messenger.send(
+                target="broadcast", sender=self.id, player=self.id, data=data
+            )
+
+            self.lastBroadcast = pygame.time.get_ticks()
+            return True
+        
+        return False
+
+    def sendLocation(self):
         pos = (self.dot_position.x, self.dot_position.y)
-
-        self.messenger.send(
-            target="broadcast", sender=self.id, player=self.id, dot_position=pos
-        )
-        self.lastBroadcast = pygame.time.get_ticks()
-
-    def threadedBroadcastLocation(self):
-        # only send a message so many ticks otherwise problems occur!
-        # print(pygame.time.get_ticks() - self.ticks)
-        while True:
-            if pygame.time.get_ticks() - self.ticks > 100:
-                pos = (self.dot_position.x, self.dot_position.y)
-
-                self.messenger.send(
-                    target="broadcast", sender=self.id, player=self.id, dot_position=pos
-                )
-                self.ticks = pygame.time.get_ticks()
-
-    def threadedBroadcast(self):
-        Thread(
-            target=self.broadcastLocation,
-            args=(),
-            daemon=True,
-        ).start()
+        self.broadcastData(pos)
 
     def draw(self):
         # draw the dot
@@ -259,6 +248,11 @@ def main(creds):
                     print(f"Speed set to: {event.key-48}")
                     # choose current dot by which key pressed
                     localPlayer.speed = event.key - 48
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                # Get the position of the mouse click
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                print(mouse_x,mouse_y)
 
         # move the dot based on key input
         keys = pygame.key.get_pressed()
