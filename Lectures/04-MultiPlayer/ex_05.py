@@ -14,6 +14,7 @@ from random import randint
 import json
 import sys 
 from rich import print
+from threading import Thread
 
 # necessary libs for rabbitmq
 from comms import CommsListener
@@ -44,8 +45,6 @@ class Messenger:
         self.commsListener.threadedListen(self.callBack)
 
 
-
-
     def send(self,**kwargs):
         """
         """
@@ -70,6 +69,8 @@ class BasicPlayer:
         self.speed = 1
         self.color = (randint(0,256),randint(0,256),randint(0,256))
         self.ticks = 0
+        self.width, self.height = screen.get_size()
+        self.lastUpdated = pygame.time.get_ticks()
 
 
     def update(self,keys):
@@ -85,6 +86,15 @@ class BasicPlayer:
         if keys[pygame.K_RIGHT]:
             self.dot_position.x += self.speed
 
+        if self.dot_position.x > self.width:
+            self.dot_position.x = 0
+        if self.dot_position.x < 0:
+            self.dot_position.x = self.width
+
+        if self.dot_position.y > self.height:
+            self.dot_position.y = 0
+        if self.dot_position.y < 0:
+            self.dot_position.y = self.height
 
     def draw(self):
         # draw the dot
@@ -104,23 +114,43 @@ class Player(BasicPlayer):
         super().__init__(screen)
         self.creds = creds
         self.id = self.creds['user'] 
-        
-
         self.messenger = Messenger(self.creds,callback)
+        self.lastBroadcast = pygame.time.get_ticks()
+        self.broadCastDelay = 100
 
-        
+    def timeToBroadCast(self):
+        return pygame.time.get_ticks() - self.lastBroadcast > self.broadCastDelay
+
     def broadcastLocation(self):
         # only send a message so many ticks otherwise problems occur!
+        pos = (self.dot_position.x,self.dot_position.y)
+        
+        self.messenger.send(
+            target='broadcast', sender=self.id, player=self.id,dot_position=pos
+        )
+        self.lastBroadcast = pygame.time.get_ticks()
+
+    def threadedBroadcastLocation(self):
+        # only send a message so many ticks otherwise problems occur!
         #print(pygame.time.get_ticks() - self.ticks)
-        if pygame.time.get_ticks() - self.ticks > 100:
-            pos = (self.dot_position.x,self.dot_position.y)
-            self.messenger.send(
-                target='broadcast', sender=self.id, player=self.id,dot_position=pos
-            )
-            self.ticks = pygame.time.get_ticks()
+        while True:
+            if pygame.time.get_ticks() - self.ticks > 100:
+                pos = (self.dot_position.x,self.dot_position.y)
+                
+                self.messenger.send(
+                    target='broadcast', sender=self.id, player=self.id,dot_position=pos
+                )
+                self.ticks = pygame.time.get_ticks()
+
+    def threadedBroadcast(self):
+        Thread(
+            target=self.broadcastLocation,
+            args=(),
+            daemon=True,
+        ).start()
 
     def draw(self):
-        self.broadcastLocation()
+        
         # draw the dot
         pygame.draw.circle(self.screen, self.color , self.dot_position, 10)
 
@@ -132,9 +162,11 @@ class GameManager:
         self.players = {}
         self.screen = screen
         self.localPlayer = None
+        self.ticks = pygame.time.get_ticks()
 
     def addPlayer(self,player,local=False):
         if not player.id in self.players:
+            
             self.players[player.id] = player
         
         if local:
@@ -157,22 +189,25 @@ class GameManager:
         Returns:
             dictionary: results of callback
         """
-        results = {}
-        results['game'] = method.exchange
-        results['exchange'] = method.exchange
+       
+        game = method.exchange
+        exchange = method.exchange
         body = json.loads(body.decode('utf-8'))
-        for k,v in body.items():
-            results[k] = v
+        sender = body['sender']
+        x,y = body['dot_position']
 
-        if not results['sender'] in self.players:
-            self.players[results['sender']] = BasicPlayer(self.screen)
+        # for k,v in body.items():
+        #     results[k] = v
+
+        if not sender in self.players:
+            self.players[sender] = BasicPlayer(self.screen)
             print(len(self.players))
         else:
-            self.players[results['sender']].dot_position.x = results['dot_position'][0]
-            self.players[results['sender']].dot_position.y = results['dot_position'][1]
+            if pygame.time.get_ticks() - self.players[sender].lastUpdated > 100:
+                self.players[sender].dot_position.x = x
+                self.players[sender].dot_position.y = y
+                self.players[sender].lastUpdated = pygame.time.get_ticks()
 
-        #print(results)
-        return results
 
 ############################################################
 # GLOBALS
@@ -186,14 +221,21 @@ size = (400, 400)
 
 # create the window
 screen = pygame.display.set_mode(size)
+
+clock = pygame.time.Clock()
+
+FPS = 60
 ############################################################
 
 
 def main(creds):
 
     manager = GameManager(screen)
-
+    
+  
     localPlayer = Player(screen,creds,manager.callBack)
+
+    # localPlayer.threadedBroadcast()
     
     manager.addPlayer(localPlayer,True)
    
@@ -219,26 +261,35 @@ def main(creds):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-
                 # get the keys 0-9 if pressed
                 elif event.key in numericKeys:
-                    print(f"You pressed: {48-event.key}")
+                    print(f"Speed set to: {event.key-48}")
                     # choose current dot by which key pressed
-                    currentPlayer = 48 - event.key
-
+                    localPlayer.speed = event.key-48
+        
+    
         # move the dot based on key input
         keys = pygame.key.get_pressed()
         localPlayer.update(keys)
+        localPlayer.draw()
+
+        if localPlayer.timeToBroadCast():
+            localPlayer.broadcastLocation()
 
         manager.draw()
         
         # update the screen
         pygame.display.flip()
 
+        clock.tick(FPS)
+
     # quit Pygame
     pygame.quit()
 
 if __name__=='__main__':
+    """
+    python ex_05.py game1 player-1 'player-12023!!!!!'
+    """
     if len(sys.argv) < 4:
         print("Need: exchange playerName passWord")
         sys.exit()
