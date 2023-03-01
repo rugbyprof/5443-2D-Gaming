@@ -204,8 +204,8 @@ if __name__ == "__main__":
     else:
         numCmds = 3
 
-    teams = ["team-1", "team-2", "team-3", "team-4", "team-5"]
-    teams = ["player-1", "player-2", "player-3"]
+    queues = ["game-01", "game-02", "game-03"]
+    users = ["player-01", "player-02", "player-03", "player-04", "player-05"]
     cmds = ["message", "broadcast", "move", "fire"]
     body = {
         "message": ["hello", "whatsup", "show me the money", "god bless merica"],
@@ -220,15 +220,15 @@ if __name__ == "__main__":
         ],
     }
 
-    user = random.choice(teams)
-    target = random.choice(teams)
+    user = random.choice(users)
+    exchange = random.choice(queues)
 
     creds = {
-        "exchange": "2dgame",
+        "exchange": exchange,
         "port": "5672",
-        "host": "crappy2d.us",
+        "host": "terrywgriffin.com",
         "user": user,
-        "password": "horse1CatDonkey",  # user.capitalize() * 3,
+        "password": user + "2023!!!!!",  # user.capitalize() * 3,
     }
 
     if method == "send":
