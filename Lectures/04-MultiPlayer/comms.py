@@ -59,9 +59,9 @@ class Comms(object):
         # if not self.user in self._messageQueue:
         #     self._messageQueue[self.user] = []
 
-        self.establishConnection()
+        self.setupConnection()
 
-    def establishConnection(self, **kwargs):
+    def setupConnection(self, **kwargs):
         """This method basically authenticates with the message server using:
 
                 exchange: the 'channel' we will send messages on
@@ -90,20 +90,26 @@ class Comms(object):
         for p in zip(names, params):
             if not p[1]:
                 print(
-                    f"Error: connection parameter `{p[0]}` missing in class Comms method `establishConnection`!"
+                    f"Error: connection parameter `{p[0]}` missing in class Comms method `setupConnection`!"
                 )
                 sys.exit()
 
         # establish credentials and auth values
         credentials = pika.PlainCredentials(self.user, self.password)
-        parameters = pika.ConnectionParameters(
+        self.parameters = pika.ConnectionParameters(
             self.host, int(self.port), self.exchange, credentials, heartbeat=60
         )
 
-        # make the connection and choose "exchange" to communicate with
-        self.connection = pika.BlockingConnection(parameters)
-        self.channel = self.connection.channel()
-        self.channel.exchange_declare(exchange=self.exchange, exchange_type="topic")
+        self.connect()
+
+    def connect(self):
+        try:
+            self.connection = pika.BlockingConnection(self.parameters)
+            self.channel = self.connection.channel()
+            self.channel.exchange_declare(exchange=self.exchange, exchange_type="topic")
+        except pika.exceptions.AMQPConnectionError:
+            time.sleep(2)
+            self.connect()
 
 
 class CommsListener(Comms):
@@ -163,16 +169,6 @@ class CommsListener(Comms):
         )
         self.channel.start_consuming()
 
-    def publish(self, msg):
-        """Publish msg, reconnecting if necessary."""
-
-        try:
-            self._publish(msg)
-        except pika.exceptions.ConnectionClosed:
-            logging.debug("reconnecting to queue")
-            self.connect()
-            self._publish(msg)
-
     def callback(self, ch, method, properties, body):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
@@ -210,11 +206,21 @@ class CommsSender(Comms):
 
         body["from"] = sender
 
+        try:
+            self.publish(target, body)
+        except pika.exceptions.AMQPConnectionError:
+            self.connect()
+            self.publish(target, body)
+
+        if closeConnection:
+            self.connection.close()
+
+    def publish(self, target, body):
+        """Publish msg"""
+
         self.channel.basic_publish(
             self.exchange, routing_key=target, body=json.dumps(body)
         )
-        if closeConnection:
-            self.connection.close()
 
     def threadedSend(self, **kwargs):
         """Immediately calls send with a thread."""
@@ -240,23 +246,6 @@ class CommsSender(Comms):
 
     def closeConnection(self):
         self.connection.close()
-
-
-# class MultiComms:
-#     def __init__(self):
-#         self.currentConnections = {}
-#         self.getCurrentConnections()
-
-
-#     def getCurrentConnections(self):
-#         response = requests.get('http://terrywgriffin.com:8080/connections/?verbose=false')
-#         if response.status_code == 200:
-#             response = response.json()
-
-#         for row in response:
-#             if not row['vhost'] in self.currentConnections:
-#                 self.currentConnections[row['vhost']] = []
-#             self.currentConnections[row['vhost']].append(row['user'])
 
 
 def usage():
