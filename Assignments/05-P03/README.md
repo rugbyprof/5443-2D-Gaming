@@ -1,5 +1,5 @@
 ## TwoPlayer Game - Projectile Dual
-#### Due: 03-27-2023 (Monday @ 2:30 p.m.)
+#### Due: 03-20-2023 (Monday @ 2:30 p.m.)
 
 ### Overview
 
@@ -9,6 +9,8 @@ This will be a two player game that will be a nice and slow turned base game sim
 | :-------------------------------: | --- | :------------------------------: |
 |  |  <img src='artillary.jpeg' width=400>    | |
 | <img src='bananas.png' width=400> |     | <img src='archer.png' width=400> |
+
+A very basic two player approach can be seen [HERE](two_player.py)
 
 ### Requirements
 
