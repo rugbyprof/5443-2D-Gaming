@@ -1,14 +1,58 @@
 """
-After we saw how to control each player using event logic,
-could we use similar logic to do the same for a multiplayer game?
-Instead of directly controlling each player, we could let commands 
-comming from a specific player be passed to a "dot" instance to move
-it. 
+This example has a series of classes to help with the multiplayer issue:
 
-First however, lets get a comms example that will let players wanting
-to be added to the same game get added and basically "appear" when they
-send a message to the same game queue you are on. 
+Messenger: 
+    Handles messaging for the players
+BasicPlayer:
+    Handles basic drawing and moving and is extended by `Player`
+Player:
+    Adds messaging to a basic player.
+GameManager:
+    Since we want most updating to be done locally, the game manager creates basic
+    instances of each player (BasicPlayer) to move them around the screen. This reduces
+    messaging to a minimum.
+Globals:
+    This was kind of an experiment to see about class level variables. I didn't want pygame
+    to get instantiated until I grabbed to window location. So this was my solution. 
+
+This multiplayer example moves a bunch of dots around the screen. However, they are pygame
+shapes and NOT sprites. I discovered sprites act much differently when moving via vectors.
+So, I will create yet another version using sprites instead of shapes and attempt to get the
+movement correct. 
+
+USAGE:
+
+    python ex_99.py queue=game-01 player=player-02 windowLocation=400,400 color=Red
+    
+    - queue             : the exchange or channel you want to join
+    - player            : the name or id of a player
+    - windowLocation    : allows me to test better by moving pygame windows to different locations
+    - color             : player dot color
 """
+
+# class Icon(pygame.sprite.Sprite):
+#     def __init__(self, start, end):
+#         super().__init__()
+#         # setup
+#         self.image = pygame.Surface((40, 40))
+#         self.image.fill("red")
+#         self.pos = Vector2(start)
+#         self.rect = self.image.get_rect(center=start)
+
+#         # positions
+#         self.direction = Vector2(end) - Vector2(start)
+#         self.speed = 10  # changing this changes the direction the sprite moves
+#         self.moving = False
+
+#     def move(self):
+#         self.moving = True
+
+#     def update(self):
+#         if self.moving:
+#             self.pos += self.direction.normalize() * self.speed
+#             self.rect.center = (round(self.pos.x), round(self.pos.y))
+
+
 import pygame
 from random import randint
 import json
@@ -26,37 +70,17 @@ import pygame.display
 from comms import CommsListener
 from comms import CommsSender
 
-
+# bunches of named colors!
 with open("colors.json") as f:
     colors = json.load(f)
 
 
-class MyVector22(object):
-    def __init__(self, x, y):
-        self.x, self.y = x, y
-        self.tuple = (self.x, self.y)
-
-    def __str__(self):
-        return f"({self.x}, {self.y})"
-
-    @property
-    def magnitude(self):
-        return math.sqrt(self.x**2 + self.y**2)
-
-    def normalize(self):
-        self.x /= self.magnitude
-        self.y /= self.magnitude
-
-    @staticmethod
-    def create_path(destination, pos):
-        return MyVector22(destination.x - pos.x, destination.y - pos.y)
-
-    @staticmethod
-    def dot(v1, v2):
-        return v1.x * v2.x + v1.y * v2.y
-
-
 class Messenger:
+    """
+    - Handles messaging (sending and receiving) for each player.
+    - Requires a callback to be passed in so received messages can be handled.
+    """
+
     def __init__(self, creds, callback=None):
         self.creds = creds
         self.callBack = callback
@@ -92,30 +116,12 @@ class Messenger:
         )
 
 
-# class Icon(pygame.sprite.Sprite):
-#     def __init__(self, start, end):
-#         super().__init__()
-#         # setup
-#         self.image = pygame.Surface((40, 40))
-#         self.image.fill("red")
-#         self.pos = Vector2(start)
-#         self.rect = self.image.get_rect(center=start)
+class BasicPlayer:
+    """
+    - Handles basic updating and movement for a "dot" (player)
+    - Doesn't require anything. But at minimum name should probably match a valid rabbitmq name.
+    """
 
-#         # positions
-#         self.direction = Vector2(end) - Vector2(start)
-#         self.speed = 10  # changing this changes the direction the sprite moves
-#         self.moving = False
-
-#     def move(self):
-#         self.moving = True
-
-#     def update(self):
-#         if self.moving:
-#             self.pos += self.direction.normalize() * self.speed
-#             self.rect.center = (round(self.pos.x), round(self.pos.y))
-
-
-class BasicPlayer(pygame.sprite.Sprite):
     def __init__(self, **kwargs):
         """_summary_
 
@@ -130,24 +136,18 @@ class BasicPlayer(pygame.sprite.Sprite):
 
         # get player basics from kwargs
         self.screen = kwargs.get("screen", None)  # copy of screen to display dot on
-        self.name = kwargs.get("name", None)
+        self.name = kwargs.get("name", None)  # players name or id
+
+        # pick a color or get a random one
         self.color = kwargs.get(
             "color", (randint(0, 256), randint(0, 256), randint(0, 256))
         )
+
         # get starting player location from kwargs
         self.location = kwargs.get("location", (randint(25, 400), randint(25, 400)))
+
         # convert tuple to a vector
         self.location = pygame.math.Vector2(self.location)
-
-        # sprite stuff
-        self.surf = pygame.Surface((10, 10))
-        self.surf.fill(self.color)
-        self.rect = self.surf.get_rect(
-            center=(
-                self.location.x,
-                self.location.y,
-            )
-        )
 
         self.speed = 1
         self.ticks = 0
@@ -158,9 +158,9 @@ class BasicPlayer(pygame.sprite.Sprite):
         self.target = (0, 0)
 
     def move(self, keys=None):
-        """Change player position based on velocity or stop if
-        space bar is pressed.
-        https://stackoverflow.com/questions/68486375/moving-with-a-normalized-vector-in-pygame-inconsistent
+        """
+        - Change player position based on velocity.
+        - Stop player if space bar is pressed.
         """
         # print(f"updating {self.color}")
         if keys:
@@ -172,10 +172,8 @@ class BasicPlayer(pygame.sprite.Sprite):
         self.location.x += self.velocity.x
         self.location.y += self.velocity.y
 
-        self.rect.move_ip(self.velocity.x, self.velocity.y)
-        self.rect.left += self.velocity.x
-        self.rect.top += self.velocity.y
-
+        # Wrap player around the screen so
+        # they never get lost.
         if self.location.x > self.width:
             self.location.x = 0
         if self.location.x < 0:
@@ -185,23 +183,17 @@ class BasicPlayer(pygame.sprite.Sprite):
         if self.location.y < 0:
             self.location.y = self.height
 
-        # # Keep player on the screen
-        if self.rect.left <= 0:
-            self.rect.right = self.width
-        if self.rect.right > self.width:
-            self.rect.left = 0
-        if self.rect.top <= 0:
-            self.rect.bottom = self.height
-        if self.rect.bottom >= self.height:
-            self.rect.top = 0
-
     def goto(self, target_x, target_y):
         """Starts player moving towards the x,y coords passed
         in from a mouse click event.
         """
+        # distance not used, but could be if we had AI players you wanted to move
+        # toward another player.
         distance = math.sqrt(
             (target_x - self.location.x) ** 2 + (target_y - self.location.y) ** 2
         )
+
+        # set players direction based on clicked location and current dot location
         self.direction = (
             target_x - self.location.x,
             target_y - self.location.y,
@@ -214,6 +206,7 @@ class BasicPlayer(pygame.sprite.Sprite):
         self.velocity = direction_normalized * self.speed
 
     def setSpeed(self, speed):
+        """This gets called when any numeric key is pressed from 0-9"""
         self.speed = speed
         direction_normalized = pygame.math.Vector2(self.direction).normalize()
 
@@ -281,7 +274,7 @@ class Player(BasicPlayer):
             x (int) : x coord
             y (int) : y coord
         """
-        # print("child goto")
+        print("child goto")
         self.target = (target_x, target_y)
         super(Player, self).goto(target_x, target_y)
         print("broadcasting target")
@@ -313,6 +306,18 @@ class Player(BasicPlayer):
 
 
 class GameManager:
+    """
+    - Manages all external players that are in the same game queue.
+    - Any message that gets broadcast is listened to by the game managers
+      callback method (call back is not a keyword and is named callBack to
+      fit its purpose) and handled based on its content.
+    - Commands:
+        - xy        : tells manager to put the player at the xy coords
+        - target    : tells manager to move player toward the target
+        - speed     : tells manager to change a players speed
+        - color     : tells a manager what color a dot is
+    """
+
     def __init__(self, screen):
         self.players = {}
         self.screen = screen
@@ -320,6 +325,7 @@ class GameManager:
         self.sprites = pygame.sprite.Group()
 
     def addPlayer(self, **kwargs):
+        """Adds a player to the local game as dictated by incoming messages."""
         name = kwargs.get("name", None)
         player = kwargs.get("player", None)
         color = kwargs.get("color", None)
@@ -327,27 +333,18 @@ class GameManager:
 
         # we don't want to try and manage the local player instance
         if localPlayer:
-            self.localPlayer = player
-            return
-
-        # this is a new player that needs just a basic player class
-        # with no messaging capabilites. This is a mirror of another
-        # player somewhere else.
-        player = BasicPlayer(screen=self.screen, name=name, color=color)
-        self.players[name] = player
-
-        self.sprites.add(player)
+            self.localPlayer = player.id
+        else:
+            # this is a new player that needs just a basic player class
+            # with no messaging capabilites. This is a mirror of another
+            # player somewhere else.
+            player = BasicPlayer(screen=self.screen, name=name, color=color)
+            self.players[name] = player
 
     def update(self):
         """Update all players registered with the game manager."""
         for id, player in self.players.items():
             player.update()
-
-        for entity in self.sprites:
-            self.screen.blit(entity.surf, entity.rect)
-
-        if pygame.sprite.spritecollideany(self.localPlayer, self.sprites):
-            print("collision!!")
 
     def callBack(self, ch, method, properties, body):
         """_summary_: callback for multiple players
@@ -362,9 +359,9 @@ class GameManager:
             dictionary: results of callback
         """
 
-        game = method.exchange
-        exchange = method.exchange
-        body = json.loads(body.decode("utf-8"))
+        game = method.exchange  # not used here but passed in by pika
+        exchange = method.exchange  # not used here but passed in by pika
+        body = json.loads(body.decode("utf-8"))  # where all the game commands are
         data = body.get("data", None)
         sender = body["sender"]
         xy = data.get("location", None)
@@ -373,6 +370,7 @@ class GameManager:
         speed = data.get("speed", None)
 
         if self.localPlayer != sender:
+            print(f"not local: {sender} != {self.localPlayer}")
             if not sender in self.players:
                 self.addPlayer(name=sender, color=color)
                 print(f"Players: {len(self.players)}")
@@ -380,7 +378,6 @@ class GameManager:
                 if xy:
                     self.players[sender].location.x = xy[0]
                     self.players[sender].location.y = xy[1]
-                    self.players[sender].rect.center = xy
                 if target:
                     print(f"{sender} goto to {target}")
                     self.players[sender].goto(target[0], target[1])
@@ -390,13 +387,15 @@ class GameManager:
                 if color:
                     print(f"{sender} color to {color}")
                     self.players[sender].color = color
+        else:
+            print("local player")
 
 
 ############################################################
 # GLOBALS
 ############################################################
 class Globals:
-    """A class mainly for one reason,"""
+    """A class mainly for one reason, placing game window in new xy location"""
 
     winx = 0
     winy = 0
@@ -415,6 +414,12 @@ class Globals:
 
 
 def main(creds, x, y, color=None):
+    """
+    Args:
+        creds (dict)    : credentials for messaging
+        x,y  (int,int)  : starting location for player (dot)
+        color (tuple)   : rgb color value
+    """
     globals = Globals(x, y)
     manager = GameManager(globals.screen)
 
@@ -455,6 +460,7 @@ def main(creds, x, y, color=None):
             elif event.type == pygame.MOUSEBUTTONUP:
                 # Get the position of the mouse click
                 mouse_x, mouse_y = pygame.mouse.get_pos()
+                print(mouse_x, mouse_y)
                 localPlayer.goto(mouse_x, mouse_y)
 
         # move the dot based on key input
@@ -500,8 +506,18 @@ def mykwargs(argv):
     return args, kargs
 
 
+def usage():
+    print("Need: queue and player ")
+    print(
+        "Example: python ex_99.py queue=game-01 player=player-01 windowLocation=100,100 color=blue"
+    )
+    sys.exit()
+
+
 if __name__ == "__main__":
-    """ """
+    """
+    Example: python ex_99.py queue=game-01 player=player-01 windowLocation=100,100 color=blue
+    """
     args, kwargs = mykwargs(sys.argv)
 
     queue = kwargs.get("queue", None)
@@ -519,12 +535,9 @@ if __name__ == "__main__":
     x, y = windowLocation
 
     if None in [queue, player]:
-        print("Need: queue and player ")
-        print(
-            "Example: python ex_99.py queue=game-01 player=player-01 windowLocation=100,100 color=blue"
-        )
-        sys.exit()
+        usage()
 
+    # player credentials built based on which temp player chosen (player-01 through player-25)
     creds = {
         "exchange": queue,
         "port": "5672",

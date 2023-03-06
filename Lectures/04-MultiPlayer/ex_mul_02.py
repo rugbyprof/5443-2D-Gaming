@@ -29,8 +29,11 @@ USAGE:
     - windowLocation    : allows me to test better by moving pygame windows to different locations
     - color             : player dot color
 """
+
+
 import pygame
 from random import randint
+import random
 import json
 import sys
 from rich import print
@@ -41,14 +44,45 @@ from pygame.math import Vector2
 
 import pygame.display
 
+import colorsys
+
 
 # necessary libs for rabbitmq
 from comms import CommsListener
 from comms import CommsSender
 
+globals = None
+
 # bunches of named colors!
 with open("colors.json") as f:
     colors = json.load(f)
+
+
+def randLocation(width=None, height=None):
+    global globals
+    if not width or not height:
+        width, height = globals.screen.get_size()
+
+    x = randint(0, width)
+    y = randint(0, height)
+
+    return (x, y)
+
+
+def randColor():
+    # bright_color = { h: Random(0, 255), s: 100, l: 50 }
+
+    h, s, l = random.random(), 0.5 + random.random() / 2.0, 0.4 + random.random() / 5.0
+    r, g, b = [int(256 * i) for i in colorsys.hls_to_rgb(h, l, s)]
+
+    # minRed = kwargs.get("minRed", 0)
+    # maxRed = kwargs.get("maxRed", 255)
+    # minGreen = kwargs.get("minRed", 0)
+    # maxGreen = kwargs.get("maxRed", 255)
+    # minBlue = kwargs.get("minRed", 0)
+    # maxBlue = kwargs.get("maxRed", 255)
+
+    return (r, g, b)
 
 
 class Messenger:
@@ -92,46 +126,98 @@ class Messenger:
         )
 
 
-class BasicPlayer:
-    """
-    - Handles basic updating and movement for a "dot" (player)
-    - Doesn't require anything. But at minimum name should probably match a valid rabbitmq name.
-    """
-
+class SpritePlayer(pygame.sprite.Sprite):
     def __init__(self, **kwargs):
-        """_summary_
+        super().__init__()
+        self.color = kwargs.get("color", (0, 0, 0))
+        self.width, self.height = globals.winsize
+        self.position = kwargs.get("position", (self.width / 2, self.height / 2))
+        self.size = kwargs.get("size", (20, 20))
+        self.image = pygame.Surface(self.size)
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect(center=self.position)
+        self.speed = kwargs.get("speed", 1)
+        self.destination = self.rect.center
 
-        Args:
-            color (tuple)           : rgb value (r,g,b)
-            id (string)             : unique identifier for player
-            location (tuple)        : (x,y)
-            screen (pygame surface) : pygame surface to display player
-        """
-        # init sprite base class
-        super(BasicPlayer, self).__init__()
+    def update(self, keys=None):
+        print(self.destination)
+        print(self.rect.center)
+        if self.rect.center != self.destination:
+            direction = Vector2(self.destination) - Vector2(self.rect.center)
+            print(f"direction: {direction}")
+            distance = direction.length()
+            print(f"distance: {distance}")
+            normalized_direction = direction.normalize()
+            speed = Vector2(self.speed)
+            if distance < speed.length():
+                print(f"less than: {distance} < {speed.length()}")
+                self.rect.center = self.destination
+            else:
+                print(f"normalized_direction: {normalized_direction}, speed:{speed}")
+                moveip = normalized_direction * speed
+                mover = (
+                    normalized_direction[0] * speed[0],
+                    normalized_direction[1] * speed[1],
+                )
 
-        # get player basics from kwargs
-        self.screen = kwargs.get("screen", None)  # copy of screen to display dot on
-        self.name = kwargs.get("name", None)  # players name or id
+                print(f"mover: {mover}")
+                self.newrect = self.rect.move_ip(mover)
+                print(f"rect: {self.rect}")
 
-        # pick a color or get a random one
-        self.color = kwargs.get(
-            "color", (randint(0, 256), randint(0, 256), randint(0, 256))
+    def move(self):
+        self.rect.center = self.newrect
+
+    def goto(self, x, y):
+        self.destination = (x, y)
+
+
+class BasicPlayer(pygame.sprite.Sprite):
+    def __init__(self, **kwargs):
+        super().__init__()
+
+        # sprite_image = pygame.image.load("sprite.png").convert_alpha()
+        # sprite = GameSprite(sprite_image, (320, 240), (5, 5))
+
+        self.screen = kwargs.get("screen", None)
+        self.pos = kwargs.get("pos", randLocation())
+        self.target = kwargs.get("target", randLocation())
+        self.color = kwargs.get("color", (0, 0, 0))
+        self.size = kwargs.get("size", (40, 40))
+        self.speed = kwargs.get("speed", (0, 0))
+
+        self.image = pygame.Surface(self.size)
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect(center=self.pos)
+
+        self.speed = Vector2(self.speed)
+        self.velocity = Vector2(self.speed)
+        self.target = Vector2(self.pos)
+        self.pos = Vector2(self.pos)
+
+    def update(self, keys):
+        self.rect.move_ip(self.speed)
+        self.move()
+
+    def change_speed(self, speed):
+        self.speed = speed
+        self.speed = Vector2(self.speed)
+
+    def goto(self, target_x, target_y):
+        self.target = Vector2(target_x, target_y)
+        self.pos = Vector2(self.rect.centerx, self.rect.centery)
+
+        distance = math.sqrt(
+            (target_x - self.rect.centerx) ** 2 + (target_y - self.rect.centery) ** 2
         )
 
-        # get starting player location from kwargs
-        self.location = kwargs.get("location", (randint(25, 400), randint(25, 400)))
+        # set players direction based on clicked location and current dot location
+        self.direction = Vector2(self.target) - Vector2(self.pos)
 
-        # convert tuple to a vector
-        self.location = pygame.math.Vector2(self.location)
+        # Normalize the direction vector to get a unit vector
+        direction_normalized = Vector2(self.direction).normalize()
 
-        self.speed = 1
-        self.ticks = 0
-        self.width, self.height = self.screen.get_size()
-        self.lastUpdated = pygame.time.get_ticks()
-        self.velocity = pygame.math.Vector2()
-        self.direction = (1, 1)
-        self.target = (0, 0)
+        # Calculate the velocity vector by multiplying the direction vector by the speed
+        self.velocity = direction_normalized * self.speed
 
     def move(self, keys=None):
         """
@@ -141,65 +227,25 @@ class BasicPlayer:
         # print(f"updating {self.color}")
         if keys:
             if keys[pygame.K_SPACE]:
-                self.velocity.x = 0
-                self.velocity.y = 0
+                self.speed.x = 0
+                self.speed.y = 0
 
+        print(self.pos)
+        print(self.velocity)
         # Move the sprite towards the target each frame
-        self.location.x += self.velocity.x
-        self.location.y += self.velocity.y
+        self.pos.x += self.velocity.x
+        self.pos.y += self.velocity.y
 
         # Wrap player around the screen so
         # they never get lost.
-        if self.location.x > self.width:
-            self.location.x = 0
-        if self.location.x < 0:
-            self.location.x = self.width
-        if self.location.y > self.height:
-            self.location.y = 0
-        if self.location.y < 0:
-            self.location.y = self.height
-
-    def goto(self, target_x, target_y):
-        """Starts player moving towards the x,y coords passed
-        in from a mouse click event.
-        """
-        # distance not used, but could be if we had AI players you wanted to move
-        # toward another player.
-        distance = math.sqrt(
-            (target_x - self.location.x) ** 2 + (target_y - self.location.y) ** 2
-        )
-
-        # set players direction based on clicked location and current dot location
-        self.direction = (
-            target_x - self.location.x,
-            target_y - self.location.y,
-        )
-
-        # Normalize the direction vector to get a unit vector
-        direction_normalized = pygame.math.Vector2(self.direction).normalize()
-
-        # Calculate the velocity vector by multiplying the direction vector by the speed
-        self.velocity = direction_normalized * self.speed
-
-    def setSpeed(self, speed):
-        """This gets called when any numeric key is pressed from 0-9"""
-        self.speed = speed
-        direction_normalized = pygame.math.Vector2(self.direction).normalize()
-
-        # change velocity based on input speed
-        self.velocity = direction_normalized * self.speed
-
-    def update(self, keys=None):
-        """Updates position and calls draw for player"""
-        self.move(keys)
-        self.draw()
-
-    def draw(self):
-        """Draws the dot. Could be more complex for an animated sprite or
-        similar, but one line is good for now.
-        """
-        # draw the dot
-        pygame.draw.circle(self.screen, self.color, self.location, 10)
+        if self.pos.x > globals.winsize[0]:
+            self.pos.x = 0
+        if self.pos.x < 0:
+            self.pos.x = globals.winsize[0]
+        if self.pos.y > globals.winsize[1]:
+            self.pos.y = 0
+        if self.pos.y < 0:
+            self.pos.y = globals.winsize[1]
 
 
 class Player(BasicPlayer):
@@ -254,11 +300,21 @@ class Player(BasicPlayer):
         self.target = (target_x, target_y)
         super(Player, self).goto(target_x, target_y)
         print("broadcasting target")
+
+        # print(
+        #     {
+        #         "target": (self.target[0], self.target[1]),
+        #         "location": (self.rect.centerx, self.rect.centery),
+        #         "speed": (self.speed[0], self.speed[1]),
+        #         "color": self.color,
+        #     }
+        # )
+
         self.broadcastData(
             {
-                "target": self.target,
-                "location": (self.location.x, self.location.y),
-                "speed": self.speed,
+                "target": (self.target[0], self.target[1]),
+                "pos": (self.rect.centerx, self.rect.centery),
+                "speed": (self.speed[0], self.speed[1]),
                 "color": self.color,
             }
         )
@@ -273,9 +329,9 @@ class Player(BasicPlayer):
         print("broadcasting speed")
         self.broadcastData(
             {
-                "target": self.target,
-                "location": (self.location.x, self.location.y),
-                "speed": self.speed,
+                "target": (self.target[0], self.target[1]),
+                "pos": (self.rect.centerx, self.rect.centery),
+                "speed": (self.speed[0], self.speed[1]),
                 "color": self.color,
             }
         )
@@ -340,7 +396,7 @@ class GameManager:
         body = json.loads(body.decode("utf-8"))  # where all the game commands are
         data = body.get("data", None)
         sender = body["sender"]
-        xy = data.get("location", None)
+        xy = data.get("pos", None)
         target = data.get("target", None)
         color = data.get("color", None)
         speed = data.get("speed", None)
@@ -352,8 +408,8 @@ class GameManager:
                 print(f"Players: {len(self.players)}")
             else:
                 if xy:
-                    self.players[sender].location.x = xy[0]
-                    self.players[sender].location.y = xy[1]
+                    self.players[sender].pos.x = xy[0]
+                    self.players[sender].pos.y = xy[1]
                 if target:
                     print(f"{sender} goto to {target}")
                     self.players[sender].goto(target[0], target[1])
@@ -371,7 +427,7 @@ class GameManager:
 # GLOBALS
 ############################################################
 class Globals:
-    """A class mainly for one reason, placing game window in new xy location"""
+    """A class mainly for one reason, placing game window in new xy pos"""
 
     winx = 0
     winy = 0
@@ -393,17 +449,23 @@ def main(creds, x, y, color=None):
     """
     Args:
         creds (dict)    : credentials for messaging
-        x,y  (int,int)  : starting location for player (dot)
+        x,y  (int,int)  : starting pos for player (dot)
         color (tuple)   : rgb color value
     """
+    global globals
     globals = Globals(x, y)
+
     manager = GameManager(globals.screen)
 
-    localPlayer = Player(
-        screen=globals.screen, creds=creds, callback=manager.callBack, color=color
-    )
+    # localPlayer = Player(
+    #     screen=globals.screen, creds=creds, callback=manager.callBack, color=color
+    # )
 
-    manager.addPlayer(player=localPlayer, localPlayer=True)
+    localPlayer = SpritePlayer()
+
+    # manager.addPlayer(player=localPlayer, localPlayer=True)
+
+    sprites_group = pygame.sprite.Group(localPlayer)
 
     # set the window title
     pygame.display.set_caption(f"{creds['user']}")
@@ -442,6 +504,9 @@ def main(creds, x, y, color=None):
         # move the dot based on key input
         keys = pygame.key.get_pressed()
         localPlayer.update(keys)
+
+        sprites_group.update(keys)
+        sprites_group.draw(globals.screen)
 
         manager.update()
 
@@ -494,6 +559,7 @@ if __name__ == "__main__":
     """
     Example: python ex_99.py queue=game-01 player=player-01 windowLocation=100,100 color=blue
     """
+
     args, kwargs = mykwargs(sys.argv)
 
     queue = kwargs.get("queue", None)
