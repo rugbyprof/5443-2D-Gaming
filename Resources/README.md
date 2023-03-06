@@ -17,6 +17,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/12-Asterioids">12-Asterioids</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/12-Asterioids">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/12-Asterioids">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/12-Asterioids">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/12-Asterioids">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">trunk</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">None</a>*** |  |
 
-<sup>Last Updated: 2023-03-06 (Mon @ 04:19)</sup> 
+<sup>Last Updated: 2023-03-06 (Mon @ 04:20)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
