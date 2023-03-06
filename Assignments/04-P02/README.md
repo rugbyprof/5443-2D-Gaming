@@ -7,7 +7,7 @@
 
 ### Overview
 
-The traditional asteroids game is a classic. Controlling the "ship" in the game was an innovative approach to moving a game object around in a vacuum. Since this will be a multi-player game, I don't want you to struggle with implementing ships in space, and so the asteroids code will be extremely helpful for us to implement our multiplayer version of this game. The code from [here](../../Resources/12-Asterioids/README.md) has an entire asteroids implementation. Removing the actual asteroids (or make them miniscule along with an extremely low occurance rate) would be helpful for this game. I want you to add multiple "ships" via the multi player class from [here](../../Lectures/04-MultiPlayer/ex_mul_02.py), along with a few more requirements (described below) dealing with gameplay. The big picture idea is many fighters in space, shooting at each other, where the winner is ship with most kills in a set amount of time. 
+The traditional asteroids game is a classic. Controlling the "ship" in the game was an innovative approach to moving a game object around in a vacuum. Since this will be a multi-player game, I don't want you to struggle with implementing ships in space, and so the asteroids code will be extremely helpful for us to implement our multiplayer version of this game. The code from [here](../../Resources/12-Asterioids/README.md) has an entire asteroids implementation. Removing the actual asteroids (or make them miniscule along with an extremely low occurance rate) would be helpful for this game. I want you to add multiple "ships" via the multi player class from [here](../../Lectures/04-MultiPlayer/ex_mul_02.py), along with a few more requirements (described below) dealing with gameplay. The big picture idea is many fighters in space, shooting at each other, where the winner is the ship with most kills in a set amount of time. 
 
 ### Minimum Requirements
 
@@ -37,7 +37,8 @@ Meeting these requirements can boost your grade to an A.
 
 Meeting these requirements will give you bragging rights.
 
-- Health "asteroids" that allow a ship to collide with to maximize health.
+- Showing scores in upper corner of all players, ordered by highest scores.
+- Health "asteroids" that randomly appear and allow a ship to collide with to maximize health.
 - Ship can upgrade after certain score that allow multiple bullets fired from ship. 
 - Bullet strength degrades over distance. Normal damage is 10%, but after half the screen it starts to weaken. So a bullet less than half the screen is 10% damage, but weakens down from 10% at halfway to 1% on the edges of the screen. The bullet sprite also needs to change size and / or color the longer it travels as well to visually imply strength. 
 

@@ -19,6 +19,7 @@ class SpaceRocks:
         self.bullets = []
         self.spaceship = Spaceship((400, 300), self.bullets.append)
 
+        # Griffin changed this to 1 so it would only generate 1 asteroid :)
         for _ in range(1):
             while True:
                 position = get_random_position(self.screen)
