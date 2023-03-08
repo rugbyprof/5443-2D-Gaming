@@ -18,6 +18,8 @@ else:
 
 In some cases, you may want to detect more precise collisions between sprites, taking into account their transparent areas. Pygame provides a mask module that can create masks from sprite images and perform collision detection based on these masks.
 
+Pixel-perfect collision detection takes into account the transparency of each pixel in the sprite images and detects collisions based on the exact location of the opaque pixels in the images. This method provides a very accurate representation of the actual collision area and can be used to detect collisions between irregularly shaped sprites, including those with holes or irregular outlines.
+
 ```python
 sprite1_mask = pygame.mask.from_surface(sprite1_image)
 sprite2_mask = pygame.mask.from_surface(sprite2_image)
@@ -32,8 +34,7 @@ else:
 
 ```
 
-In the second method, overlap method of mask class returns a mask with overlapping pixels, taking an offset value to align the masks with the correct positions. If there is overlap, it returns a non-None value which indicates collision.
-
+In the code above, `from_surface` method creates a mask from the sprite image, and overlap method of mask class returns a mask with overlapping pixels, taking an offset value to align the masks with the correct positions. If there is overlap, it returns a non-None value which indicates collision.
 
 
 ### Tailoring Basic Collisions
