@@ -44,3 +44,6 @@ Rotate an image using the keyboard
 
 Rotate a group of blocks as a single entity  (errors!)
 
+### 012
+
+Rotate sprite toward a mouseclick.
