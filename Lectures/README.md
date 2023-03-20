@@ -9,6 +9,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/05_ApiHelp">05_ApiHelp</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/05_ApiHelp"> Fast Api </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/05_ApiHelp"> Backend for Country Game</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/05_ApiHelp"> Resources</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/05_ApiHelp">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">06-Collisions</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions"> Rect collision detection:</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** |  |
 
-<sup>Last Updated: 2023-03-20 (Mon @ 11:53)</sup> 
+<sup>Last Updated: 2023-03-20 (Mon @ 11:54)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
