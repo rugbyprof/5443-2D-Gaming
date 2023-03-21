@@ -49,7 +49,7 @@ class Bullet:
 ...
 
 class Game:
-def **init**(self, rabbitmq_handler):
+def __init__(self, rabbitmq_handler):
 ...
 
     def handle_events(self):
@@ -65,7 +65,7 @@ def **init**(self, rabbitmq_handler):
         ...
 
 def main(): # Initialize RabbitMQHandler
-rabbitmq_handler = RabbitMQHandler()
+    rabbitmq_handler = RabbitMQHandler()
 
     # Initialize Pygame and create a Game instance
     pygame.init()
@@ -98,12 +98,12 @@ import pika
 import json
 
 class RabbitMQHandler:
-def **init**(self, host, queue_name):
-self.host = host
-self.queue_name = queue_name
-self.connection = None
-self.channel = None
-self.iteration = 0
+    def __init__(self, host, queue_name):
+        self.host = host
+        self.queue_name = queue_name
+        self.connection = None
+        self.channel = None
+        self.iteration = 0
 
         self.connect()
 
@@ -134,13 +134,15 @@ self.iteration = 0
 
     def close(self):
         self.connection.close()
+
 ```
 
 You can now use this RabbitMQHandler class in your game loop to send and receive messages every other iteration. For example:
 
 ```python
-def main(): # Initialize RabbitMQHandler
-rabbitmq_handler = RabbitMQHandler(host="localhost", queue_name="game_queue")
+def main():
+    # Initialize RabbitMQHandler
+    rabbitmq_handler = RabbitMQHandler(host="localhost", queue_name="game_queue")
 
     # Initialize Pygame and create a Game instance
     pygame.init()
@@ -152,6 +154,7 @@ rabbitmq_handler = RabbitMQHandler(host="localhost", queue_name="game_queue")
     # Clean up
     pygame.quit()
     rabbitmq_handler.close()
+
 ```
 
 Please note that sending messages every other game loop may not be an optimal solution, as it may introduce inconsistencies in the game state across clients. To avoid this, consider using a more advanced approach, such as sending only state updates when changes occur or implementing a client prediction mechanism.
@@ -219,6 +222,7 @@ class GameState:
                 lerp_state[key] = value
 
         return lerp_state
+
 ```
 
 Now, you can use the GameState class in your game loop to manage the state of game objects, such as ships or bullets. You should call the update_state method every game loop to send updates when the state has changed and to receive updates from other clients. You can use the get_object_state method to retrieve the interpolated state of a game object for rendering.
