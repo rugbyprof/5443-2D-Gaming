@@ -252,11 +252,11 @@ Remember that this is just a starting point for handling inconsistencies in a mu
 
 ---
 
-### Question
+### Question 4
 
 I want to create a multiplayer game using pygame and rabbitmq. I also want to minimilize inconsistencies in this multiplayer game by only sending state updates when changes occur or implementing a client prediction mechanism to assist with player movement. Each player will be in a ship that can move, rotate, and fire projectiles. The goal of the game is not to die. But deaths will be counted for each individual player. The winner of the game will have the least number of deaths in the span of a game, which can be adjusted based on preferences. When a projectile hits a player, they die, and are respawned with their death count incremented. To test my game I would like to use a small number of NPC's that act similar to a real player, shooting at the actual real player in the game. The NPC behavior can be mostly random, but the fireing of projectiles should be toward other players.
 
-### Answer
+### Answer 4
 
 To create a multiplayer game with Pygame and RabbitMQ with minimal inconsistencies, we will build on the previously provided RabbitMQHandler and GameState classes. The game will have ships that can move, rotate, and fire projectiles. We will also implement an NPC class to simulate other players. Here's a high-level overview of the classes and methods you'll need:
 
@@ -341,11 +341,11 @@ Keep in mind that this is a high-level outline, and you'll need to fill in the d
 
 ---
 
-### Question
+### Question 5
 
 Could you write an NPC class uses random movements and rotations, but when firing projectiles it should be directed toward other players. I would like the class to include calculating the angle between the NPC's position and the target player's position, and then adjusting the NPC's rotation to match that angle before firing.
 
-### Answer
+### Answer 5
 
 Certainly! Here's an example of an NPC class that inherits from the Ship class. It uses random movements and rotations, and when firing projectiles, it directs them toward other players. The class calculates the angle between the NPC's position and the target player's position, and then adjusts the NPC's rotation to match that angle before firing.
 
@@ -410,11 +410,11 @@ Keep in mind that this is a simple example of an NPC class with basic AI. You ma
 
 ---
 
-### Question
+### Question 6
 
 Could you alter the previous NPC class that you wrote so that the `ai_behavior` method doesn't use random movements, but instead it uses the `A-star algorithm` to always move towards a target player.
 
-### Answer
+### Answer 6
 
 To make the NPC class use the A-star algorithm to move towards a target player, we'll need to create a grid-based representation of the game world and implement the A-star algorithm. For this example, I'll assume that the game world is divided into cells of equal size, and that the Ship class has a method called cell_position that returns the current cell coordinates (row, column) of the ship.
 
@@ -512,11 +512,11 @@ class NPC(Ship):
 
 ---
 
-### Question
+### Question 7
 
 Instead of altering the `NPC` class to use the `A-Star algorithm` to always move toward and attack a target player, would it be simpler to use a `distance based metric` where the `NPC` is always attempting to shorten the distance of a target player. And if so, please provide an `ai_behavior` method that uses this heuristic to attack target players.
 
-### Answer
+### Answer 7
 
 Certainly! You can use a `distance-based metric` to move the `NPC` towards a target player. In this case, the `NPC` will always try to shorten the distance to the target player. Here's an updated `ai_behavior` method that uses this heuristic:
 
