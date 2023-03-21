@@ -8,22 +8,22 @@ Show me how to write a pygame implementation of a multiplayer game that utilizes
 
 Creating a multiplayer game with Pygame and RabbitMQ requires a good understanding of both libraries. The following is a high-level overview of how you could structure the game, divided into several steps. It is not a complete code implementation, but it should give you a good starting point for your project.
 
-- 1. Install the required libraries:
+- 1: Install the required libraries:
 
 ```bash
 pip install pygame
 pip install pika
 ```
 
-- 2. Create a Game class that handles the game logic, including ship movement, bullets, and collision detection.
+- 2: Create a Game class that handles the game logic, including ship movement, bullets, and collision detection.
 
-- 3. Create a Ship class that represents the player's ship, including attributes for location, direction, and movement. Implement methods for updating the ship's state and rendering it on the screen.
+- 3: Create a Ship class that represents the player's ship, including attributes for location, direction, and movement. Implement methods for updating the ship's state and rendering it on the screen.
 
-- 4. Create a Bullet class that represents bullets fired by ships. Implement methods for updating bullet position and rendering on the screen.
+- 4: Create a Bullet class that represents bullets fired by ships. Implement methods for updating bullet position and rendering on the screen.
 
-- 5. Create a RabbitMQHandler class that handles communication with RabbitMQ, including sending and receiving messages. You'll need to use the pika library to connect to RabbitMQ and manage message queues.
+- 5: Create a RabbitMQHandler class that handles communication with RabbitMQ, including sending and receiving messages. You'll need to use the pika library to connect to RabbitMQ and manage message queues.
 
-- 6. Modify the Game class to use the RabbitMQHandler for sending and receiving ship and bullet data.
+- 6: Modify the Game class to use the RabbitMQHandler for sending and receiving ship and bullet data.
 
 Here's an outline of the code structure you can use:
 
