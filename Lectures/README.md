@@ -10,6 +10,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">06-Collisions</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions"> Rect collision detection:</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/06-Collisions">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/07-MultiplayerWRabbitMQ">07-MultiplayerWRabbitMQ</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/07-MultiplayerWRabbitMQ">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/07-MultiplayerWRabbitMQ">None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/07-MultiplayerWRabbitMQ"> Question 1</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/07-MultiplayerWRabbitMQ">None</a>*** |  |
 
-<sup>Last Updated: 2023-03-20 (Mon @ 23:25)</sup> 
+<sup>Last Updated: 2023-03-20 (Mon @ 23:29)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
