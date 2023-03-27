@@ -163,7 +163,7 @@ Please note that sending messages every other game loop may not be an optimal so
 
 ### Question 3
 
-Can you write a python class to minimilize inconsistencies in a multiplayer game state across clients by only sending state updates when changes occur or implementing a client prediction mechanism.
+Can you write a python class to minimize inconsistencies in a multiplayer game state across clients by only sending state updates when changes occur or implementing a client prediction mechanism.
 
 ### Answer 3
 

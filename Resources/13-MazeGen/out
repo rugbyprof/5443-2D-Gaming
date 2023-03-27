@@ -1,0 +1,1240 @@
+pygame 2.3.0 (SDL 2.24.2, Python 3.10.9)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+('0',)
+('0',)
+('1',)
+('1',)
+('1',)
+('0',)
+('1',)
+('0',)
+('1',)
+('1',)
+('0',)
+('0',)
+('0',)
+('1',)
+('0',)
+('1',)
+neighbors:[(5, 3), (7, 3), (6, 2), (6, 4)]
+next_x:6 next_y:2
+getting adjacent walls - x:6 y:2
+neighbors:[(5, 2), (7, 2), (6, 1)]
+next_x:5 next_y:2
+getting adjacent walls - x:5 y:2
+neighbors:[(4, 2), (5, 1), (5, 3)]
+next_x:5 next_y:3
+getting adjacent walls - x:5 y:3
+neighbors:[(4, 3), (5, 4)]
+next_x:5 next_y:4
+getting adjacent walls - x:5 y:4
+neighbors:[(4, 4), (6, 4), (5, 5)]
+next_x:4 next_y:4
+getting adjacent walls - x:4 y:4
+neighbors:[(3, 4), (4, 3), (4, 5)]
+next_x:3 next_y:4
+getting adjacent walls - x:3 y:4
+neighbors:[(2, 4), (3, 3), (3, 5)]
+next_x:2 next_y:4
+getting adjacent walls - x:2 y:4
+neighbors:[(1, 4), (2, 3), (2, 5)]
+next_x:2 next_y:5
+getting adjacent walls - x:2 y:5
+neighbors:[(1, 5), (3, 5), (2, 6)]
+next_x:2 next_y:6
+getting adjacent walls - x:2 y:6
+neighbors:[(1, 6), (3, 6), (2, 7)]
+next_x:1 next_y:6
+getting adjacent walls - x:1 y:6
+neighbors:[(0, 6), (1, 5), (1, 7)]
+next_x:1 next_y:7
+getting adjacent walls - x:1 y:7
+neighbors:[(0, 7), (2, 7), (1, 8)]
+next_x:0 next_y:7
+getting adjacent walls - x:0 y:7
+neighbors:[(0, 6), (0, 8)]
+next_x:0 next_y:8
+getting adjacent walls - x:0 y:8
+neighbors:[(1, 8), (0, 9)]
+next_x:1 next_y:8
+getting adjacent walls - x:1 y:8
+neighbors:[(2, 8), (1, 9)]
+next_x:2 next_y:8
+getting adjacent walls - x:2 y:8
+neighbors:[(3, 8), (2, 7), (2, 9)]
+next_x:2 next_y:9
+getting adjacent walls - x:2 y:9
+neighbors:[(1, 9), (3, 9), (2, 10)]
+next_x:2 next_y:10
+getting adjacent walls - x:2 y:10
+neighbors:[(1, 10), (3, 10), (2, 11)]
+next_x:1 next_y:10
+getting adjacent walls - x:1 y:10
+neighbors:[(0, 10), (1, 9), (1, 11)]
+next_x:1 next_y:9
+getting adjacent walls - x:1 y:9
+neighbors:[(0, 9)]
+next_x:0 next_y:9
+getting adjacent walls - x:0 y:9
+neighbors:[(0, 10)]
+next_x:0 next_y:10
+getting adjacent walls - x:0 y:10
+neighbors:[(0, 11)]
+next_x:0 next_y:11
+getting adjacent walls - x:0 y:11
+neighbors:[(1, 11), (0, 12)]
+next_x:0 next_y:12
+getting adjacent walls - x:0 y:12
+neighbors:[(1, 12), (0, 13)]
+next_x:0 next_y:13
+getting adjacent walls - x:0 y:13
+neighbors:[(1, 13), (0, 14)]
+next_x:1 next_y:13
+getting adjacent walls - x:1 y:13
+neighbors:[(2, 13), (1, 12), (1, 14)]
+next_x:2 next_y:13
+getting adjacent walls - x:2 y:13
+neighbors:[(3, 13), (2, 12), (2, 14)]
+next_x:2 next_y:12
+getting adjacent walls - x:2 y:12
+neighbors:[(1, 12), (3, 12), (2, 11)]
+next_x:1 next_y:12
+getting adjacent walls - x:1 y:12
+neighbors:[(1, 11)]
+next_x:1 next_y:11
+getting adjacent walls - x:1 y:11
+neighbors:[(2, 11)]
+next_x:2 next_y:11
+getting adjacent walls - x:2 y:11
+neighbors:[(3, 11)]
+next_x:3 next_y:11
+getting adjacent walls - x:3 y:11
+neighbors:[(4, 11), (3, 10), (3, 12)]
+next_x:3 next_y:10
+getting adjacent walls - x:3 y:10
+neighbors:[(4, 10), (3, 9)]
+next_x:3 next_y:9
+getting adjacent walls - x:3 y:9
+neighbors:[(4, 9), (3, 8)]
+next_x:3 next_y:8
+getting adjacent walls - x:3 y:8
+neighbors:[(4, 8), (3, 7)]
+next_x:4 next_y:8
+getting adjacent walls - x:4 y:8
+neighbors:[(5, 8), (4, 7), (4, 9)]
+next_x:4 next_y:7
+getting adjacent walls - x:4 y:7
+neighbors:[(3, 7), (5, 7), (4, 6)]
+next_x:4 next_y:6
+getting adjacent walls - x:4 y:6
+neighbors:[(3, 6), (5, 6), (4, 5)]
+next_x:3 next_y:6
+getting adjacent walls - x:3 y:6
+neighbors:[(3, 5), (3, 7)]
+next_x:3 next_y:5
+getting adjacent walls - x:3 y:5
+neighbors:[(4, 5)]
+next_x:4 next_y:5
+getting adjacent walls - x:4 y:5
+neighbors:[(5, 5)]
+next_x:5 next_y:5
+getting adjacent walls - x:5 y:5
+neighbors:[(6, 5), (5, 6)]
+next_x:5 next_y:6
+getting adjacent walls - x:5 y:6
+neighbors:[(6, 6), (5, 7)]
+next_x:5 next_y:7
+getting adjacent walls - x:5 y:7
+neighbors:[(6, 7), (5, 8)]
+next_x:6 next_y:7
+getting adjacent walls - x:6 y:7
+neighbors:[(7, 7), (6, 6), (6, 8)]
+next_x:6 next_y:6
+getting adjacent walls - x:6 y:6
+neighbors:[(7, 6), (6, 5)]
+next_x:6 next_y:5
+getting adjacent walls - x:6 y:5
+neighbors:[(7, 5), (6, 4)]
+next_x:6 next_y:4
+getting adjacent walls - x:6 y:4
+neighbors:[(7, 4)]
+next_x:7 next_y:4
+getting adjacent walls - x:7 y:4
+neighbors:[(8, 4), (7, 3), (7, 5)]
+next_x:7 next_y:5
+getting adjacent walls - x:7 y:5
+neighbors:[(8, 5), (7, 6)]
+next_x:7 next_y:6
+getting adjacent walls - x:7 y:6
+neighbors:[(8, 6), (7, 7)]
+next_x:8 next_y:6
+getting adjacent walls - x:8 y:6
+neighbors:[(9, 6), (8, 5), (8, 7)]
+next_x:8 next_y:7
+getting adjacent walls - x:8 y:7
+neighbors:[(7, 7), (9, 7), (8, 8)]
+next_x:7 next_y:7
+getting adjacent walls - x:7 y:7
+neighbors:[(7, 8)]
+next_x:7 next_y:8
+getting adjacent walls - x:7 y:8
+neighbors:[(6, 8), (8, 8), (7, 9)]
+next_x:6 next_y:8
+getting adjacent walls - x:6 y:8
+neighbors:[(5, 8), (6, 9)]
+next_x:5 next_y:8
+getting adjacent walls - x:5 y:8
+neighbors:[(5, 9)]
+next_x:5 next_y:9
+getting adjacent walls - x:5 y:9
+neighbors:[(4, 9), (6, 9), (5, 10)]
+next_x:4 next_y:9
+getting adjacent walls - x:4 y:9
+neighbors:[(4, 10)]
+next_x:4 next_y:10
+getting adjacent walls - x:4 y:10
+neighbors:[(5, 10), (4, 11)]
+next_x:5 next_y:10
+getting adjacent walls - x:5 y:10
+neighbors:[(6, 10), (5, 11)]
+next_x:5 next_y:11
+getting adjacent walls - x:5 y:11
+neighbors:[(4, 11), (6, 11), (5, 12)]
+next_x:6 next_y:11
+getting adjacent walls - x:6 y:11
+neighbors:[(7, 11), (6, 10), (6, 12)]
+next_x:6 next_y:10
+getting adjacent walls - x:6 y:10
+neighbors:[(7, 10), (6, 9)]
+next_x:7 next_y:10
+getting adjacent walls - x:7 y:10
+neighbors:[(8, 10), (7, 9), (7, 11)]
+next_x:7 next_y:11
+getting adjacent walls - x:7 y:11
+neighbors:[(8, 11), (7, 12)]
+next_x:7 next_y:12
+getting adjacent walls - x:7 y:12
+neighbors:[(6, 12), (8, 12), (7, 13)]
+next_x:7 next_y:13
+getting adjacent walls - x:7 y:13
+neighbors:[(6, 13), (8, 13), (7, 14)]
+next_x:8 next_y:13
+getting adjacent walls - x:8 y:13
+neighbors:[(9, 13), (8, 12), (8, 14)]
+next_x:9 next_y:13
+getting adjacent walls - x:9 y:13
+neighbors:[(10, 13), (9, 12), (9, 14)]
+next_x:9 next_y:14
+getting adjacent walls - x:9 y:14
+neighbors:[(8, 14), (10, 14), (9, 15)]
+next_x:8 next_y:14
+getting adjacent walls - x:8 y:14
+neighbors:[(7, 14), (8, 15)]
+next_x:8 next_y:15
+getting adjacent walls - x:8 y:15
+neighbors:[(7, 15), (9, 15), (8, 16)]
+next_x:7 next_y:15
+getting adjacent walls - x:7 y:15
+neighbors:[(6, 15), (7, 14), (7, 16)]
+next_x:7 next_y:14
+getting adjacent walls - x:7 y:14
+neighbors:[(6, 14)]
+next_x:6 next_y:14
+getting adjacent walls - x:6 y:14
+neighbors:[(5, 14), (6, 13), (6, 15)]
+next_x:6 next_y:15
+getting adjacent walls - x:6 y:15
+neighbors:[(5, 15), (6, 16)]
+next_x:5 next_y:15
+getting adjacent walls - x:5 y:15
+neighbors:[(4, 15), (5, 14), (5, 16)]
+next_x:5 next_y:16
+getting adjacent walls - x:5 y:16
+neighbors:[(4, 16), (6, 16), (5, 17)]
+next_x:5 next_y:17
+getting adjacent walls - x:5 y:17
+neighbors:[(4, 17), (6, 17), (5, 18)]
+next_x:4 next_y:17
+getting adjacent walls - x:4 y:17
+neighbors:[(3, 17), (4, 16), (4, 18)]
+next_x:4 next_y:16
+getting adjacent walls - x:4 y:16
+neighbors:[(3, 16), (4, 15)]
+next_x:3 next_y:16
+getting adjacent walls - x:3 y:16
+neighbors:[(2, 16), (3, 15), (3, 17)]
+next_x:3 next_y:17
+getting adjacent walls - x:3 y:17
+neighbors:[(2, 17), (3, 18)]
+next_x:3 next_y:18
+getting adjacent walls - x:3 y:18
+neighbors:[(2, 18), (4, 18), (3, 19)]
+next_x:2 next_y:18
+getting adjacent walls - x:2 y:18
+neighbors:[(1, 18), (2, 17), (2, 19)]
+next_x:1 next_y:18
+getting adjacent walls - x:1 y:18
+neighbors:[(0, 18), (1, 17), (1, 19)]
+next_x:0 next_y:18
+getting adjacent walls - x:0 y:18
+neighbors:[(0, 17), (0, 19)]
+next_x:0 next_y:17
+getting adjacent walls - x:0 y:17
+neighbors:[(1, 17), (0, 16)]
+next_x:0 next_y:16
+getting adjacent walls - x:0 y:16
+neighbors:[(1, 16), (0, 15)]
+next_x:0 next_y:15
+getting adjacent walls - x:0 y:15
+neighbors:[(1, 15), (0, 14)]
+next_x:1 next_y:15
+getting adjacent walls - x:1 y:15
+neighbors:[(2, 15), (1, 14), (1, 16)]
+next_x:1 next_y:14
+getting adjacent walls - x:1 y:14
+neighbors:[(0, 14), (2, 14)]
+next_x:0 next_y:14
+getting adjacent walls - x:0 y:14
+neighbors:[(2, 14)]
+next_x:2 next_y:14
+getting adjacent walls - x:2 y:14
+neighbors:[(3, 14), (2, 15)]
+next_x:3 next_y:14
+getting adjacent walls - x:3 y:14
+neighbors:[(4, 14), (3, 13), (3, 15)]
+next_x:3 next_y:13
+getting adjacent walls - x:3 y:13
+neighbors:[(4, 13), (3, 12)]
+next_x:3 next_y:12
+getting adjacent walls - x:3 y:12
+neighbors:[(4, 12)]
+next_x:4 next_y:12
+getting adjacent walls - x:4 y:12
+neighbors:[(5, 12), (4, 11), (4, 13)]
+next_x:4 next_y:11
+getting adjacent walls - x:4 y:11
+neighbors:[(5, 12), (4, 13)]
+next_x:5 next_y:12
+getting adjacent walls - x:5 y:12
+neighbors:[(6, 12), (5, 13)]
+next_x:6 next_y:12
+getting adjacent walls - x:6 y:12
+neighbors:[(6, 13)]
+next_x:6 next_y:13
+getting adjacent walls - x:6 y:13
+neighbors:[(5, 13)]
+next_x:5 next_y:13
+getting adjacent walls - x:5 y:13
+neighbors:[(4, 13), (5, 14)]
+next_x:5 next_y:14
+getting adjacent walls - x:5 y:14
+neighbors:[(4, 14)]
+next_x:4 next_y:14
+getting adjacent walls - x:4 y:14
+neighbors:[(4, 13), (4, 15)]
+next_x:4 next_y:15
+getting adjacent walls - x:4 y:15
+neighbors:[(3, 15)]
+next_x:3 next_y:15
+getting adjacent walls - x:3 y:15
+neighbors:[(2, 15)]
+next_x:2 next_y:15
+getting adjacent walls - x:2 y:15
+neighbors:[(2, 16)]
+next_x:2 next_y:16
+getting adjacent walls - x:2 y:16
+neighbors:[(1, 16), (2, 17)]
+next_x:2 next_y:17
+getting adjacent walls - x:2 y:17
+neighbors:[(1, 17)]
+next_x:1 next_y:17
+getting adjacent walls - x:1 y:17
+neighbors:[(1, 16)]
+next_x:1 next_y:16
+getting adjacent walls - x:1 y:16
+neighbors:[(4, 13)]
+next_x:4 next_y:13
+getting adjacent walls - x:4 y:13
+neighbors:[(0, 19)]
+next_x:0 next_y:19
+getting adjacent walls - x:0 y:19
+neighbors:[(1, 19)]
+next_x:1 next_y:19
+getting adjacent walls - x:1 y:19
+neighbors:[(2, 19)]
+next_x:2 next_y:19
+getting adjacent walls - x:2 y:19
+neighbors:[(3, 19)]
+next_x:3 next_y:19
+getting adjacent walls - x:3 y:19
+neighbors:[(4, 19)]
+next_x:4 next_y:19
+getting adjacent walls - x:4 y:19
+neighbors:[(5, 19), (4, 18)]
+next_x:4 next_y:18
+getting adjacent walls - x:4 y:18
+neighbors:[(5, 18)]
+next_x:5 next_y:18
+getting adjacent walls - x:5 y:18
+neighbors:[(6, 18), (5, 19)]
+next_x:6 next_y:18
+getting adjacent walls - x:6 y:18
+neighbors:[(7, 18), (6, 17), (6, 19)]
+next_x:6 next_y:19
+getting adjacent walls - x:6 y:19
+neighbors:[(5, 19), (7, 19)]
+next_x:7 next_y:19
+getting adjacent walls - x:7 y:19
+neighbors:[(8, 19), (7, 18)]
+next_x:7 next_y:18
+getting adjacent walls - x:7 y:18
+neighbors:[(8, 18), (7, 17)]
+next_x:7 next_y:17
+getting adjacent walls - x:7 y:17
+neighbors:[(6, 17), (8, 17), (7, 16)]
+next_x:7 next_y:16
+getting adjacent walls - x:7 y:16
+neighbors:[(6, 16), (8, 16)]
+next_x:6 next_y:16
+getting adjacent walls - x:6 y:16
+neighbors:[(6, 17)]
+next_x:6 next_y:17
+getting adjacent walls - x:6 y:17
+neighbors:[(8, 16)]
+next_x:8 next_y:16
+getting adjacent walls - x:8 y:16
+neighbors:[(9, 16), (8, 17)]
+next_x:9 next_y:16
+getting adjacent walls - x:9 y:16
+neighbors:[(10, 16), (9, 15), (9, 17)]
+next_x:10 next_y:16
+getting adjacent walls - x:10 y:16
+neighbors:[(11, 16), (10, 15), (10, 17)]
+next_x:10 next_y:15
+getting adjacent walls - x:10 y:15
+neighbors:[(9, 15), (11, 15), (10, 14)]
+next_x:10 next_y:14
+getting adjacent walls - x:10 y:14
+neighbors:[(11, 14), (10, 13)]
+next_x:11 next_y:14
+getting adjacent walls - x:11 y:14
+neighbors:[(12, 14), (11, 13), (11, 15)]
+next_x:12 next_y:14
+getting adjacent walls - x:12 y:14
+neighbors:[(13, 14), (12, 13), (12, 15)]
+next_x:13 next_y:14
+getting adjacent walls - x:13 y:14
+neighbors:[(14, 14), (13, 13), (13, 15)]
+next_x:14 next_y:14
+getting adjacent walls - x:14 y:14
+neighbors:[(15, 14), (14, 13), (14, 15)]
+next_x:14 next_y:15
+getting adjacent walls - x:14 y:15
+neighbors:[(13, 15), (15, 15), (14, 16)]
+next_x:14 next_y:16
+getting adjacent walls - x:14 y:16
+neighbors:[(13, 16), (15, 16), (14, 17)]
+next_x:14 next_y:17
+getting adjacent walls - x:14 y:17
+neighbors:[(13, 17), (15, 17), (14, 18)]
+next_x:13 next_y:17
+getting adjacent walls - x:13 y:17
+neighbors:[(12, 17), (13, 16), (13, 18)]
+next_x:13 next_y:18
+getting adjacent walls - x:13 y:18
+neighbors:[(12, 18), (14, 18), (13, 19)]
+next_x:14 next_y:18
+getting adjacent walls - x:14 y:18
+neighbors:[(15, 18), (14, 19)]
+next_x:15 next_y:18
+getting adjacent walls - x:15 y:18
+neighbors:[(16, 18), (15, 17), (15, 19)]
+next_x:15 next_y:19
+getting adjacent walls - x:15 y:19
+neighbors:[(14, 19), (16, 19)]
+next_x:16 next_y:19
+getting adjacent walls - x:16 y:19
+neighbors:[(17, 19), (16, 18)]
+next_x:16 next_y:18
+getting adjacent walls - x:16 y:18
+neighbors:[(17, 18), (16, 17)]
+next_x:16 next_y:17
+getting adjacent walls - x:16 y:17
+neighbors:[(15, 17), (17, 17), (16, 16)]
+next_x:17 next_y:17
+getting adjacent walls - x:17 y:17
+neighbors:[(18, 17), (17, 16), (17, 18)]
+next_x:17 next_y:18
+getting adjacent walls - x:17 y:18
+neighbors:[(18, 18), (17, 19)]
+next_x:18 next_y:18
+getting adjacent walls - x:18 y:18
+neighbors:[(19, 18), (18, 17), (18, 19)]
+next_x:19 next_y:18
+getting adjacent walls - x:19 y:18
+neighbors:[(19, 17), (19, 19)]
+next_x:19 next_y:17
+getting adjacent walls - x:19 y:17
+neighbors:[(18, 17), (19, 16)]
+next_x:18 next_y:17
+getting adjacent walls - x:18 y:17
+neighbors:[(18, 16)]
+next_x:18 next_y:16
+getting adjacent walls - x:18 y:16
+neighbors:[(17, 16), (19, 16), (18, 15)]
+next_x:18 next_y:15
+getting adjacent walls - x:18 y:15
+neighbors:[(17, 15), (19, 15), (18, 14)]
+next_x:18 next_y:14
+getting adjacent walls - x:18 y:14
+neighbors:[(17, 14), (19, 14), (18, 13)]
+next_x:18 next_y:13
+getting adjacent walls - x:18 y:13
+neighbors:[(17, 13), (19, 13), (18, 12)]
+next_x:17 next_y:13
+getting adjacent walls - x:17 y:13
+neighbors:[(16, 13), (17, 12), (17, 14)]
+next_x:17 next_y:12
+getting adjacent walls - x:17 y:12
+neighbors:[(16, 12), (18, 12), (17, 11)]
+next_x:16 next_y:12
+getting adjacent walls - x:16 y:12
+neighbors:[(15, 12), (16, 11), (16, 13)]
+next_x:16 next_y:11
+getting adjacent walls - x:16 y:11
+neighbors:[(15, 11), (17, 11), (16, 10)]
+next_x:16 next_y:10
+getting adjacent walls - x:16 y:10
+neighbors:[(15, 10), (17, 10), (16, 9)]
+next_x:17 next_y:10
+getting adjacent walls - x:17 y:10
+neighbors:[(18, 10), (17, 9), (17, 11)]
+next_x:17 next_y:11
+getting adjacent walls - x:17 y:11
+neighbors:[(18, 11)]
+next_x:18 next_y:11
+getting adjacent walls - x:18 y:11
+neighbors:[(19, 11), (18, 10), (18, 12)]
+next_x:19 next_y:11
+getting adjacent walls - x:19 y:11
+neighbors:[(19, 10), (19, 12)]
+next_x:19 next_y:10
+getting adjacent walls - x:19 y:10
+neighbors:[(18, 10), (19, 9)]
+next_x:18 next_y:10
+getting adjacent walls - x:18 y:10
+neighbors:[(18, 9)]
+next_x:18 next_y:9
+getting adjacent walls - x:18 y:9
+neighbors:[(17, 9), (19, 9), (18, 8)]
+next_x:18 next_y:8
+getting adjacent walls - x:18 y:8
+neighbors:[(17, 8), (19, 8), (18, 7)]
+next_x:19 next_y:8
+getting adjacent walls - x:19 y:8
+neighbors:[(19, 7), (19, 9)]
+next_x:19 next_y:9
+getting adjacent walls - x:19 y:9
+neighbors:[(19, 7)]
+next_x:19 next_y:7
+getting adjacent walls - x:19 y:7
+neighbors:[(18, 7), (19, 6)]
+next_x:18 next_y:7
+getting adjacent walls - x:18 y:7
+neighbors:[(17, 7), (18, 6)]
+next_x:17 next_y:7
+getting adjacent walls - x:17 y:7
+neighbors:[(16, 7), (17, 6), (17, 8)]
+next_x:17 next_y:8
+getting adjacent walls - x:17 y:8
+neighbors:[(16, 8), (17, 9)]
+next_x:16 next_y:8
+getting adjacent walls - x:16 y:8
+neighbors:[(15, 8), (16, 7), (16, 9)]
+next_x:16 next_y:7
+getting adjacent walls - x:16 y:7
+neighbors:[(15, 7), (16, 6)]
+next_x:16 next_y:6
+getting adjacent walls - x:16 y:6
+neighbors:[(15, 6), (17, 6), (16, 5)]
+next_x:15 next_y:6
+getting adjacent walls - x:15 y:6
+neighbors:[(14, 6), (15, 5), (15, 7)]
+next_x:14 next_y:6
+getting adjacent walls - x:14 y:6
+neighbors:[(13, 6), (14, 5), (14, 7)]
+next_x:14 next_y:7
+getting adjacent walls - x:14 y:7
+neighbors:[(13, 7), (15, 7), (14, 8)]
+next_x:14 next_y:8
+getting adjacent walls - x:14 y:8
+neighbors:[(13, 8), (15, 8), (14, 9)]
+next_x:13 next_y:8
+getting adjacent walls - x:13 y:8
+neighbors:[(12, 8), (13, 7), (13, 9)]
+next_x:13 next_y:9
+getting adjacent walls - x:13 y:9
+neighbors:[(12, 9), (14, 9), (13, 10)]
+next_x:13 next_y:10
+getting adjacent walls - x:13 y:10
+neighbors:[(12, 10), (14, 10), (13, 11)]
+next_x:13 next_y:11
+getting adjacent walls - x:13 y:11
+neighbors:[(12, 11), (14, 11), (13, 12)]
+next_x:14 next_y:11
+getting adjacent walls - x:14 y:11
+neighbors:[(15, 11), (14, 10), (14, 12)]
+next_x:15 next_y:11
+getting adjacent walls - x:15 y:11
+neighbors:[(15, 10), (15, 12)]
+next_x:15 next_y:12
+getting adjacent walls - x:15 y:12
+neighbors:[(14, 12), (15, 13)]
+next_x:15 next_y:13
+getting adjacent walls - x:15 y:13
+neighbors:[(14, 13), (16, 13), (15, 14)]
+next_x:14 next_y:13
+getting adjacent walls - x:14 y:13
+neighbors:[(13, 13), (14, 12)]
+next_x:14 next_y:12
+getting adjacent walls - x:14 y:12
+neighbors:[(13, 12)]
+next_x:13 next_y:12
+getting adjacent walls - x:13 y:12
+neighbors:[(12, 12), (13, 13)]
+next_x:13 next_y:13
+getting adjacent walls - x:13 y:13
+neighbors:[(12, 13)]
+next_x:12 next_y:13
+getting adjacent walls - x:12 y:13
+neighbors:[(11, 13), (12, 12)]
+next_x:12 next_y:12
+getting adjacent walls - x:12 y:12
+neighbors:[(11, 12), (12, 11)]
+next_x:11 next_y:12
+getting adjacent walls - x:11 y:12
+neighbors:[(10, 12), (11, 11), (11, 13)]
+next_x:11 next_y:13
+getting adjacent walls - x:11 y:13
+neighbors:[(10, 13)]
+next_x:10 next_y:13
+getting adjacent walls - x:10 y:13
+neighbors:[(10, 12)]
+next_x:10 next_y:12
+getting adjacent walls - x:10 y:12
+neighbors:[(9, 12), (10, 11)]
+next_x:9 next_y:12
+getting adjacent walls - x:9 y:12
+neighbors:[(8, 12), (9, 11)]
+next_x:8 next_y:12
+getting adjacent walls - x:8 y:12
+neighbors:[(8, 11)]
+next_x:8 next_y:11
+getting adjacent walls - x:8 y:11
+neighbors:[(9, 11), (8, 10)]
+next_x:9 next_y:11
+getting adjacent walls - x:9 y:11
+neighbors:[(10, 11), (9, 10)]
+next_x:9 next_y:10
+getting adjacent walls - x:9 y:10
+neighbors:[(8, 10), (10, 10), (9, 9)]
+next_x:10 next_y:10
+getting adjacent walls - x:10 y:10
+neighbors:[(11, 10), (10, 9), (10, 11)]
+next_x:10 next_y:11
+getting adjacent walls - x:10 y:11
+neighbors:[(11, 11)]
+next_x:11 next_y:11
+getting adjacent walls - x:11 y:11
+neighbors:[(12, 11), (11, 10)]
+next_x:12 next_y:11
+getting adjacent walls - x:12 y:11
+neighbors:[(12, 10)]
+next_x:12 next_y:10
+getting adjacent walls - x:12 y:10
+neighbors:[(11, 10), (12, 9)]
+next_x:11 next_y:10
+getting adjacent walls - x:11 y:10
+neighbors:[(11, 9)]
+next_x:11 next_y:9
+getting adjacent walls - x:11 y:9
+neighbors:[(10, 9), (12, 9), (11, 8)]
+next_x:11 next_y:8
+getting adjacent walls - x:11 y:8
+neighbors:[(10, 8), (12, 8), (11, 7)]
+next_x:11 next_y:7
+getting adjacent walls - x:11 y:7
+neighbors:[(10, 7), (12, 7), (11, 6)]
+next_x:10 next_y:7
+getting adjacent walls - x:10 y:7
+neighbors:[(9, 7), (10, 6), (10, 8)]
+next_x:10 next_y:6
+getting adjacent walls - x:10 y:6
+neighbors:[(9, 6), (11, 6), (10, 5)]
+next_x:10 next_y:5
+getting adjacent walls - x:10 y:5
+neighbors:[(9, 5), (11, 5), (10, 4)]
+next_x:11 next_y:5
+getting adjacent walls - x:11 y:5
+neighbors:[(12, 5), (11, 4), (11, 6)]
+next_x:12 next_y:5
+getting adjacent walls - x:12 y:5
+neighbors:[(13, 5), (12, 4), (12, 6)]
+next_x:12 next_y:6
+getting adjacent walls - x:12 y:6
+neighbors:[(11, 6), (13, 6), (12, 7)]
+next_x:13 next_y:6
+getting adjacent walls - x:13 y:6
+neighbors:[(13, 5), (13, 7)]
+next_x:13 next_y:5
+getting adjacent walls - x:13 y:5
+neighbors:[(14, 5), (13, 4)]
+next_x:14 next_y:5
+getting adjacent walls - x:14 y:5
+neighbors:[(15, 5), (14, 4)]
+next_x:14 next_y:4
+getting adjacent walls - x:14 y:4
+neighbors:[(13, 4), (15, 4), (14, 3)]
+next_x:15 next_y:4
+getting adjacent walls - x:15 y:4
+neighbors:[(16, 4), (15, 3), (15, 5)]
+next_x:16 next_y:4
+getting adjacent walls - x:16 y:4
+neighbors:[(17, 4), (16, 3), (16, 5)]
+next_x:17 next_y:4
+getting adjacent walls - x:17 y:4
+neighbors:[(18, 4), (17, 3), (17, 5)]
+next_x:17 next_y:3
+getting adjacent walls - x:17 y:3
+neighbors:[(16, 3), (18, 3), (17, 2)]
+next_x:18 next_y:3
+getting adjacent walls - x:18 y:3
+neighbors:[(19, 3), (18, 2), (18, 4)]
+next_x:18 next_y:2
+getting adjacent walls - x:18 y:2
+neighbors:[(17, 2), (19, 2), (18, 1)]
+next_x:18 next_y:1
+getting adjacent walls - x:18 y:1
+neighbors:[(17, 1), (19, 1), (18, 0)]
+next_x:19 next_y:1
+getting adjacent walls - x:19 y:1
+neighbors:[(19, 0), (19, 2)]
+next_x:19 next_y:2
+getting adjacent walls - x:19 y:2
+neighbors:[(19, 3)]
+next_x:19 next_y:3
+getting adjacent walls - x:19 y:3
+neighbors:[(19, 4)]
+next_x:19 next_y:4
+getting adjacent walls - x:19 y:4
+neighbors:[(18, 4), (19, 5)]
+next_x:18 next_y:4
+getting adjacent walls - x:18 y:4
+neighbors:[(18, 5)]
+next_x:18 next_y:5
+getting adjacent walls - x:18 y:5
+neighbors:[(17, 5), (19, 5), (18, 6)]
+next_x:17 next_y:5
+getting adjacent walls - x:17 y:5
+neighbors:[(16, 5), (17, 6)]
+next_x:16 next_y:5
+getting adjacent walls - x:16 y:5
+neighbors:[(15, 5)]
+next_x:15 next_y:5
+getting adjacent walls - x:15 y:5
+neighbors:[(17, 6)]
+next_x:17 next_y:6
+getting adjacent walls - x:17 y:6
+neighbors:[(18, 6)]
+next_x:18 next_y:6
+getting adjacent walls - x:18 y:6
+neighbors:[(19, 6)]
+next_x:19 next_y:6
+getting adjacent walls - x:19 y:6
+neighbors:[(19, 5)]
+next_x:19 next_y:5
+getting adjacent walls - x:19 y:5
+neighbors:[(19, 0)]
+next_x:19 next_y:0
+getting adjacent walls - x:19 y:0
+neighbors:[(18, 0)]
+next_x:18 next_y:0
+getting adjacent walls - x:18 y:0
+neighbors:[(17, 0)]
+next_x:17 next_y:0
+getting adjacent walls - x:17 y:0
+neighbors:[(16, 0), (17, 1)]
+next_x:16 next_y:0
+getting adjacent walls - x:16 y:0
+neighbors:[(15, 0), (16, 1)]
+next_x:15 next_y:0
+getting adjacent walls - x:15 y:0
+neighbors:[(14, 0), (15, 1)]
+next_x:14 next_y:0
+getting adjacent walls - x:14 y:0
+neighbors:[(13, 0), (14, 1)]
+next_x:13 next_y:0
+getting adjacent walls - x:13 y:0
+neighbors:[(12, 0), (13, 1)]
+next_x:12 next_y:0
+getting adjacent walls - x:12 y:0
+neighbors:[(11, 0), (12, 1)]
+next_x:11 next_y:0
+getting adjacent walls - x:11 y:0
+neighbors:[(10, 0), (11, 1)]
+next_x:10 next_y:0
+getting adjacent walls - x:10 y:0
+neighbors:[(9, 0), (10, 1)]
+next_x:9 next_y:0
+getting adjacent walls - x:9 y:0
+neighbors:[(8, 0), (9, 1)]
+next_x:8 next_y:0
+getting adjacent walls - x:8 y:0
+neighbors:[(7, 0), (8, 1)]
+next_x:7 next_y:0
+getting adjacent walls - x:7 y:0
+neighbors:[(6, 0), (7, 1)]
+next_x:6 next_y:0
+getting adjacent walls - x:6 y:0
+neighbors:[(5, 0), (6, 1)]
+next_x:5 next_y:0
+getting adjacent walls - x:5 y:0
+neighbors:[(4, 0), (5, 1)]
+next_x:5 next_y:1
+getting adjacent walls - x:5 y:1
+neighbors:[(4, 1), (6, 1)]
+next_x:4 next_y:1
+getting adjacent walls - x:4 y:1
+neighbors:[(3, 1), (4, 0), (4, 2)]
+next_x:4 next_y:2
+getting adjacent walls - x:4 y:2
+neighbors:[(3, 2), (4, 3)]
+next_x:3 next_y:2
+getting adjacent walls - x:3 y:2
+neighbors:[(2, 2), (3, 1), (3, 3)]
+next_x:3 next_y:3
+getting adjacent walls - x:3 y:3
+neighbors:[(2, 3), (4, 3)]
+next_x:2 next_y:3
+getting adjacent walls - x:2 y:3
+neighbors:[(1, 3), (2, 2)]
+next_x:2 next_y:2
+getting adjacent walls - x:2 y:2
+neighbors:[(1, 2), (2, 1)]
+next_x:2 next_y:1
+getting adjacent walls - x:2 y:1
+neighbors:[(1, 1), (3, 1), (2, 0)]
+next_x:2 next_y:0
+getting adjacent walls - x:2 y:0
+neighbors:[(1, 0), (3, 0)]
+next_x:3 next_y:0
+getting adjacent walls - x:3 y:0
+neighbors:[(4, 0), (3, 1)]
+next_x:3 next_y:1
+getting adjacent walls - x:3 y:1
+neighbors:[(4, 0)]
+next_x:4 next_y:0
+getting adjacent walls - x:4 y:0
+neighbors:[(1, 0)]
+next_x:1 next_y:0
+getting adjacent walls - x:1 y:0
+neighbors:[(0, 0), (1, 1)]
+next_x:1 next_y:1
+getting adjacent walls - x:1 y:1
+neighbors:[(0, 1), (1, 2)]
+next_x:1 next_y:2
+getting adjacent walls - x:1 y:2
+neighbors:[(0, 2), (1, 3)]
+next_x:0 next_y:2
+getting adjacent walls - x:0 y:2
+neighbors:[(0, 1), (0, 3)]
+next_x:0 next_y:1
+getting adjacent walls - x:0 y:1
+neighbors:[(0, 0)]
+next_x:0 next_y:0
+getting adjacent walls - x:0 y:0
+neighbors:[(0, 3)]
+next_x:0 next_y:3
+getting adjacent walls - x:0 y:3
+neighbors:[(1, 3), (0, 4)]
+next_x:1 next_y:3
+getting adjacent walls - x:1 y:3
+neighbors:[(1, 4)]
+next_x:1 next_y:4
+getting adjacent walls - x:1 y:4
+neighbors:[(0, 4), (1, 5)]
+next_x:1 next_y:5
+getting adjacent walls - x:1 y:5
+neighbors:[(0, 5)]
+next_x:0 next_y:5
+getting adjacent walls - x:0 y:5
+neighbors:[(0, 4), (0, 6)]
+next_x:0 next_y:4
+getting adjacent walls - x:0 y:4
+neighbors:[(0, 6)]
+next_x:0 next_y:6
+getting adjacent walls - x:0 y:6
+neighbors:[(4, 3)]
+next_x:4 next_y:3
+getting adjacent walls - x:4 y:3
+neighbors:[(6, 1)]
+next_x:6 next_y:1
+getting adjacent walls - x:6 y:1
+neighbors:[(7, 1)]
+next_x:7 next_y:1
+getting adjacent walls - x:7 y:1
+neighbors:[(8, 1), (7, 2)]
+next_x:7 next_y:2
+getting adjacent walls - x:7 y:2
+neighbors:[(8, 2), (7, 3)]
+next_x:8 next_y:2
+getting adjacent walls - x:8 y:2
+neighbors:[(9, 2), (8, 1), (8, 3)]
+next_x:8 next_y:1
+getting adjacent walls - x:8 y:1
+neighbors:[(9, 1)]
+next_x:9 next_y:1
+getting adjacent walls - x:9 y:1
+neighbors:[(10, 1), (9, 2)]
+next_x:9 next_y:2
+getting adjacent walls - x:9 y:2
+neighbors:[(10, 2), (9, 3)]
+next_x:9 next_y:3
+getting adjacent walls - x:9 y:3
+neighbors:[(8, 3), (10, 3), (9, 4)]
+next_x:10 next_y:3
+getting adjacent walls - x:10 y:3
+neighbors:[(11, 3), (10, 2), (10, 4)]
+next_x:11 next_y:3
+getting adjacent walls - x:11 y:3
+neighbors:[(12, 3), (11, 2), (11, 4)]
+next_x:11 next_y:2
+getting adjacent walls - x:11 y:2
+neighbors:[(10, 2), (12, 2), (11, 1)]
+next_x:10 next_y:2
+getting adjacent walls - x:10 y:2
+neighbors:[(10, 1)]
+next_x:10 next_y:1
+getting adjacent walls - x:10 y:1
+neighbors:[(11, 1)]
+next_x:11 next_y:1
+getting adjacent walls - x:11 y:1
+neighbors:[(12, 1)]
+next_x:12 next_y:1
+getting adjacent walls - x:12 y:1
+neighbors:[(13, 1), (12, 2)]
+next_x:13 next_y:1
+getting adjacent walls - x:13 y:1
+neighbors:[(14, 1), (13, 2)]
+next_x:13 next_y:2
+getting adjacent walls - x:13 y:2
+neighbors:[(12, 2), (14, 2), (13, 3)]
+next_x:12 next_y:2
+getting adjacent walls - x:12 y:2
+neighbors:[(12, 3)]
+next_x:12 next_y:3
+getting adjacent walls - x:12 y:3
+neighbors:[(13, 3), (12, 4)]
+next_x:13 next_y:3
+getting adjacent walls - x:13 y:3
+neighbors:[(14, 3), (13, 4)]
+next_x:13 next_y:4
+getting adjacent walls - x:13 y:4
+neighbors:[(12, 4)]
+next_x:12 next_y:4
+getting adjacent walls - x:12 y:4
+neighbors:[(11, 4)]
+next_x:11 next_y:4
+getting adjacent walls - x:11 y:4
+neighbors:[(10, 4)]
+next_x:10 next_y:4
+getting adjacent walls - x:10 y:4
+neighbors:[(9, 4)]
+next_x:9 next_y:4
+getting adjacent walls - x:9 y:4
+neighbors:[(8, 4), (9, 5)]
+next_x:8 next_y:4
+getting adjacent walls - x:8 y:4
+neighbors:[(8, 3), (8, 5)]
+next_x:8 next_y:5
+getting adjacent walls - x:8 y:5
+neighbors:[(9, 5)]
+next_x:9 next_y:5
+getting adjacent walls - x:9 y:5
+neighbors:[(9, 6)]
+next_x:9 next_y:6
+getting adjacent walls - x:9 y:6
+neighbors:[(9, 7)]
+next_x:9 next_y:7
+getting adjacent walls - x:9 y:7
+neighbors:[(9, 8)]
+next_x:9 next_y:8
+getting adjacent walls - x:9 y:8
+neighbors:[(8, 8), (10, 8), (9, 9)]
+next_x:9 next_y:9
+getting adjacent walls - x:9 y:9
+neighbors:[(8, 9), (10, 9)]
+next_x:8 next_y:9
+getting adjacent walls - x:8 y:9
+neighbors:[(7, 9), (8, 8), (8, 10)]
+next_x:8 next_y:10
+getting adjacent walls - x:8 y:10
+neighbors:[(7, 9), (8, 8)]
+next_x:8 next_y:8
+getting adjacent walls - x:8 y:8
+neighbors:[(7, 9)]
+next_x:7 next_y:9
+getting adjacent walls - x:7 y:9
+neighbors:[(6, 9)]
+next_x:6 next_y:9
+getting adjacent walls - x:6 y:9
+neighbors:[(10, 9)]
+next_x:10 next_y:9
+getting adjacent walls - x:10 y:9
+neighbors:[(10, 8)]
+next_x:10 next_y:8
+getting adjacent walls - x:10 y:8
+neighbors:[(8, 3)]
+next_x:8 next_y:3
+getting adjacent walls - x:8 y:3
+neighbors:[(7, 3)]
+next_x:7 next_y:3
+getting adjacent walls - x:7 y:3
+neighbors:[(14, 3)]
+next_x:14 next_y:3
+getting adjacent walls - x:14 y:3
+neighbors:[(15, 3), (14, 2)]
+next_x:14 next_y:2
+getting adjacent walls - x:14 y:2
+neighbors:[(15, 2), (14, 1)]
+next_x:14 next_y:1
+getting adjacent walls - x:14 y:1
+neighbors:[(15, 1)]
+next_x:15 next_y:1
+getting adjacent walls - x:15 y:1
+neighbors:[(16, 1), (15, 2)]
+next_x:15 next_y:2
+getting adjacent walls - x:15 y:2
+neighbors:[(16, 2), (15, 3)]
+next_x:15 next_y:3
+getting adjacent walls - x:15 y:3
+neighbors:[(16, 3)]
+next_x:16 next_y:3
+getting adjacent walls - x:16 y:3
+neighbors:[(16, 2)]
+next_x:16 next_y:2
+getting adjacent walls - x:16 y:2
+neighbors:[(17, 2), (16, 1)]
+next_x:16 next_y:1
+getting adjacent walls - x:16 y:1
+neighbors:[(17, 1)]
+next_x:17 next_y:1
+getting adjacent walls - x:17 y:1
+neighbors:[(17, 2)]
+next_x:17 next_y:2
+getting adjacent walls - x:17 y:2
+neighbors:[(13, 7)]
+next_x:13 next_y:7
+getting adjacent walls - x:13 y:7
+neighbors:[(12, 7)]
+next_x:12 next_y:7
+getting adjacent walls - x:12 y:7
+neighbors:[(12, 8)]
+next_x:12 next_y:8
+getting adjacent walls - x:12 y:8
+neighbors:[(12, 9)]
+next_x:12 next_y:9
+getting adjacent walls - x:12 y:9
+neighbors:[(11, 6)]
+next_x:11 next_y:6
+getting adjacent walls - x:11 y:6
+neighbors:[(16, 13), (15, 14)]
+next_x:15 next_y:14
+getting adjacent walls - x:15 y:14
+neighbors:[(16, 14), (15, 15)]
+next_x:15 next_y:15
+getting adjacent walls - x:15 y:15
+neighbors:[(16, 15), (15, 16)]
+next_x:16 next_y:15
+getting adjacent walls - x:16 y:15
+neighbors:[(17, 15), (16, 14), (16, 16)]
+next_x:16 next_y:14
+getting adjacent walls - x:16 y:14
+neighbors:[(17, 14), (16, 13)]
+next_x:16 next_y:13
+getting adjacent walls - x:16 y:13
+neighbors:[(17, 14)]
+next_x:17 next_y:14
+getting adjacent walls - x:17 y:14
+neighbors:[(17, 15)]
+next_x:17 next_y:15
+getting adjacent walls - x:17 y:15
+neighbors:[(17, 16)]
+next_x:17 next_y:16
+getting adjacent walls - x:17 y:16
+neighbors:[(16, 16)]
+next_x:16 next_y:16
+getting adjacent walls - x:16 y:16
+neighbors:[(15, 16)]
+next_x:15 next_y:16
+getting adjacent walls - x:15 y:16
+neighbors:[(15, 17)]
+next_x:15 next_y:17
+getting adjacent walls - x:15 y:17
+neighbors:[(15, 10)]
+next_x:15 next_y:10
+getting adjacent walls - x:15 y:10
+neighbors:[(14, 10), (15, 9)]
+next_x:14 next_y:10
+getting adjacent walls - x:14 y:10
+neighbors:[(14, 9)]
+next_x:14 next_y:9
+getting adjacent walls - x:14 y:9
+neighbors:[(15, 9)]
+next_x:15 next_y:9
+getting adjacent walls - x:15 y:9
+neighbors:[(16, 9), (15, 8)]
+next_x:16 next_y:9
+getting adjacent walls - x:16 y:9
+neighbors:[(17, 9)]
+next_x:17 next_y:9
+getting adjacent walls - x:17 y:9
+neighbors:[(15, 8)]
+next_x:15 next_y:8
+getting adjacent walls - x:15 y:8
+neighbors:[(15, 7)]
+next_x:15 next_y:7
+getting adjacent walls - x:15 y:7
+neighbors:[(19, 12)]
+next_x:19 next_y:12
+getting adjacent walls - x:19 y:12
+neighbors:[(18, 12), (19, 13)]
+next_x:18 next_y:12
+getting adjacent walls - x:18 y:12
+neighbors:[(19, 13)]
+next_x:19 next_y:13
+getting adjacent walls - x:19 y:13
+neighbors:[(19, 14)]
+next_x:19 next_y:14
+getting adjacent walls - x:19 y:14
+neighbors:[(19, 15)]
+next_x:19 next_y:15
+getting adjacent walls - x:19 y:15
+neighbors:[(19, 16)]
+next_x:19 next_y:16
+getting adjacent walls - x:19 y:16
+neighbors:[(19, 19)]
+next_x:19 next_y:19
+getting adjacent walls - x:19 y:19
+neighbors:[(18, 19)]
+next_x:18 next_y:19
+getting adjacent walls - x:18 y:19
+neighbors:[(17, 19)]
+next_x:17 next_y:19
+getting adjacent walls - x:17 y:19
+neighbors:[(14, 19)]
+next_x:14 next_y:19
+getting adjacent walls - x:14 y:19
+neighbors:[(13, 19)]
+next_x:13 next_y:19
+getting adjacent walls - x:13 y:19
+neighbors:[(12, 19)]
+next_x:12 next_y:19
+getting adjacent walls - x:12 y:19
+neighbors:[(11, 19), (12, 18)]
+next_x:12 next_y:18
+getting adjacent walls - x:12 y:18
+neighbors:[(11, 18), (12, 17)]
+next_x:12 next_y:17
+getting adjacent walls - x:12 y:17
+neighbors:[(11, 17), (12, 16)]
+next_x:12 next_y:16
+getting adjacent walls - x:12 y:16
+neighbors:[(11, 16), (13, 16), (12, 15)]
+next_x:12 next_y:15
+getting adjacent walls - x:12 y:15
+neighbors:[(11, 15), (13, 15)]
+next_x:13 next_y:15
+getting adjacent walls - x:13 y:15
+neighbors:[(13, 16)]
+next_x:13 next_y:16
+getting adjacent walls - x:13 y:16
+neighbors:[(11, 15)]
+next_x:11 next_y:15
+getting adjacent walls - x:11 y:15
+neighbors:[(11, 16)]
+next_x:11 next_y:16
+getting adjacent walls - x:11 y:16
+neighbors:[(11, 17)]
+next_x:11 next_y:17
+getting adjacent walls - x:11 y:17
+neighbors:[(10, 17), (11, 18)]
+next_x:11 next_y:18
+getting adjacent walls - x:11 y:18
+neighbors:[(10, 18), (11, 19)]
+next_x:11 next_y:19
+getting adjacent walls - x:11 y:19
+neighbors:[(10, 19)]
+next_x:10 next_y:19
+getting adjacent walls - x:10 y:19
+neighbors:[(9, 19), (10, 18)]
+next_x:10 next_y:18
+getting adjacent walls - x:10 y:18
+neighbors:[(9, 18), (10, 17)]
+next_x:9 next_y:18
+getting adjacent walls - x:9 y:18
+neighbors:[(8, 18), (9, 17), (9, 19)]
+next_x:8 next_y:18
+getting adjacent walls - x:8 y:18
+neighbors:[(8, 17), (8, 19)]
+next_x:8 next_y:17
+getting adjacent walls - x:8 y:17
+neighbors:[(9, 17)]
+next_x:9 next_y:17
+getting adjacent walls - x:9 y:17
+neighbors:[(10, 17)]
+next_x:10 next_y:17
+getting adjacent walls - x:10 y:17
+neighbors:[(8, 19)]
+next_x:8 next_y:19
+getting adjacent walls - x:8 y:19
+neighbors:[(9, 19)]
+next_x:9 next_y:19
+getting adjacent walls - x:9 y:19
+neighbors:[(9, 15)]
+next_x:9 next_y:15
+getting adjacent walls - x:9 y:15
+neighbors:[(5, 19)]
+next_x:5 next_y:19
+getting adjacent walls - x:5 y:19
+neighbors:[(3, 7)]
+next_x:3 next_y:7
+getting adjacent walls - x:3 y:7
+neighbors:[(2, 7)]
+next_x:2 next_y:7
+getting adjacent walls - x:2 y:7
+[
+    [13, 9, 8, 8, 9, 8, 9, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 8, 9],
+    [4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+    [6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]
+]
+{('0',): <Surface(32x32x32 SW)>, ('1',): <Surface(32x32x32 SW)>}
+tile_index: 13
+[['0', '0', '1', '1'], ['1', '0', '1', '0'], ['1', '1', '0', '0'], ['0', '1', '0', '1']]

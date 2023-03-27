@@ -53,51 +53,100 @@ Create:
         where timestamp is an integer value. 
 
 """
-import sys,os
+import sys, os
 import math
 from PIL import Image
 from os import listdir
 from os.path import isfile, join
 from natsort import natsorted
 import glob
-import time;
+import time
+from rich import print
 
-def sequence_num(n=0,digits=3):
-    """ Returns a zero padded string.
-        Example: sequence(234,7) would return 0000234
+
+def wangToIndex(index, direction="from"):
+    fromWang = {
+        4: 0,
+        6: 1,
+        14: 2,
+        12: 3,
+        5: 4,
+        7: 5,
+        15: 6,
+        13: 7,
+        1: 8,
+        3: 9,
+        11: 10,
+        9: 11,
+        0: 12,
+        2: 13,
+        10: 14,
+        8: 15,
+    }
+    toWang = {
+        0: 4,
+        1: 6,
+        2: 14,
+        3: 2,
+        4: 5,
+        5: 7,
+        6: 15,
+        7: 13,
+        8: 1,
+        9: 3,
+        10: 11,
+        11: 9,
+        12: 0,
+        13: 2,
+        14: 10,
+        15: 8,
+    }
+    if direction == "from":
+        return fromWang[index]
+    else:
+        return toWang[index]
+
+
+def sequence_num(n=0, digits=3):
+    """Returns a zero padded string.
+    Example: sequence(234,7) would return 0000234
     """
     return str(n).zfill(digits)
 
+
 def explodeSpriteSheet(**kwargs):
-    """ Takes a sprite sheet thats layed out in a consistent manor (same size tiles), 
-        it will take each "tile" and create a seperate image. 
-        Params:
-            inpath <string>     : path to input folder
-            outpath <string>    : path to outinput folder
-            name <string>       : basename to give to each file
-            rows <int>          : how many rows in the sheet
-            cols <int>          : how many columns in the sheet
-            frame_width <int>   : width of frame in pixels
-            frame_height <int>  : height of frame in pixels
-            direction <xy / yx> : process row then col (xy) or column then row (yx)
-            xoffset <int>       : lets you skip frames in x direction
-            yoffset <int>       : skip frames in y direction
+    """Takes a sprite sheet thats layed out in a consistent manor (same size tiles),
+    it will take each "tile" and create a seperate image.
+    Params:
+        inpath <string>     : path to input folder
+        outpath <string>    : path to outinput folder
+        name <string>       : basename to give to each file
+        rows <int>          : how many rows in the sheet
+        cols <int>          : how many columns in the sheet
+        frame_width <int>   : width of frame in pixels
+        frame_height <int>  : height of frame in pixels
+        direction <xy / yx> : process row then col (xy) or column then row (yx)
+        xoffset <int>       : lets you skip frames in x direction
+        yoffset <int>       : skip frames in y direction
+        isWang <bool>       : http://www.cr31.co.uk/stagecast/wang/intro.html
     """
 
-    inpath = kwargs.get("inpath",None)
-    outpath = kwargs.get("outpath",None)
-    name = kwargs.get("name",None)
-    rows = kwargs.get("rows",None)
-    cols = kwargs.get("cols",None)
-    frame_width = kwargs.get("frame_width",None)
-    frame_height = kwargs.get("frame_height",None)
-    direction = kwargs.get("direction",None)
-    xoffset = kwargs.get("xoffset",0)
-    yoffset = kwargs.get("yoffset",0)
-    xgap = kwargs.get("xgap",0)
-    ygap = kwargs.get("ygap",0)
-    xborder = kwargs.get("xborder",0)
-    yborder = kwargs.get("yborder",0)
+    inpath = kwargs.get("inpath", None)
+    outpath = kwargs.get("outpath", None)
+    name = kwargs.get("name", None)
+    rows = kwargs.get("rows", None)
+    cols = kwargs.get("cols", None)
+    frame_width = kwargs.get("frame_width", None)
+    frame_height = kwargs.get("frame_height", None)
+    direction = kwargs.get("direction", None)
+    xoffset = kwargs.get("xoffset", 0)
+    yoffset = kwargs.get("yoffset", 0)
+    xgap = kwargs.get("xgap", 0)
+    ygap = kwargs.get("ygap", 0)
+    xborder = kwargs.get("xborder", 0)
+    yborder = kwargs.get("yborder", 0)
+    startIndex = int(kwargs.get("start_index", 1))
+    isWang = kwargs.get("isWang", "from")
 
     if not os.path.isfile(inpath):
         print(f"{inpath} is not a proper file...")
@@ -108,7 +157,7 @@ def explodeSpriteSheet(**kwargs):
     cols = int(cols)
     rows = int(rows)
     frame_width = int(frame_width)
-    frame_height= int(frame_height)
+    frame_height = int(frame_height)
     xoffset = int(xoffset)
     yoffset = int(yoffset)
     xgap = int(xgap)
@@ -116,30 +165,32 @@ def explodeSpriteSheet(**kwargs):
     xborder = int(xborder)
     yborder = int(yborder)
 
-    count = 1
+    count = startIndex
     yg = 0
     xg = 0
     # Determine row wise or column wise traversal
-    if direction == 'xy':
-       
-        # Traverse sheet in the order determined from 
+    if direction == "xy":
+        # Traverse sheet in the order determined from
         # previous if statement
         for r in range(rows):
             y = r * frame_height + (ygap * r) + yborder
             for c in range(cols):
                 x = c * frame_width + (xgap * c) + xborder
-                sequence = sequence_num(count)
+                if isWang == "from":
+                    sequence = sequence_num(wangToIndex(count, "from"))
+                else:
+                    sequence = sequence_num(wangToIndex(count, "to"))
 
                 x += xoffset
                 y += yoffset
 
-                print(x,y)
-                frame_im = im.crop((x, y, x+frame_width, y+frame_height))
-                frame_im.save(join(outpath,name+'_'+sequence+".png"), quality=95)
+                print(x, y)
+                frame_im = im.crop((x, y, x + frame_width, y + frame_height))
+                frame_im.save(join(outpath, name + "_" + sequence + ".png"), quality=95)
                 count += 1
 
     else:
-        # Traverse sheet in the order determined from 
+        # Traverse sheet in the order determined from
         # previous if statement
         for r in range(rows):
             x = r * frame_height
@@ -150,42 +201,41 @@ def explodeSpriteSheet(**kwargs):
                 x += xoffset
                 y += yoffset
 
-                frame_im = im.crop((x, y, x+frame_width, y+frame_height))
-                frame_im.save(join(outpath,name+'_'+sequence+".png"), quality=95)
+                frame_im = im.crop((x, y, x + frame_width, y + frame_height))
+                frame_im.save(join(outpath, name + "_" + sequence + ".png"), quality=95)
                 count += 1
 
 
-
 def createSpriteSheet(**kwargs):
-    """ Takes a sprite sheet thats layed out in a consistent manor (same size tiles), 
-        it will take each "tile" and create a seperate image. 
-        Params:
-            inpath <string>     : path to input folder
-            outpath <string>    : path to outinput folder
-            rows <int>          : how many rows in the sheet
-            cols <int>          : how many columns in the sheet
-            frame_width <int>   : width of frame in pixels
-            frame_height <int>  : height of frame in pixels
-            direction <xy / yx> : process row then col (xy) or column then row (yx)
-            image_type <string> : default png 
+    """Takes a sprite sheet thats layed out in a consistent manor (same size tiles),
+    it will take each "tile" and create a seperate image.
+    Params:
+        inpath <string>     : path to input folder
+        outpath <string>    : path to outinput folder
+        rows <int>          : how many rows in the sheet
+        cols <int>          : how many columns in the sheet
+        frame_width <int>   : width of frame in pixels
+        frame_height <int>  : height of frame in pixels
+        direction <xy / yx> : process row then col (xy) or column then row (yx)
+        image_type <string> : default png
     """
-    inpath = kwargs.get("inpath",None)
-    outpath = kwargs.get("outpath",None)
-    rows = kwargs.get("rows",None)
-    cols = kwargs.get("cols",None)
-    frame_width = kwargs.get("frame_width",None)
-    frame_height = kwargs.get("frame_height",None)
-    direction = kwargs.get("direction",None)
-    image_type = kwargs.get("image_type","png")
-    
+    inpath = kwargs.get("inpath", None)
+    outpath = kwargs.get("outpath", None)
+    rows = kwargs.get("rows", None)
+    cols = kwargs.get("cols", None)
+    frame_width = kwargs.get("frame_width", None)
+    frame_height = kwargs.get("frame_height", None)
+    direction = kwargs.get("direction", None)
+    image_type = kwargs.get("image_type", "png")
+
     ts = time.time()
     ts = int(ts)
 
     if outpath == None:
-        outpath = os.path.join(inpath,'sprite_sheet_'+str(ts)+'.png')
+        outpath = os.path.join(inpath, "sprite_sheet_" + str(ts) + ".png")
     else:
         if outpath[-3:] != image_type:
-            outpath = os.path.join(outpath,'sprite_sheet_'+str(ts)+'.png')
+            outpath = os.path.join(outpath, "sprite_sheet_" + str(ts) + ".png")
 
     if not os.path.isdir(inpath):
         print(f"Error: {inpath} is not a proper folder! ")
@@ -193,10 +243,10 @@ def createSpriteSheet(**kwargs):
 
     frame_width = int(frame_width)
     frame_height = int(frame_height)
-    rows= int(rows)
+    rows = int(rows)
     cols = int(cols)
 
-    images = glob.glob(os.path.join(inpath,f"*.{image_type}"))
+    images = glob.glob(os.path.join(inpath, f"*.{image_type}"))
 
     images.sort()
 
@@ -205,17 +255,17 @@ def createSpriteSheet(**kwargs):
     height = frame_height * rows
 
     # create a blank image to "paste" on
-    spriteimg = Image.new('RGBA', (width, height),(255, 255, 255, 0))
+    spriteimg = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
     x = 0
     y = 0
     i = 0
-    
-    # loop through images and calculate where 
+
+    # loop through images and calculate where
     # to paste image
     for img in images:
         f = Image.open(img)
-        w,h = f.size
+        w, h = f.size
 
         # if image is smaller than frame, center it.
         if w < frame_width and h < frame_height:
@@ -226,13 +276,13 @@ def createSpriteSheet(**kwargs):
             ty = y
         spriteimg.paste(f, (tx, ty))
         i += 1
-        if direction == 'xy':
-            x += frame_width 
+        if direction == "xy":
+            x += frame_width
             if i == cols:
                 y += frame_height
                 x = 0
                 i = 0
-        else: # direction == yx
+        else:  # direction == yx
             y += frame_height
             if i == rows:
                 x += frame_width
@@ -240,10 +290,10 @@ def createSpriteSheet(**kwargs):
                 i = 0
 
     spriteimg.save(outpath)
-    
+
 
 def mykwargs(argv):
-    '''
+    """
     Processes argv list into plain args and kwargs.
     Just easier than using a library like argparse for small things.
     Example:
@@ -257,25 +307,29 @@ def mykwargs(argv):
         spaces between k=v would result in bad params
     Returns:
         tuple  (args,kargs)
-    '''
+    """
     args = []
     kargs = {}
 
+    print(argv)
+
     for arg in argv:
-        if '=' in arg:
-            key,val = arg.split('=')
+        if "=" in arg:
+            key, val = arg.split("=")
             kargs[key] = val
         else:
             args.append(arg)
-    return args,kargs
+    return args, kargs
 
-def wrap(line,nl='\n\t'):
-    """wraps a string within a terminal window
-    """
+
+def wrap(line, nl="\n\t"):
+    """wraps a string within a terminal window"""
     nl = nl
-    rows, columns = os.popen('stty size', 'r').read().split()
+    rows, columns = os.popen("stty size", "r").read().split()
 
-    newline = ''
+    print(rows, columns)
+
+    newline = ""
     line = line.split(" ")
     length = 0
     for item in line:
@@ -289,32 +343,44 @@ def wrap(line,nl='\n\t'):
 
 
 def usage(command=None):
-
-    print(wrap("Usage: python spriter.py action=[extract,create] inpath=string_file outpath=string_folder name=string rows=int cols=int frame_width=int frame_height=int direction=[xy,yx] [xoffset=int] [yoffset=int] [image_type=str]"))
+    print(
+        wrap(
+            "Usage: python spriter.py action=(extract or create) inpath=string_file outpath=string_folder name=string rows=int cols=int frame_width=int frame_height=int direction=(xy or yx) (xoffset=int) (yoffset=int) (image_type=str) (start_index=int 0,1) (isWang=True,False)"
+        )
+    )
 
     if command:
-        if command == 'extract':
+        if command == "extract":
             # Params in square brackets are optional
-            # The kwargs function script needs the key value pairs (key=value) to NOT have spaces 
-            print(wrap("Example: python spriter.py action=extract inpath=pacman_ghosts.png outpath=pacman_ghosts_folder name=pacman_pink rows=9 cols=3 frame_width=40 frame_height=40 direction=xy xoffset=120"))
+            # The kwargs function script needs the key value pairs (key=value) to NOT have spaces
+            print(
+                wrap(
+                    "Example: python spriter.py action=extract inpath=pacman_ghosts.png outpath=pacman_ghosts_folder name=pacman_pink rows=9 cols=3 frame_width=40 frame_height=40 direction=xy xoffset=120"
+                )
+            )
             print("")
         else:
-            print(wrap("Example: python spriter.py action=create inpath=/path/to/images outpath=/path/to/pacman_pink_ghost.png rows=9 cols=3 frame_width=40 frame_height=40 direction=xy"))
+            print(
+                wrap(
+                    "Example: python spriter.py action=create inpath=/path/to/images outpath=/path/to/pacman_pink_ghost.png rows=9 cols=3 frame_width=40 frame_height=40 direction=xy"
+                )
+            )
             print("")
 
     sys.exit()
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     """
     Sprite maker / extractor.
     """
     argv = sys.argv[1:]
 
     # process command line args
-    args,kwargs = mykwargs(argv)
+    args, kwargs = mykwargs(argv)
 
     # make sure action (extract or create) is an argument
-    action = kwargs.get("action",None)
+    action = kwargs.get("action", None)
 
     # throw error if no action
     if action is None:
@@ -322,57 +388,69 @@ if __name__=='__main__':
         usage()
 
     # extracting a sprited from a sheet
-    elif action == 'extract':
-        inpath = kwargs.get("inpath",None)
-        outpath = kwargs.get("outpath",None)
-        name = kwargs.get("name",None)
-        rows = kwargs.get("rows",None)
-        cols = kwargs.get("cols",None)
-        frame_width = kwargs.get("frame_width",None)
-        frame_height = kwargs.get("frame_height",None)
-        direction = kwargs.get("direction",None)
-        xoffset = kwargs.get("xoffset",0)
-        yoffset = kwargs.get("yoffset",0)
+    elif action == "extract":
+        inpath = kwargs.get("inpath", None)
+        outpath = kwargs.get("outpath", None)
+        name = kwargs.get("name", None)
+        rows = kwargs.get("rows", None)
+        cols = kwargs.get("cols", None)
+        frame_width = kwargs.get("frame_width", None)
+        frame_height = kwargs.get("frame_height", None)
+        direction = kwargs.get("direction", None)
+        xoffset = kwargs.get("xoffset", 0)
+        yoffset = kwargs.get("yoffset", 0)
+        isWang = kwargs.get("isWang", False)
 
-        # make a list to make sure none of these are None :) 
-        params = [inpath,outpath,name,rows,cols,frame_width,frame_height,direction]
+        # make a list to make sure none of these are None :)
+        params = [
+            inpath,
+            outpath,
+            name,
+            rows,
+            cols,
+            frame_width,
+            frame_height,
+            direction,
+        ]
 
         if None in params:
             print("Missing a parameter ... ")
             usage("extract")
 
-        # checking if outpath exists, if not create it ... 
+        # checking if outpath exists, if not create it ...
         if not os.path.isdir(outpath):
-            ans = input(f"{outpath} is not a directory! Would you like me to create it? [Y/n]:")
-        
-            if ans == "" or ans == "Y" or ans =="y":
+            ans = input(
+                f"{outpath} is not a directory! Would you like me to create it? [Y/n]:"
+            )
+
+            if ans == "" or ans == "Y" or ans == "y":
                 try:
                     os.mkdir(outpath)
                 except OSError:
-                    print (f"Creation of the directory {outpath} failed!")
+                    print(f"Creation of the directory {outpath} failed!")
                 else:
-                    print (f"Successfully created the directory {outpath}")
+                    print(f"Successfully created the directory {outpath}")
 
         # do it!
         explodeSpriteSheet(**kwargs)
-        
-    # this is going to be very basic. 
-    # putting specific moves together or anything complicated is 
-    # beyond this script. This will take a folder of images and 
+
+    # this is going to be very basic.
+    # putting specific moves together or anything complicated is
+    # beyond this script. This will take a folder of images and
     # make a sheet with a specified number of rows and columns
-    elif action == 'create':
+    elif action == "create":
+        inpath = kwargs.get("inpath", None)
+        outpath = kwargs.get("outpath", None)
+        rows = kwargs.get("rows", None)
+        cols = kwargs.get("cols", None)
+        frame_width = kwargs.get("frame_width", None)
+        frame_height = kwargs.get("frame_height", None)
+        direction = kwargs.get("direction", None)
+        image_type = kwargs.get("image_type", "png")
+        isWang = kwargs.get("isWang", False)
 
-        inpath = kwargs.get("inpath",None)
-        outpath = kwargs.get("outpath",None)
-        rows = kwargs.get("rows",None)
-        cols = kwargs.get("cols",None)
-        frame_width = kwargs.get("frame_width",None)
-        frame_height = kwargs.get("frame_height",None)
-        direction = kwargs.get("direction",None)
-        image_type = kwargs.get("image_type","png")
-
-        # make a list to make sure none of these are None :) 
-        params = [inpath,rows,cols,frame_width,frame_height,direction]
+        # make a list to make sure none of these are None :)
+        params = [inpath, rows, cols, frame_width, frame_height, direction]
 
         if None in params:
             print("Missing a parameter to create a sprite ... ")
