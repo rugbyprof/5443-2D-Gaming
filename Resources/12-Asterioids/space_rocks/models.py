@@ -1,7 +1,7 @@
 from pygame.math import Vector2
 from pygame.transform import rotozoom
-
-from utils import get_random_velocity, load_sound, load_sprite, wrap_position
+import random
+from utils import get_random_velocity, load_sound, load_sprite, wrap_position, distance
 
 UP = Vector2(0, -1)
 
@@ -25,18 +25,86 @@ class GameObject:
         return distance < self.radius + other_obj.radius
 
 
+class NPCShip(pygame.sprite.Sprite):
+    def __init__(self, x, y, target_list, projectile_group):
+        super().__init__()
+        self.image = pygame.image.load(
+            "../assets/sprites/space_ship5_40x40.png.png"
+        ).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.speed = 2
+        self.rotation_speed = 2
+        self.target_list = target_list
+        self.projectile_group = projectile_group
+        self.target = None
+        self.target_time = 0
+        self.target_time_quantum = 120  # 2 seconds at 60 FPS
+        self.shooting_delay = 60
+        self.shooting_timer = 0
+
+    def choose_target(self):
+        if self.target_time >= self.target_time_quantum:
+            if self.target_list:
+                self.target = random.choice(self.target_list)
+            else:
+                self.target = None
+            self.target_time = 0
+        else:
+            self.target_time += 1
+
+    def follow_target(self):
+        if self.target:
+            direction = Vector2(
+                self.target.rect.x - self.rect.x, self.target.rect.y - self.rect.y
+            )
+            distance = direction.length()
+            direction.normalize_ip()
+
+            angle = math.degrees(math.atan2(direction.y, direction.x)) - 90
+            current_angle = (
+                pygame.transform.rotate(self.image, self.rotation_speed)
+                .get_rect()
+                .angle
+            )
+            new_angle = angle - current_angle
+            self.image = pygame.transform.rotate(self.image, new_angle)
+            self.rect = self.image.get_rect(center=self.rect.center)
+
+            if distance > 100:
+                self.rect.x += direction.x * self.speed
+                self.rect.y += direction.y * self.speed
+
+    def shoot(self):
+        if self.shooting_timer >= self.shooting_delay:
+            if self.target:
+                projectile = Projectile(
+                    self.rect.x, self.rect.y, self.target.rect.x, self.target.rect.y
+                )
+                self.projectile_group.add(projectile)
+            self.shooting_timer = 0
+        else:
+            self.shooting_timer += 1
+
+    def update(self):
+        self.choose_target()
+        self.follow_target()
+        self.shoot()
+
+
 class Spaceship(GameObject):
     MANEUVERABILITY = 3
     ACCELERATION = 0.25
     BULLET_SPEED = 100
 
-    def __init__(self, position, create_bullet_callback):
+    def __init__(self, position, create_bullet_callback, ship="space_ship_40x40"):
         self.create_bullet_callback = create_bullet_callback
         self.laser_sound = load_sound("laser")
         # Make a copy of the original UP vector
         self.direction = Vector2(UP)
 
-        super().__init__(position, load_sprite("space_ship_40x40"), Vector2(0))
+        super().__init__(position, load_sprite(ship), Vector2(0))
 
     def rotate(self, clockwise=True):
         sign = 1 if clockwise else -1
@@ -58,6 +126,48 @@ class Spaceship(GameObject):
         bullet = Bullet(self.position, bullet_velocity)
         self.create_bullet_callback(bullet)
         self.laser_sound.play()
+
+
+class NPC(Spaceship):
+    def __init__(self,position,create_bullet_callback,ship="space_ship5_40x40.png",targets=[]):
+        self.targets = targets
+        super().__init__(position, create_bullet_callback, ship)
+
+    def choose_target(self):
+        closest = 100000
+        for target in self.targets:
+            if distance(target.rect,self
+            
+            # if self.target_time >= self.target_time_quantum:
+            #     if self.target_list:
+            #         self.target = random.choice(self.target_list)
+            #     else:
+            #         self.target = None
+            #     self.target_time = 0
+            # else:
+            #     self.target_time += 1
+
+    def follow_target(self):
+        if self.target:
+            direction = Vector2(
+                self.target.rect.x - self.rect.x, self.target.rect.y - self.rect.y
+            )
+            distance = direction.length()
+            direction.normalize_ip()
+
+            angle = math.degrees(math.atan2(direction.y, direction.x)) - 90
+            current_angle = (
+                pygame.transform.rotate(self.image, self.rotation_speed)
+                .get_rect()
+                .angle
+            )
+            new_angle = angle - current_angle
+            self.image = pygame.transform.rotate(self.image, new_angle)
+            self.rect = self.image.get_rect(center=self.rect.center)
+
+            if distance > 100:
+                self.rect.x += direction.x * self.speed
+                self.rect.y += direction.y * self.speed
 
 
 class Asteroid(GameObject):

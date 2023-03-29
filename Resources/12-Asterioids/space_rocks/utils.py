@@ -1,9 +1,10 @@
 import random
-
+import math
 from pygame import Color
 from pygame.image import load
 from pygame.math import Vector2
 from pygame.mixer import Sound
+from pygame import math as pymath
 
 
 def load_sprite(name, with_alpha=True):
@@ -32,6 +33,19 @@ def get_random_position(surface):
         random.randrange(surface.get_width()),
         random.randrange(surface.get_height()),
     )
+
+
+def distance(p1, p2):
+    if isinstance(p1, tuple):
+        x1, y1 = p1
+        x2, y2 = p2
+        dx = x2 - x1
+        dy = y2 - y1
+        return math.sqrt(dx * dx + dy * dy)
+    else:
+        v1 = pymath.Vector2(p1)
+        v2 = pymath.Vector2(p2)
+        return v1.distance_to(v2)
 
 
 def get_random_velocity(min_speed, max_speed):

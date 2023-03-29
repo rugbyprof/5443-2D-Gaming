@@ -198,11 +198,10 @@ if __name__ == "__main__":
         usage()
 
     method = sys.argv[1]
-
     if len(sys.argv) > 2:
-        numCmds = sys.argv[2]
-    else:
-        numCmds = 3
+        target = sys.argv[2]
+
+    numCmds = 3
 
     queues = ["game-01", "game-02", "game-03"]
     users = ["player-01", "player-02", "player-03", "player-04", "player-05"]
@@ -240,7 +239,7 @@ if __name__ == "__main__":
             time.sleep(2)
 
     else:
-        print("Comms Listener starting. To exit press CTRL+C ...")
+        print(f"Comms Listener starting for {user}. To exit press CTRL+C ...")
         commsListener = CommsListener(**creds)
         commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()
