@@ -4,6 +4,70 @@ from models import Asteroid, Spaceship
 from utils import get_random_position, load_sprite, print_text
 
 
+import pygame
+import math
+import random
+from pygame.math import Vector2
+
+class NPCShip(pygame.sprite.Sprite):
+    def __init__(self, x, y, target_list, projectile_group):
+        super().__init__()
+        self.image = pygame.image.load('npc_ship_image.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.speed = 2
+        self.rotation_speed = 2
+        self.target_list = target_list
+        self.projectile_group = projectile_group
+        self.target = None
+        self.target_time = 0
+        self.target_time_quantum = 120  # 2 seconds at 60 FPS
+        self.shooting_delay = 60
+        self.shooting_timer = 0
+
+    def choose_target(self):
+        if self.target_time >= self.target_time_quantum:
+            if self.target_list:
+                self.target = random.choice(self.target_list)
+            else:
+                self.target = None
+            self.target_time = 0
+        else:
+            self.target_time += 1
+
+    def follow_target(self):
+        if self.target:
+            direction = Vector2(self.target.rect.x - self.rect.x, self.target.rect.y - self.rect.y)
+            distance = direction.length()
+            direction.normalize_ip()
+
+            angle = math.degrees(math.atan2(direction.y, direction.x)) - 90
+            current_angle = pygame.transform.rotate(self.image, self.rotation_speed).get_rect().angle
+            new_angle = angle - current_angle
+            self.image = pygame.transform.rotate(self.image, new_angle)
+            self.rect = self.image.get_rect(center=self.rect.center)
+
+            if distance > 100:
+                self.rect.x += direction.x * self.speed
+                self.rect.y += direction.y * self.speed
+
+    def shoot(self):
+        if self.shooting_timer >= self.shooting_delay:
+            if self.target:
+                projectile = Projectile(self.rect.x, self.rect.y, self.target.rect.x, self.target.rect.y)
+                self.projectile_group.add(projectile)
+            self.shooting_timer = 0
+        else:
+            self.shooting_timer += 1
+
+    def update(self):
+        self.choose_target()
+        self.follow_target()
+        self.shoot()
+
+
+
 class SpaceRocks:
     MIN_ASTEROID_DISTANCE = 250
 
