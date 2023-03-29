@@ -24,7 +24,9 @@ class SpaceRocks:
         self.asteroids = []
         self.bullets = []
         self.spaceship = Spaceship((400, 300), self.bullets.append)
-        self.npc = NPC((200, 200), self.bullets.append, "space_ship5_40x40.png")
+        self.npc = NPC(
+            (200, 200), self.bullets.append, "space_ship5_40x40", [self.spaceship]
+        )
 
         # Griffin changed this to 1 so it would only generate 1 asteroid :)
         for _ in range(1):
@@ -82,6 +84,10 @@ class SpaceRocks:
                     self.message = "You lost!"
                     break
 
+        if self.npc:
+            self.npc.choose_target()
+            self.npc.follow_target()
+
         for bullet in self.bullets[:]:
             for asteroid in self.asteroids[:]:
                 if asteroid.collides_with(bullet):
@@ -101,6 +107,7 @@ class SpaceRocks:
         self.screen.blit(self.background, (0, 0))
 
         for game_object in self._get_game_objects():
+            print(game_object)
             game_object.draw(self.screen)
 
         if self.message:
@@ -114,5 +121,8 @@ class SpaceRocks:
 
         if self.spaceship:
             game_objects.append(self.spaceship)
+
+        if self.npc:
+            game_objects.append(self.npc)
 
         return game_objects

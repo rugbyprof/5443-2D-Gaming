@@ -48,6 +48,15 @@ def distance(p1, p2):
         return v1.distance_to(v2)
 
 
+def direction(v1, v2):
+    dot = v1.dot(v2)
+    mag1 = v1.magnitude()
+    mag2 = v2.magnitude()
+    cos_angle = dot / (mag1 * mag2)
+    angle = math.degrees(math.acos(cos_angle))
+    return angle
+
+
 def get_random_velocity(min_speed, max_speed):
     speed = random.randint(min_speed, max_speed)
     angle = random.randrange(0, 360)

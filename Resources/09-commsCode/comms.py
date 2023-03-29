@@ -138,8 +138,9 @@ class CommsListener(Comms):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
         """
-        self._messageQueue[self.user].append(f"{method.routing_key} : {body}")
-        print(self._messageQueue)
+        # self._messageQueue[self.user].append(f"{method.routing_key} : {body}")
+        # print(self._messageQueue)
+        print(f"{method.routing_key} : {body}")
 
     def threadedListen(self):
         self.bindKeysToQueue([f"#.{self.user}.#", "#.broadcast.#"])
@@ -189,7 +190,7 @@ class CommsSender(Comms):
 
 def usage():
     print("Error: You need to choose `send` or `listen` and optionally `teamName`!")
-    print("Usage: python CommsClass <send,listen>")
+    print("Usage: python CommsClass <send,listen> <target> <game>")
     sys.exit()
 
 
@@ -200,6 +201,9 @@ if __name__ == "__main__":
     method = sys.argv[1]
     if len(sys.argv) > 2:
         target = sys.argv[2]
+
+    if len(sys.argv) > 3:
+        queue = sys.argv[3]
 
     numCmds = 3
 
@@ -239,7 +243,9 @@ if __name__ == "__main__":
             time.sleep(2)
 
     else:
-        print(f"Comms Listener starting for {user}. To exit press CTRL+C ...")
+        print(
+            f"Comms Listener starting for {user} on {exchange}. To exit press CTRL+C ..."
+        )
         commsListener = CommsListener(**creds)
         commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()
