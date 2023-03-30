@@ -188,64 +188,126 @@ class CommsSender(Comms):
         self.connection.close()
 
 
-def usage():
-    print("Error: You need to choose `send` or `listen` and optionally `teamName`!")
-    print("Usage: python CommsClass <send,listen> <target> <game>")
+def mykwargs(argv):
+    """
+    Processes argv list into plain args and kwargs.
+    Just easier than using a library like argparse for small things.
+    Example:
+        python file.py arg1 arg2 arg3=val1 arg4=val2 -arg5 -arg6 --arg7
+        Would create:
+            args[arg1, arg2, -arg5, -arg6, --arg7]
+            kargs{arg3 : val1, arg4 : val2}
+
+        Params with dashes (flags) can now be processed seperately
+    Shortfalls:
+        spaces between k=v would result in bad params
+    Returns:
+        tuple  (args,kargs)
+    """
+    args = []
+    kargs = {}
+
+    for arg in argv:
+        if "=" in arg:
+            key, val = arg.split("=")
+            kargs[key] = val
+        else:
+            args.append(arg)
+    return args, kargs
+
+
+def usage(msg):
+    print(f"Error: {msg}")
+    print("Usage Syntax:")
+    print("    square brackets imply: \[optional param]")
+    print("    angle brackets imply: <required>")
+    print("    curly braces show: {default value}")
+    print(
+        """
+    Usage: python CommsClass direction=<send,listen>  
+                             player=<playerId> 
+                             game=<gameId> 
+                             target=<playerId> 
+                             message=['your message']{default='This is a message.'} 
+                             rounds=[n]{default = 3,-1 = continue sending until ctrl-c to quit}
+                             
+        direction : sender and listener
+        player : sender and listener
+        game : sender and listener
+        target : sender only
+        message : sender only
+        round : sender only
+        """
+    )
+    print("Examples: ")
+    print(
+        """
+    Basic Listener:
+        python CommsClass listener player=player-07 game=game-03
+        (starts a lister listening on queue: game-03 and using playerId : player07)
+    Basic Sender: 
+        python CommsClass sender player=player-05 game=game-03 target=player-07)
+        (starts a sender who sends a message to `player-07 using the queue `game-03` sending as `player04` the message: `This is a message.` 3 times.)
+        
+        python CommsClass sender player=player-04 game=game-03 target=player-21 message='{x:80,y:200,velocity:3}' rounds=50)
+        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{x:80,y:200,velocity:3}` 50 times.)
+        """
+    )
     sys.exit()
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        usage()
+    args, kwargs = mykwargs(sys.argv)
 
-    method = sys.argv[1]
-    if len(sys.argv) > 2:
-        target = sys.argv[2]
+    direction = kwargs.get("direction", None)
+    player = kwargs.get("player", None)
+    game = kwargs.get("game", None)
+    target = kwargs.get("target", None)
+    message = kwargs.get("message", "This is a message.")
+    rounds = kwargs.get("rounds", 3)
 
-    if len(sys.argv) > 3:
-        queue = sys.argv[3]
+    if direction == None:
+        usage("`direction` needed in command params.")
+    elif direction == "sender":
+        if None in [game, player, target]:
+            usage(
+                "`game`, `target` and `player` needed in command params to send a message."
+            )
+    elif direction == "listen":
+        if None in [game, player]:
+            usage(
+                "`game` and `player` needed in command params to listen for messages."
+            )
 
-    numCmds = 3
-
-    queues = ["game-01", "game-02", "game-03"]
-    users = ["player-01", "player-02", "player-03", "player-04", "player-05"]
-    cmds = ["message", "broadcast", "move", "fire"]
-    body = {
-        "message": ["hello", "whatsup", "show me the money", "god bless merica"],
-        "broadcast": ["hello", "whatsup", "show me the money", "god bless merica"],
-        "move": [{"x": random.randint(1, 100), "y": random.randint(1, 100)}],
-        "fire": [
-            {
-                "x": random.randint(1, 100),
-                "y": random.randint(1, 100),
-                "bearing": random.choice(["N", "S", "E", "W"]),
-            }
-        ],
-    }
-
-    user = random.choice(users)
-    exchange = random.choice(queues)
+    queues = []
+    for i in range(10):
+        if i < 10:
+            q = "0" + str(i)
+        queues.append("game-" + q)
+    users = []
+    for i in range(25):
+        if i < 10:
+            p = "0" + str(i)
+        queues.append("player-" + p)
 
     creds = {
-        "exchange": exchange,
+        "exchange": game,
         "port": "5672",
         "host": "terrywgriffin.com",
-        "user": user,
-        "password": user + "2023!!!!!",  # user.capitalize() * 3,
+        "user": player,
+        "password": player + "2023!!!!!",  # user.capitalize() * 3,
     }
 
-    if method == "send":
+    if direction == "sender":
         commsSender = CommsSender(**creds)
-        for i in range(numCmds):
-            cmd = random.choice(cmds)
-            data = random.choice(body[cmd])
-            commsSender.send(target, json.dumps({"cmd": cmd, "body": data}), False)
+        for i in range(rounds):
+            commsSender.send(target, json.dumps({"data": message}), False)
             time.sleep(2)
 
     else:
         print(
-            f"Comms Listener starting for {user} on {exchange}. To exit press CTRL+C ..."
+            f"Comms Listener starting for {player} on {game}. To exit press CTRL+C ..."
         )
         commsListener = CommsListener(**creds)
-        commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
+        commsListener.bindKeysToQueue([f"#.{player}.#", "#.broadcast.#"])
         commsListener.startConsuming()

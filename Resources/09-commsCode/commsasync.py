@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=C0111,C0103,R0205
-
+"""
+NOT WORKING
+"""
 import threading
 from time import sleep
 from pika import ConnectionParameters, BlockingConnection, PlainCredentials
