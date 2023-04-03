@@ -251,6 +251,9 @@ def usage(msg):
         
         python CommsClass sender player=player-04 game=game-03 target=player-21 message='{x:80,y:200,velocity:3}' rounds=50)
         (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{x:80,y:200,velocity:3}` 50 times.)
+        
+        python CommsClass sender player=player-04 game=game-03 target=player-21 message='{x:80,y:200,velocity:3}' rounds=-1)
+        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{x:80,y:200,velocity:3}` until ctrl-c is hit.)
         """
     )
     sys.exit()
@@ -264,7 +267,10 @@ if __name__ == "__main__":
     game = kwargs.get("game", None)
     target = kwargs.get("target", None)
     message = kwargs.get("message", "This is a message.")
-    rounds = kwargs.get("rounds", 3)
+    rounds = int(kwargs.get("rounds", 3))
+
+    if int(rounds) < 0:
+        rounds = pow(2, 20)
 
     if direction == None:
         usage("`direction` needed in command params.")
@@ -281,6 +287,7 @@ if __name__ == "__main__":
 
     queues = []
     for i in range(10):
+        i += 1
         if i < 10:
             q = "0" + str(i)
         queues.append("game-" + q)
