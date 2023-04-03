@@ -8,6 +8,7 @@ import pygame
 import math
 import random
 from pygame.math import Vector2
+import sys
 
 
 class SpaceRocks:
@@ -15,21 +16,49 @@ class SpaceRocks:
 
     def __init__(self):
         self._init_pygame()
-        self.screen = pygame.display.set_mode((800, 600))
-        self.background = load_sprite("space", False)
+        # current_w = 1680, current_h = 1050
+        # self.screen = pygame.display.set_mode((1024, 768))
+        self.width = 800
+        self.height = 600
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.background = load_sprite("space", False)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, 64)
         self.message = ""
 
         self.asteroids = []
         self.bullets = []
-        self.spaceship = Spaceship((400, 300), self.bullets.append)
-        self.npc = NPC(
-            (200, 200), self.bullets.append, "space_ship5_40x40", [self.spaceship]
+        self.spaceship = Spaceship(
+            (self.width // 2, self.height // 2), self.bullets.append
+        )
+
+        self.npcs = []
+
+        self.started = False
+
+        self.npcs.append(
+            NPC(
+                (self.width * 0.05, self.height * 0.05),
+                self.bullets.append,
+                "space_ship5_40x40",
+                [self.spaceship],
+                other_npcs=self.npcs,
+            )
+        )
+
+        self.npcs.append(
+            NPC(
+                (self.width * 0.95, self.height * 0.95),
+                self.bullets.append,
+                "space_ship6_40x40",
+                [self.spaceship],
+                other_npcs=self.npcs,
+            )
         )
 
         # Griffin changed this to 1 so it would only generate 1 asteroid :)
-        for _ in range(1):
+        for _ in range(0):
             while True:
                 position = get_random_position(self.screen)
                 if (
@@ -40,10 +69,14 @@ class SpaceRocks:
 
             self.asteroids.append(Asteroid(position, self.asteroids.append))
 
+    def other_npcs(self):
+        return self.npcs
+
     def main_loop(self):
         while True:
             self._handle_input()
-            self._process_game_logic()
+            if self.started:
+                self._process_game_logic()
             self._draw()
 
     def _init_pygame(self):
@@ -65,13 +98,23 @@ class SpaceRocks:
 
         is_key_pressed = pygame.key.get_pressed()
 
+        if not self.started:
+            if is_key_pressed[pygame.K_g]:
+                self.started = True
+
         if self.spaceship:
+            # print(f"velocity: {self.spaceship.velocity}")
             if is_key_pressed[pygame.K_RIGHT]:
                 self.spaceship.rotate(clockwise=True)
             elif is_key_pressed[pygame.K_LEFT]:
                 self.spaceship.rotate(clockwise=False)
             if is_key_pressed[pygame.K_UP]:
                 self.spaceship.accelerate()
+                if len(self.npcs) > 0:
+                    for npc in self.npcs:
+                        npc.accelerate()
+            if is_key_pressed[pygame.K_DOWN]:
+                self.spaceship.accelerate(0)
 
     def _process_game_logic(self):
         for game_object in self._get_game_objects():
@@ -84,9 +127,12 @@ class SpaceRocks:
                     self.message = "You lost!"
                     break
 
-        if self.npc:
-            self.npc.choose_target()
-            self.npc.follow_target()
+        if len(self.npcs) > 0:
+            for npc in self.npcs:
+                npc.choose_target()
+                npc.rotate()
+                npc.follow_target()
+                # npc.check_shoot()
 
         for bullet in self.bullets[:]:
             for asteroid in self.asteroids[:]:
@@ -97,17 +143,20 @@ class SpaceRocks:
                     break
 
         for bullet in self.bullets[:]:
+            print(bullet)
             if not self.screen.get_rect().collidepoint(bullet.position):
                 self.bullets.remove(bullet)
 
-        if not self.asteroids and self.spaceship:
-            self.message = "You won!"
+        # if not self.asteroids and self.spaceship:
+        #     self.message = "You won!"
 
     def _draw(self):
-        self.screen.blit(self.background, (0, 0))
+        # self.screen.blit(self.background, (0, 0))
+
+        self.screen.fill((0, 0, 0))
 
         for game_object in self._get_game_objects():
-            print(game_object)
+            # print(game_object)
             game_object.draw(self.screen)
 
         if self.message:
@@ -122,7 +171,8 @@ class SpaceRocks:
         if self.spaceship:
             game_objects.append(self.spaceship)
 
-        if self.npc:
-            game_objects.append(self.npc)
+        if len(self.npcs) > 0:
+            for npc in self.npcs:
+                game_objects.append(npc)
 
         return game_objects
