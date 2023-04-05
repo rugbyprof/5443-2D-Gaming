@@ -1,0 +1,8 @@
+{
+    "key":{"img":"key.png","points":100,"weight":10},
+    "cherry":{"img":"cherry.png","points":5,"weight":500},
+    "grenade":{"img":"grenade.png","points":0,"weight":1000},
+    "peach":{"img":"peach.png","points":5,"weight":500},
+    "strawberry":{"img":"strawberry.png","points":5,"weight":500},
+    "ray":{"img":"ray.png","points":10,"weight":100}
+}

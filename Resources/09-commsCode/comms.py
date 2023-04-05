@@ -166,7 +166,9 @@ class CommsSender(Comms):
         body["from"] = self.user
 
         self.channel.basic_publish(
-            self.exchange, routing_key=routing_key, body=json.dumps(body)
+            self.exchange,
+            routing_key=f"#.{routing_key}.broadcast",
+            body=json.dumps(body),
         )
         if closeConnection:
             self.connection.close()
@@ -316,5 +318,5 @@ if __name__ == "__main__":
             f"Comms Listener starting for {player} on {game}. To exit press CTRL+C ..."
         )
         commsListener = CommsListener(**creds)
-        commsListener.bindKeysToQueue([f"#.{player}.#", "#.broadcast.#"])
+        commsListener.bindKeysToQueue([f"#.{game}.#", "#.broadcast.#"])
         commsListener.startConsuming()

@@ -35,32 +35,9 @@ class SpaceRocks:
             (self.width // 2, self.height // 2), self.bullets.append
         )
 
-        self.npcs = []
-
         self.started = False
 
-        self.npcs.append(
-            NPC(
-                (self.width * 0.05, self.height * 0.05),
-                self.bullets.append,
-                "space_ship5_40x40",
-                [self.spaceship],
-                other_npcs=self.npcs,
-            )
-        )
-
-        self.npcs.append(
-            NPC(
-                (self.width * 0.95, self.height * 0.95),
-                self.bullets.append,
-                "space_ship6_40x40",
-                [self.spaceship],
-                other_npcs=self.npcs,
-            )
-        )
-
-        # Griffin changed this to 1 so it would only generate 1 asteroid :)
-        for _ in range(0):
+        for _ in range(10):
             while True:
                 position = get_random_position(self.screen)
                 if (
@@ -70,9 +47,6 @@ class SpaceRocks:
                     break
 
             self.asteroids.append(Asteroid(position, self.asteroids.append))
-
-    def other_npcs(self):
-        return self.npcs
 
     def main_loop(self):
         while True:
@@ -112,9 +86,7 @@ class SpaceRocks:
                 self.spaceship.rotate(clockwise=False)
             if is_key_pressed[pygame.K_UP]:
                 self.spaceship.accelerate()
-                if len(self.npcs) > 0:
-                    for npc in self.npcs:
-                        npc.accelerate()
+
             if is_key_pressed[pygame.K_DOWN]:
                 self.spaceship.accelerate(0)
 
@@ -129,13 +101,6 @@ class SpaceRocks:
                     self.message = "You lost!"
                     break
 
-        if len(self.npcs) > 0:
-            for npc in self.npcs:
-                npc.choose_target()
-                npc.rotate()
-                npc.follow_target()
-                # npc.check_shoot()
-
         for bullet in self.bullets[:]:
             for asteroid in self.asteroids[:]:
                 if asteroid.collides_with(bullet):
@@ -145,15 +110,14 @@ class SpaceRocks:
                     break
 
         for bullet in self.bullets[:]:
-            print(bullet)
             if not self.screen.get_rect().collidepoint(bullet.position):
                 self.bullets.remove(bullet)
 
-        # if not self.asteroids and self.spaceship:
-        #     self.message = "You won!"
+        if not self.asteroids and self.spaceship:
+            self.message = "You won!"
 
     def _draw(self):
-        # self.screen.blit(self.background, (0, 0))
+        self.screen.blit(self.background, (0, 0))
 
         self.screen.fill((0, 0, 0))
 
@@ -172,9 +136,5 @@ class SpaceRocks:
 
         if self.spaceship:
             game_objects.append(self.spaceship)
-
-        if len(self.npcs) > 0:
-            for npc in self.npcs:
-                game_objects.append(npc)
 
         return game_objects

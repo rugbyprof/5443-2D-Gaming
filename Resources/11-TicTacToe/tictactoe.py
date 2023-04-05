@@ -13,7 +13,7 @@ pygame.init()
 WIDTH = 500
 ROWS = 3
 win = pygame.display.set_mode((WIDTH, WIDTH))
-pygame.display.set_caption("TicTacToe")
+pygame.display.set_caption("TicTacToe")x
 
 # Colors
 WHITE = (255, 255, 255)
@@ -219,6 +219,7 @@ def main(player):
 
 
 if __name__ == '__main__':
+    print(localCallBack)
     if len(sys.argv) < 2:
         print("need player name")
         sys.exit()
