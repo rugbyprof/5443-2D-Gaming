@@ -181,39 +181,6 @@ class PacmanSprite(pygame.sprite.Sprite):
             (frame, yoffset, self.tilesize, self.tilesize),
         )
 
-
-class EventContainer:
-    """
-    NOT USED!!
-    Dictionary of events all kept in one place for use in other classes
-    
-    """
-
-    def __init__(self):
-        self.events = {
-            "keydown": None,
-            "keyup": None,
-            "mouse_motion": None,
-            "mouse_button_up": None,
-            "all_pressed": None,
-        }
-
-    def reset(self):
-        """Set all to None"""
-        for k, v in self.events.items():
-            self.events[k] = None
-
-    def __str__(self):
-        """Dump instance to screen or wherever"""
-        s = ""
-        for k, v in self.events.items():
-            if k == "all_pressed":
-                continue
-            s += f"{k} : {v}\n"
-
-        return s
-
-
 class BackgroundScroller:
     def __init__(self, screen, floor, tile_size):
         # assumes squares for now
@@ -247,6 +214,7 @@ class BackgroundScroller:
     def setScrollDirection(self, loc=None):
         """If keys are pressed or mouse is clicked, set a goal location to scroll toward."""
         self.target_location = loc
+        print(loc)
         self.cardinal_direction = getCardinalDirection(
             (self.cx, self.cy), self.target_location
         )
@@ -285,8 +253,6 @@ class BackgroundScroller:
 def main():
     pygame.init()
 
-    eventHelper = EventContainer()
-
     # sets the window title
     pygame.display.set_caption(config["title"])
 
@@ -307,7 +273,6 @@ def main():
 
     while running:
         # Did the user click the window close button?
-        eventHelper.reset()
 
         background.drawBackground()
 
@@ -318,19 +283,33 @@ def main():
                 running = False
 
             if event.type == pygame.KEYDOWN:
-                eventHelper.events["keydown"] = event.key
+            
+                print("keydown")
 
+            # This doesn't capture "diagonal" movement with keys. 
+            # Whatever.
             if event.type == pygame.KEYUP:
-                eventHelper.events["keyup"] = event.key
+                loc = [pman.x,pman.y]
+                if is_key_pressed[pygame.K_RIGHT]:
+                    loc = (int(width*.75),int(height*.50))
+                if is_key_pressed[pygame.K_LEFT]:
+                    loc = (int(width*.25),int(height*.50))
+                if is_key_pressed[pygame.K_UP]:
+                    loc = (int(width*.50),int(height*.25))
+                if is_key_pressed[pygame.K_DOWN]:
+                    loc = (int(width*.50),int(height*.75))
+                background.setScrollDirection(loc)
+                print("keyup")
 
             if event.type == pygame.MOUSEMOTION:
-                eventHelper.events["mouse_motion"] = pygame.mouse.get_pos()
+                print("mousemotion")
 
             if event.type == pygame.MOUSEBUTTONUP:
-                eventHelper.events["mouse_button_up"] = pygame.mouse.get_pos()
+                print("mousebuttonup")
+                print(pygame.mouse.get_pos())
+                # eventHelper.events["mouse_button_up"] = pygame.mouse.get_pos()
                 background.setScrollDirection(pygame.mouse.get_pos())
 
-        #eventHelper.events["all_pressed"] = pygame.key.get_pressed()
 
         pman.Move(is_key_pressed)
 
