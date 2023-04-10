@@ -43,7 +43,7 @@ from pygame.locals import (
 
 config = {
     "title": "Pygame Side Scrolling",
-    "window_size": {"width": 400, "height": 400},
+    "window_size": {"width": 600, "height": 400},
     "background": "./media/desert_bg_1200.png",
 }
 

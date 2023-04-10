@@ -1,0 +1,13 @@
+{
+    "title" :"My Fake Game",
+    "game_window" : [1000,500],
+    "sprite_sheets":{
+        "mario":{"path":"./resources/mario_frames"}
+    },
+    "tiles_path":"./resources/maps/forest_clean/Tiles_20",
+    "levels_path":"./resources/levels",
+    "font_path":"./resources/data/freesansbold.ttf",
+    "tile_size":20,
+    "debug": 1,
+    "debug_level":20
+}

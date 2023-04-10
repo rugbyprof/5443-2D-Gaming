@@ -1,0 +1,34 @@
+{
+    "folder":"Tiles_25",
+    "size":{
+        "width":25,
+        "height":25
+    },
+    "groups":{
+        "block":[
+            ["01","02","03"],
+            ["04","05","06"],
+            ["12","09","16"]
+        ],
+        "platform":[
+            ["13","14","15"]
+        ],
+        "water":[
+            ["17"],
+            ["18"]
+        ],
+        "sub_block_left":[
+            ["07","08"]
+        ],
+        "sub_block_right":[
+            ["10","11"]
+        ]
+    },
+    "objects":{
+        "folder":"Objects_25",
+        "items":{
+            "mushrooml_1":"Mushroom_1.png",
+            "mushrooml_2":"Mushroom_2.png"
+        }
+    }
+}

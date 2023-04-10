@@ -183,7 +183,11 @@ class PacmanSprite(pygame.sprite.Sprite):
 
 
 class EventContainer:
-    """Dictionary of events all kept in one place for use in other classes"""
+    """
+    NOT USED!!
+    Dictionary of events all kept in one place for use in other classes
+    
+    """
 
     def __init__(self):
         self.events = {

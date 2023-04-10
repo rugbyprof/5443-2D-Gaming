@@ -1,0 +1,5 @@
+pygame
+rich
+pillow
+pyscroll
+pytmx

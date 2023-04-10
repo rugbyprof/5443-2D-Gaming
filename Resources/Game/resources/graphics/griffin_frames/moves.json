@@ -1,0 +1,32 @@
+{
+    "base_name": "griffin_",
+    "frame_width": 295,
+    "frame_height": 215,
+    "ext":".png",
+    "moves": {
+        "walking" : {
+            "frame_width" : 295,
+            "frame_height" : 215,
+            "frames" : [
+                "001",
+                "002",
+                "003",
+                "004",
+                "005",
+                "006",
+                "007",
+                "008"
+            ]
+        },
+        "sit" : {
+            "frame_width" : 295,
+            "frame_height" : 215,
+            "frames" : [
+                "009",
+                "010",
+                "011"
+            ]
+        }
+
+    }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+ <editorsettings>
+  <export format="tmx"/>
+ </editorsettings>
+ <tileset firstgid="1" source="forest_plain.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zstd">
+   KLUv/WBAm30GANQCAAAsAAAALS4ALCAAAAAhIgAkJQAwJgAAACcpAAAAKiIiIzEjIysAAAAoLysrPKBgb3VgghPRYYAO+xjYi4LLXwKeSiFn4I4eYxj/o7ExbInJ9PYxsxcFN39JPJWGzMBVdADOIf7ytZc0DiLzyFKkRPjXdHBmETRDmck0h3FW+GubnKhJfFmDKtfYGqqd4XAUhubiA+TPNFhXWqSeHiXuy/mhag633F8sN06+6gzVfmGiUpsdid+H3eSrA6oezHV+S0PYTwdAv/xoP60HLQ==
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="100" height="100">
+  <data encoding="base64" compression="zstd">
+   KLUv/WBAm4UAABgAABcDAJUQ8LDS3cl1B1g=
+  </data>
+ </layer>
+</map>
