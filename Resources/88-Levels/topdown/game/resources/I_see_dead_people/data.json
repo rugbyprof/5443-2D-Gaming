@@ -1,0 +1,162 @@
+{
+	"identifier": "I_see_dead_people",
+	"uniqueIdentifer": "a3498d50-66b0-11ec-9cd7-11ba70853612",
+	"x": 640,
+	"y": 128,
+	"width": 336,
+	"height": 384,
+	"bgColor": "#404255",
+	"neighbourLevels": [
+		{
+			"levelIid": "a348f110-66b0-11ec-9cd7-352deb718870",
+			"dir": "w"
+		},
+		{
+			"levelIid": "85fad420-66b0-11ec-adb8-b5aafe4bf8a4",
+			"dir": "w"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Default_ground.png",
+		"Custom_grounds.png",
+		"Collisions.png",
+		"Custom_tiles.png",
+		"Wall_outlines.png"
+	],
+	"entities": {
+		"Container": [
+			{
+				"id": "Container",
+				"iid": "a3498d59-66b0-11ec-9cd7-9dc769c667cd",
+				"layer": "Entities",
+				"x": 168,
+				"y": 280,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": "The crate has some military logo on it.",
+					"label": "Strange crate",
+					"loot": [
+						"Rifle"
+					]
+				}
+			},
+			{
+				"id": "Container",
+				"iid": "a3498d5a-66b0-11ec-9cd7-fd579a8393e6",
+				"layer": "Entities",
+				"x": 248,
+				"y": 344,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": null,
+					"label": "Food storage",
+					"loot": [
+						"Food"
+					]
+				}
+			},
+			{
+				"id": "Container",
+				"iid": "a3498d5b-66b0-11ec-9cd7-619f3d98c448",
+				"layer": "Entities",
+				"x": 200,
+				"y": 72,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": "This guy has a **key** attached to its uniform.",
+					"label": "Dead technician",
+					"loot": [
+						"KeyA"
+					]
+				}
+			},
+			{
+				"id": "Container",
+				"iid": "22f16f60-66b0-11ec-adb8-ddc942fd4398",
+				"layer": "Entities",
+				"x": 296,
+				"y": 328,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": null,
+					"label": "Guard remains",
+					"loot": [
+						"Health"
+					]
+				}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "439a2ef0-66b0-11ec-adb8-b3ac4be53cea",
+				"layer": "Entities",
+				"x": 216,
+				"y": 168,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": "KeyA"
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "7f4e9b70-66b0-11ec-adb8-436a8351d73d",
+				"layer": "Entities",
+				"x": 120,
+				"y": 104,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "960ebc00-66b0-11ec-adb8-c5a13d226918",
+				"layer": "Entities",
+				"x": 72,
+				"y": 312,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			}
+		],
+		"Button": [
+			{
+				"id": "Button",
+				"iid": "52138950-7820-11ed-9dc9-1998e37b5191",
+				"layer": "Entities",
+				"x": 104,
+				"y": 296,
+				"width": 10,
+				"height": 10,
+				"color": 16711680,
+				"customFields": {
+					"targets": [
+						{
+							"entityIid": "960ebc00-66b0-11ec-adb8-c5a13d226918",
+							"layerIid": "a3498d57-66b0-11ec-9cd7-63f43597ba6b",
+							"levelIid": "a3498d50-66b0-11ec-9cd7-11ba70853612",
+							"worldIid": "b27e93f0-c640-11ed-be73-355e090b4bd9"
+						}
+					]
+				}
+			}
+		]
+	}
+}

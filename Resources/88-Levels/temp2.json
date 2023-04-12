@@ -1,0 +1,76 @@
+{
+    "identifier": "Item",
+    "uid": 49,
+    "values": [
+        {
+            "id": "Knife",
+            "tileId": 896,
+            "color": 9608629,
+            "__tileSrcRect": [
+                0,
+                448,
+                16,
+                16
+            ]
+        },
+        {
+            "id": "Healing_Plant",
+            "tileId": 577,
+            "color": 4625973,
+            "__tileSrcRect": [
+                16,
+                288,
+                16,
+                16
+            ]
+        },
+        {
+            "id": "Meat",
+            "tileId": 643,
+            "color": 12015952,
+            "__tileSrcRect": [
+                48,
+                320,
+                16,
+                16
+            ]
+        },
+        {
+            "id": "Boots",
+            "tileId": 1506,
+            "color": 9067593,
+            "__tileSrcRect": [
+                32,
+                752,
+                16,
+                16
+            ]
+        },
+        {
+            "id": "Water",
+            "tileId": 544,
+            "color": 9399401,
+            "__tileSrcRect": [
+                0,
+                272,
+                16,
+                16
+            ]
+        },
+        {
+            "id": "Gem",
+            "tileId": 1963,
+            "color": 11173944,
+            "__tileSrcRect": [
+                176,
+                976,
+                16,
+                16
+            ]
+        }
+    ],
+    "iconTilesetUid": 104,
+    "externalRelPath": null,
+    "externalFileChecksum": null,
+    "tags": []
+}

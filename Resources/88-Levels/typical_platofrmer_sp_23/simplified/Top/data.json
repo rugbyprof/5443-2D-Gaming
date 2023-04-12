@@ -1,0 +1,126 @@
+{
+	"identifier": "Top",
+	"uniqueIdentifer": "a316bd80-66b0-11ec-9cd7-c50cdc9d2cc4",
+	"x": 352,
+	"y": -352,
+	"width": 672,
+	"height": 352,
+	"bgColor": "#50506A",
+	"neighbourLevels": [
+		{
+			"levelIid": "a315ac10-66b0-11ec-9cd7-99f223ad6ade",
+			"dir": "s"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Bg_textures.png",
+		"Collisions.png",
+		"Wall_shadows.png"
+	],
+	"entities": {
+		"Mob": [
+			{
+				"id": "Mob",
+				"iid": "a316bd86-66b0-11ec-9cd7-837d4383ebc8",
+				"layer": "Entities",
+				"x": 456,
+				"y": 240,
+				"width": 20,
+				"height": 20,
+				"color": 16711680,
+				"customFields": {
+					"patrol": [
+						{
+							"cx": 22,
+							"cy": 14
+						}
+					],
+					"loot": []
+				}
+			},
+			{
+				"id": "Mob",
+				"iid": "a316bd87-66b0-11ec-9cd7-df8b07359531",
+				"layer": "Entities",
+				"x": 424,
+				"y": 336,
+				"width": 20,
+				"height": 20,
+				"color": 16711680,
+				"customFields": {
+					"patrol": [
+						{
+							"cx": 23,
+							"cy": 20
+						}
+					],
+					"loot": []
+				}
+			},
+			{
+				"id": "Mob",
+				"iid": "a316bd88-66b0-11ec-9cd7-cbd4e685a38f",
+				"layer": "Entities",
+				"x": 200,
+				"y": 224,
+				"width": 48,
+				"height": 48,
+				"color": 16711680,
+				"customFields": {
+					"patrol": [],
+					"loot": [
+						"Knife",
+						"Healing_Plant"
+					]
+				}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "a316bd89-66b0-11ec-9cd7-69448da578ed",
+				"layer": "Entities",
+				"x": 328,
+				"y": 224,
+				"width": 12,
+				"height": 64,
+				"color": 12036218,
+				"customFields": {
+					"locked": false
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "a316bd8b-66b0-11ec-9cd7-27e78e24a888",
+				"layer": "Entities",
+				"x": 120,
+				"y": 144,
+				"width": 12,
+				"height": 32,
+				"color": 12036218,
+				"customFields": {
+					"locked": true
+				}
+			}
+		],
+		"Chest": [
+			{
+				"id": "Chest",
+				"iid": "a316bd8a-66b0-11ec-9cd7-a986f709d9f8",
+				"layer": "Entities",
+				"x": 72,
+				"y": 160,
+				"width": 24,
+				"height": 24,
+				"color": 7003628,
+				"customFields": {
+					"content": [
+						"Gem",
+						"Gem"
+					]
+				}
+			}
+		]
+	}
+}

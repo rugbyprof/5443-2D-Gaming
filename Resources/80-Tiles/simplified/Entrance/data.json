@@ -1,0 +1,189 @@
+{
+	"identifier": "Entrance",
+	"uniqueIdentifer": "a348f110-66b0-11ec-9cd7-352deb718870",
+	"x": 64,
+	"y": 16,
+	"width": 576,
+	"height": 320,
+	"bgColor": "#404255",
+	"neighbourLevels": [
+		{
+			"levelIid": "a3498d50-66b0-11ec-9cd7-11ba70853612",
+			"dir": "e"
+		},
+		{
+			"levelIid": "85fad420-66b0-11ec-adb8-b5aafe4bf8a4",
+			"dir": "s"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Default_ground.png",
+		"Custom_grounds.png",
+		"Collisions.png",
+		"Custom_tiles.png",
+		"Wall_outlines.png"
+	],
+	"entities": {
+		"Container": [
+			{
+				"id": "Container",
+				"iid": "a3491828-66b0-11ec-9cd7-cb4d33f76ff0",
+				"layer": "Entities",
+				"x": 264,
+				"y": 120,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": null,
+					"label": "???",
+					"loot": [
+						"Metal"
+					]
+				}
+			},
+			{
+				"id": "Container",
+				"iid": "a3491829-66b0-11ec-9cd7-c5b5ed21037f",
+				"layer": "Entities",
+				"x": 328,
+				"y": 168,
+				"width": 20,
+				"height": 20,
+				"color": 16765225,
+				"customFields": {
+					"description": null,
+					"label": "???",
+					"loot": [
+						"Wood"
+					]
+				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "a349182a-66b0-11ec-9cd7-2b12f6a4d88b",
+				"layer": "Entities",
+				"x": 88,
+				"y": 168,
+				"width": 16,
+				"height": 16,
+				"color": 248700,
+				"customFields": {
+					"ammo": 10,
+					"life": 100
+				}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "403447a0-66b0-11ec-adb8-d1e486125a8d",
+				"layer": "Entities",
+				"x": 344,
+				"y": 200,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "40950540-66b0-11ec-adb8-6f55c0bf8b04",
+				"layer": "Entities",
+				"x": 488,
+				"y": 184,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "484fa0b0-66b0-11ec-adb8-650850794064",
+				"layer": "Entities",
+				"x": 440,
+				"y": 104,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "a7f1b730-66b0-11ec-adb8-3d95de43ac8f",
+				"layer": "Entities",
+				"x": 168,
+				"y": 168,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "70452e60-7820-11ed-9dc9-457658249a52",
+				"layer": "Entities",
+				"x": 440,
+				"y": 152,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": null
+				}
+			},
+			{
+				"id": "Door",
+				"iid": "eb7f3f60-7820-11ed-8858-a7dedc0fff31",
+				"layer": "Entities",
+				"x": 472,
+				"y": 264,
+				"width": 16,
+				"height": 16,
+				"color": 16759620,
+				"customFields": {
+					"lockedWith": "KeyB"
+				}
+			}
+		],
+		"Button": [
+			{
+				"id": "Button",
+				"iid": "4a0f88d0-7820-11ed-9dc9-67550bd152fa",
+				"layer": "Entities",
+				"x": 392,
+				"y": 88,
+				"width": 10,
+				"height": 10,
+				"color": 16711680,
+				"customFields": {
+					"targets": [
+						{
+							"entityIid": "484fa0b0-66b0-11ec-adb8-650850794064",
+							"layerIid": "a3491826-66b0-11ec-9cd7-2b044c68d8a4",
+							"levelIid": "a348f110-66b0-11ec-9cd7-352deb718870",
+							"worldIid": "a7a27b60-c640-11ed-8364-1314f5bbd272"
+						},
+						{
+							"entityIid": "70452e60-7820-11ed-9dc9-457658249a52",
+							"layerIid": "a3491826-66b0-11ec-9cd7-2b044c68d8a4",
+							"levelIid": "a348f110-66b0-11ec-9cd7-352deb718870",
+							"worldIid": "a7a27b60-c640-11ed-8364-1314f5bbd272"
+						}
+					]
+				}
+			}
+		]
+	}
+}

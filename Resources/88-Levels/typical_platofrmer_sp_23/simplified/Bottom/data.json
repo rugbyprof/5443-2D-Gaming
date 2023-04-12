@@ -1,0 +1,46 @@
+{
+	"identifier": "Bottom",
+	"uniqueIdentifer": "a317cef0-66b0-11ec-9cd7-dd2f249c8c8b",
+	"x": 80,
+	"y": 336,
+	"width": 464,
+	"height": 256,
+	"bgColor": "#50506A",
+	"neighbourLevels": [
+		{
+			"levelIid": "a315ac10-66b0-11ec-9cd7-99f223ad6ade",
+			"dir": "n"
+		}
+	],
+	"customFields" : {},
+	"layers": [
+		"Bg_textures.png",
+		"Collisions.png",
+		"Wall_shadows.png"
+	],
+	"entities": {
+		"Mob": [
+			{
+				"id": "Mob",
+				"iid": "a317cef6-66b0-11ec-9cd7-a5ccf047f66e",
+				"layer": "Entities",
+				"x": 312,
+				"y": 176,
+				"width": 20,
+				"height": 20,
+				"color": 16711680,
+				"customFields": {
+					"patrol": [
+						{
+							"cx": 11,
+							"cy": 10
+						}
+					],
+					"loot": [
+						"Healing_Plant"
+					]
+				}
+			}
+		]
+	}
+}
