@@ -129,9 +129,30 @@ def update_camera_position(player, camera_view, background):
     camera_view.fill((0, 0, 0))
     camera_x = -player.rect.x + CAMERA_WIDTH // 2
     camera_y = -player.rect.y + CAMERA_HEIGHT // 2
-    camera_x = player.rect.x
-    camera_y = player.rect.y
+    # camera_x = player.rect.x
+    # camera_y = player.rect.y
     camera_view.blit(background, (camera_x, camera_y))
+
+
+class Camera:
+    def __init__(self, **kwargs):
+        self.player = kwargs.get("player", None)
+        self.camera_screen = kwargs.get("camera_screen", None)
+        self.background = kwargs.get("background", None)
+
+        if None in [self.player, self.camera_screen, self.background]:
+            print(
+                "Error: A player sprite, Camera Screen, and Background image are all needed!"
+            )
+            sys.exit()
+
+    def update(self):
+        self.camera_screen.fill((0, 0, 0))
+        camera_x = -player.rect.x + CAMERA_WIDTH // 2
+        camera_y = -player.rect.y + CAMERA_HEIGHT // 2
+        # camera_x = player.rect.x
+        # camera_y = player.rect.y
+        self.camera_screen.blit(self.background, (camera_x, camera_y))
 
 
 # Set the starting level
@@ -140,7 +161,6 @@ current_level = "Entrance"
 camera_view = pygame.Surface((CAMERA_WIDTH, CAMERA_HEIGHT))
 sidebar = pygame.Surface((WIDTH - CAMERA_WIDTH, HEIGHT))
 bottom_area = pygame.Surface((WIDTH, HEIGHT - CAMERA_HEIGHT))
-
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 background, layout, screen_size = load_level_data(current_level)
