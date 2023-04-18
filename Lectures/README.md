@@ -12,6 +12,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/08-ChattingWChatGpt">08-ChattingWChatGpt</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/08-ChattingWChatGpt"> Chat GPT </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/08-ChattingWChatGpt"> Discussions about course topics</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/08-ChattingWChatGpt"> None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/08-ChattingWChatGpt">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/09-Tiles">09-Tiles</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/09-Tiles"> Tiles</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/09-Tiles"> Pygame With Tiled Maps</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/09-Tiles"> None</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Lectures/09-Tiles">None</a>*** |  |
 
-<sup>Last Updated: 2023-04-12 (Wed @ 21:06)</sup> 
+<sup>Last Updated: 2023-04-17 (Mon @ 19:18)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
