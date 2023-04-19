@@ -1,0 +1,53 @@
+{
+    "name": "Caves of Boredom",
+    "base_path": "./resources/levels/level_04/",
+    "background": "level_04.png",
+    "thumb": "level_04_mini_map.png",
+    "collisions": "level_04_collision.csv",
+    "objects": "level_04_objects.csv",
+    "width": 4096,
+    "height": 4096,
+    "startx": 68,
+    "starty": 63,
+    "tile_size": 32,
+    "trigger_locations": [
+        {
+            "type": "transition",
+            "trigger_xy": [
+                93,
+                102
+            ],
+            "target": "level_01",
+            "target_xy": [
+                39,
+                39
+            ]
+        },
+        {
+            "type": "portal",
+            "trigger_xy": [
+                94,
+                104
+            ],
+            "target_xy": [
+                67,
+                63
+            ]
+        },
+        {
+            "type": "trigger",
+            "xy": [
+                20,
+                8
+            ],
+            "info": {
+                "type": "attack",
+                "sprite": "./path/to/sprite",
+                "xy": [
+                    22,
+                    10
+                ]
+            }
+        }
+    ]
+}

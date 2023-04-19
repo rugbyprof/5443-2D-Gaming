@@ -1,0 +1,10 @@
+convert -resize x64 Dead\ \(1\).png ../png_64/Dead.01.png
+convert -resize x64 Dead\ \(2\).png ../png_64/Dead.02.png
+convert -resize x64 Dead\ \(3\).png ../png_64/Dead.03.png
+convert -resize x64 Dead\ \(4\).png ../png_64/Dead.04.png
+convert -resize x64 Dead\ \(5\).png ../png_64/Dead.05.png
+convert -resize x64 Dead\ \(6\).png ../png_64/Dead.06.png
+convert -resize x64 Dead\ \(7\).png ../png_64/Dead.07.png
+convert -resize x64 Dead\ \(8\).png ../png_64/Dead.08.png
+convert -resize x64 Dead\ \(9\).png ../png_64/Dead.09.png
+convert -resize x64 Dead\ \(10\).png ../png_64/Dead.10.png
