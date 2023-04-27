@@ -192,7 +192,8 @@ def point_inside_rect(point, rect):
 
 # Update the camera position based on the player's position
 def update_camera_position(player, camera_view, background):
-    rect = (0, 0, CAMERA_WIDTH, CAMERA_HEIGHT)
+
+    rect = (100, 100, CAMERA_WIDTH, CAMERA_HEIGHT)
 
     # Get the specific section of the image as a new surface
     section = background.subsurface(rect)
@@ -233,7 +234,6 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         walls = get_walls(collision_map, (self.rect.x, self.rect.y))
 
-        print(walls)
 
         if keys[pygame.K_LEFT] and not walls[pygame.K_LEFT]:
             self.rect.x -= TILESIZE
@@ -265,8 +265,8 @@ class Camera:
         self.camera_screen.fill((0, 0, 0))
         camera_x = -player.rect.x + CAMERA_WIDTH // 2
         camera_y = -player.rect.y + CAMERA_HEIGHT // 2
-        # camera_x = player.rect.x
-        # camera_y = player.rect.y
+        camera_x = player.rect.x
+        camera_y = player.rect.y
         self.camera_screen.blit(self.background, (camera_x, camera_y))
 
 
