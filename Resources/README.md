@@ -25,6 +25,6 @@
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/simple_level">simple_level</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/simple_level"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/simple_level"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/simple_level">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/simple_level">None</a>*** |  |
 | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">trunk</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> Placeholder Readme </a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk"> No Description</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">N/A</a>*** | ***<a href="https://github.com/rugbyprof/5443-2D-Gaming/tree/master/Resources/trunk">None</a>*** |  |
 
-<sup>Last Updated: 2023-05-01 (Mon @ 14:21)</sup> 
+<sup>Last Updated: 2023-05-01 (Mon @ 14:23)</sup> 
 
 <sup>***Days Left is only accurate if the `Last Updated` date is the same as todays date. Otherwise, use the due date!***</sup> 
