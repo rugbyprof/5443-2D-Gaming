@@ -11,6 +11,26 @@ from threading import Thread
 
 from rich import print
 
+import gzip
+
+
+def compress(string_to_compress):
+    """Compress a string using gzip compression.
+    """
+    compressed_data = gzip.compress(string_to_compress.encode())
+    return compressed_data
+
+
+
+def decompress(string_to_decompress):
+    # Decompress the string
+    decompressed_data = gzip.decompress(string_to_decompress)
+
+    # Convert the decompressed data back to a string
+    decompressed_string = decompressed_data.decode()
+
+    return decompressed_string
+
 
 class Comms(object):
     """A helper class for client to client messaging. I don't know anything about
@@ -138,6 +158,7 @@ class CommsListener(Comms):
         """This method gets run when a message is received. You can alter it to
         do whatever is necessary.
         """
+        body = decompress(body)
         # self._messageQueue[self.user].append(f"{method.routing_key} : {body}")
         # print(self._messageQueue)
         print(f"{method.routing_key} : {body}")
@@ -159,7 +180,10 @@ class CommsSender(Comms):
         super().__init__(**kwargs)
 
     def send(self, routing_key, body, closeConnection=True):
-        print(f"Sending: routing_key: {routing_key}, body: {body}")
+        if not routing_key:
+            print(f"Sending: Broadcasting body: {body}")
+        else:
+            print(f"Sending: routing_key: {routing_key}, body: {body}")
 
         body = json.loads(body)
 
@@ -168,7 +192,7 @@ class CommsSender(Comms):
         self.channel.basic_publish(
             self.exchange,
             routing_key=f"#.{routing_key}.broadcast",
-            body=json.dumps(body),
+            body=compress(json.dumps(body)),
         )
         if closeConnection:
             self.connection.close()
@@ -242,20 +266,21 @@ def usage(msg):
         """
     )
     print("Examples: ")
+    name  = os.path.basename(__file__)
     print(
-        """
+        f"""
     Basic Listener:
-        python CommsClass listener player=player-07 game=game-03
+        python {name} direction=listener player=player-07 game=game-03
         (starts a lister listening on queue: game-03 and using playerId : player07)
     Basic Sender: 
-        python CommsClass sender player=player-05 game=game-03 target=player-07)
+        python {name} direction=sender player=player-05 game=game-03 target=player-07)
         (starts a sender who sends a message to `player-07 using the queue `game-03` sending as `player04` the message: `This is a message.` 3 times.)
         
-        python CommsClass sender player=player-04 game=game-03 target=player-21 message='{x:80,y:200,velocity:3}' rounds=50)
-        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{x:80,y:200,velocity:3}` 50 times.)
+        python {name} direction=sender player=player-04 game=game-03 target=player-21 message='{{x:80,y:200,velocity:3}}' rounds=50)
+        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{{x:80,y:200,velocity:3}}` 50 times.)
         
-        python CommsClass sender player=player-04 game=game-03 target=player-21 message='{x:80,y:200,velocity:3}' rounds=-1)
-        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{x:80,y:200,velocity:3}` until ctrl-c is hit.)
+        python {name} direction=sender player=player-04 game=game-03 target=player-21 message='{{x:80,y:200,velocity:3}}' rounds=-1)
+        (starts a sender who sends a message to `player-21 using the queue `game-03` sending as `player04` the message: `{{x:80,y:200,velocity:3}}` until ctrl-c is hit.)
         """
     )
     sys.exit()
@@ -270,6 +295,7 @@ if __name__ == "__main__":
     target = kwargs.get("target", None)
     message = kwargs.get("message", "This is a message.")
     rounds = int(kwargs.get("rounds", 3))
+    sleepTime = float(kwargs.get("sleepTime", 0.5))
 
     if int(rounds) < 0:
         rounds = pow(2, 20)
@@ -277,7 +303,8 @@ if __name__ == "__main__":
     if direction == None:
         usage("`direction` needed in command params.")
     elif direction == "sender":
-        if None in [game, player, target]:
+        #if None in [game, player, target]:
+        if None in [game, player]:
             usage(
                 "`game`, `target` and `player` needed in command params to send a message."
             )
@@ -311,7 +338,9 @@ if __name__ == "__main__":
         commsSender = CommsSender(**creds)
         for i in range(rounds):
             commsSender.send(target, json.dumps({"data": message}), False)
-            time.sleep(2)
+            time.sleep(sleepTime)
+            print(f"sending message: {i}")
+            print(f"sleeping for {sleepTime} seconds")
 
     else:
         print(
