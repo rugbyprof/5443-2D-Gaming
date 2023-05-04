@@ -97,8 +97,13 @@ class SpaceRocks:
                 and event.key == pygame.K_SPACE
             ):
                 self.spaceship.shoot()
+                
+            if event.type == pygame.KEYUP:
+                print("key released send message")
 
         is_key_pressed = pygame.key.get_pressed()
+        
+        
 
         if not self.started:
             if is_key_pressed[pygame.K_g]:

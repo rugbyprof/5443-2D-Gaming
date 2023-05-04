@@ -170,6 +170,7 @@ class NPC(Player):
 
 
 def main():
+    print("hello")
     # Define constants
     WINDOW_WIDTH = 640
     WINDOW_HEIGHT = 480
@@ -182,11 +183,11 @@ def main():
     pygame.display.set_caption("Game")
 
     # Create the player
-    player = Player(image_path="player.png", position=Vector2(100, 100), speed=5)
+    player = Player(image_path="assets/sprites/space_ship4_40x40.png", initial_pos=Vector2(100, 100), speed=5)
 
     # Create the NPCs
-    npc1 = NPC(position=Vector2(400, 100), speed=2, image_path="npc1.png")
-    npc2 = NPC(position=Vector2(200, 300), speed=3, image_path="npc2.png")
+    npc1 = NPC(initial_pos=Vector2(400, 100), speed=2, image_path="assets/sprites/space_ship4_40x40.png")
+    npc2 = NPC(initial_pos=Vector2(200, 300), speed=3, image_path="assets/sprites/space_ship5_40x40.png")
 
     # Create a list of all the NPCs
     npcs = [npc1, npc2]

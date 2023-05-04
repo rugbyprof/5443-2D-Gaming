@@ -23,7 +23,7 @@ class SpaceRocks:
         self.screen = pygame.display.set_mode((self.width, self.height))
 
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        # self.background = load_sprite("space", False)
+        self.background = load_sprite("space", False)
 
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, 64)
